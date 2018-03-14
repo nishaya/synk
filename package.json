@@ -8,6 +8,9 @@
     "react-scripts-ts": "2.13.0"
   },
   "scripts": {
+    "da": "firebase deploy",
+    "dh": "firebase deploy --only hosting",
+    "df": "firebase deploy --only functions",
     "start": "react-scripts-ts start",
     "build": "react-scripts-ts build",
     "test": "react-scripts-ts test --env=jsdom",
