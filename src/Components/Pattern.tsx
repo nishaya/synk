@@ -1,3 +1,3 @@
-import * as React from 'react';
+import * as React from 'react'
 
-export default () => <div>Pattern</div>;
+export default () => <div>Pattern</div>
