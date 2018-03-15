@@ -1,6 +1,12 @@
 export interface Session {
   id: string
+  numTracks: number
+  presets: Preset[]
   blocks: Block[]
+}
+
+export interface Preset {
+  oscillator: OscillatorType
 }
 
 export interface Block {
