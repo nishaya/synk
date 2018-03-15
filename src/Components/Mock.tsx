@@ -1,8 +1,15 @@
 import * as React from 'react'
-import Session from 'Components/Session'
+import SessionComponent from 'Components/Session'
+
+const session = {
+  id: 'dummy',
+  numTracks: 3,
+  presets: [],
+  blocks: []
+}
 
 export default () => (
   <div>
-    Mock<Session />
+    Mock<SessionComponent session={session} />
   </div>
 )
