@@ -1,11 +1,26 @@
 import * as React from 'react'
 import SessionComponent from 'Components/Session'
+import { Session } from 'types'
 
-const session = {
+const session: Session = {
   id: 'dummy',
   numTracks: 3,
-  presets: [],
-  blocks: []
+  presets: [
+    {
+      oscillator: 'sine'
+    }
+  ],
+  blocks: [
+    {
+      id: 'dummy',
+      patterns: [
+        {
+          id: 'dummy',
+          notes: []
+        }
+      ]
+    }
+  ]
 }
 
 export default () => (
