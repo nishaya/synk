@@ -1,3 +1,8 @@
 import * as React from 'react'
+import { Pattern } from 'types'
 
-export default () => <div>Pattern</div>
+interface Props {
+  pattern: Pattern
+}
+
+export default ({ pattern }: Props) => <div>Pattern</div>
