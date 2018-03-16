@@ -1,8 +1,8 @@
-import * as React from 'react'
-import './App.css'
+import { Keyboard } from 'Components/Keyboard'
 import Mock from 'Components/Mock'
 import Stats from 'Components/Stats'
-import { Keyboard } from 'Components/Keyboard'
+import * as React from 'react'
+import './App.css'
 
 class App extends React.Component {
   render() {

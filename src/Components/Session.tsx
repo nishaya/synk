@@ -1,6 +1,6 @@
-import * as React from 'react'
-import { Session, Block } from 'types'
 import BlockComponent from 'Components/Block'
+import * as React from 'react'
+import { Block, Session } from 'types'
 
 interface Props {
   session: Session

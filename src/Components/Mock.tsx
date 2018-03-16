@@ -1,5 +1,5 @@
-import * as React from 'react'
 import SessionComponent from 'Components/Session'
+import * as React from 'react'
 import { Session } from 'types'
 
 const session: Session = {

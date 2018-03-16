@@ -1,6 +1,6 @@
+import PatternComponent from 'Components/Pattern'
 import * as React from 'react'
 import { Block, Pattern } from 'types'
-import PatternComponent from 'Components/Pattern'
 
 interface Props {
   block: Block

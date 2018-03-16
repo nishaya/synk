@@ -1,9 +1,9 @@
-import * as React from 'react'
-import * as ReactDOM from 'react-dom'
 import App from 'App'
+import * as firebase from 'firebase'
 // import registerServiceWorker from 'registerServiceWorker'
 import 'index.css'
-import * as firebase from 'firebase'
+import * as React from 'react'
+import * as ReactDOM from 'react-dom'
 
 const {
   REACT_APP_FIREBASE_API_KEY: apiKey,
