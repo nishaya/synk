@@ -6,10 +6,10 @@ interface Props {
   block: Block
 }
 
-export default ({ block }: Props) => (
+export default ({ block: moge }: Props) => (
   <div>
     <h3>Block</h3>
-    {block.patterns.map((pattern: Pattern) => (
+    {moge.patterns.map((pattern: Pattern) => (
       <div key={pattern.id}>
         <PatternComponent pattern={pattern} />
       </div>
