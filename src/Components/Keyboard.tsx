@@ -22,6 +22,27 @@ const Key = styled.div`
   display: inline-block;
 `
 
+const blackKeyStyle = {
+  color: '#ccc',
+  backgroundColor: '#333'
+}
+
+const isBlackKey = (note: number) => [1, 3, 6, 8, 10].includes(note)
+const KEY_NAMES = [
+  'C',
+  'C#',
+  'D',
+  'D#',
+  'E',
+  'F',
+  'F#',
+  'G',
+  'G#',
+  'A',
+  'A#',
+  'B'
+]
+
 export const Keyboard = ({
   min = MIN_DEFAULT,
   max = MAX_DEFAULT,
@@ -33,8 +54,16 @@ export const Keyboard = ({
       <Frame>
         {new Array(max - min).fill(null).map((_: number, i: number) => {
           const keyNumber = i + min
+          const note = keyNumber % 12
+          // const oct = ~~(keyNumber / 12)
           return (
-            <Key key={i} onClick={() => onKey(keyNumber)}>
+            <Key
+              style={isBlackKey(note) ? blackKeyStyle : {}}
+              key={keyNumber}
+              onClick={() => onKey(keyNumber)}
+            >
+              {KEY_NAMES[note]}
+              <br />
               {keyNumber}
             </Key>
           )
