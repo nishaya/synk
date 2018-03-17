@@ -1,4 +1,5 @@
-import { Card, CardHeader, CardText } from 'material-ui/Card'
+import Transport from 'Components/Controls/Transport'
+import { Card, CardActions, CardHeader, CardText } from 'material-ui/Card'
 import * as React from 'react'
 import { Arrangement } from 'types'
 
@@ -14,6 +15,9 @@ export default ({ arrangement }: Props) => (
         showExpandableButton={true}
         actAsExpander={true}
       />
+      <CardActions>
+        <Transport />
+      </CardActions>
       <CardText expandable={true}>
         <div>edit area</div>
       </CardText>
