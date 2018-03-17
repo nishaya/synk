@@ -21,6 +21,7 @@ export interface Preset {
 
 export interface Block {
   id: string
+  name: string
   patterns: Pattern[]
 }
 

@@ -13,6 +13,7 @@ const session: Session = {
   blocks: [
     {
       id: 'dummy',
+      name: 'A',
       patterns: [
         {
           id: 'dummy',
