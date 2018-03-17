@@ -20,7 +20,10 @@ const session: Session = {
         }
       ]
     }
-  ]
+  ],
+  arrangement: {
+    blocks: []
+  }
 }
 
 export default () => (

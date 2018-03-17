@@ -3,6 +3,16 @@ export interface Session {
   numTracks: number
   presets: Preset[]
   blocks: Block[]
+  arrangement: Arrangement
+}
+
+export interface Arrangement {
+  blocks: BlockInfo[]
+}
+
+export interface BlockInfo {
+  blockId: string
+  repeat: number
 }
 
 export interface Preset {
