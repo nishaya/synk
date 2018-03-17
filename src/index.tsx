@@ -2,6 +2,7 @@ import App from 'App'
 import * as firebase from 'firebase'
 // import registerServiceWorker from 'registerServiceWorker'
 import 'index.css'
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 
@@ -57,5 +58,10 @@ console.log(messaging)
       console.log('Unable to get permission to notify.', err)
     })
 }
-ReactDOM.render(<App />, document.getElementById('root') as HTMLElement)
+ReactDOM.render(
+  <MuiThemeProvider>
+    <App />
+  </MuiThemeProvider>,
+  document.getElementById('root') as HTMLElement
+)
 // registerServiceWorker()
