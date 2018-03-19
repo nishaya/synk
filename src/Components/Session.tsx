@@ -9,7 +9,7 @@ interface Props {
 }
 
 export default ({ session }: Props) => (
-  <div>
+  <div style={{ padding: '4px' }}>
     <h2>Session</h2>
     <RaisedButton label="default" />
     <div>numTracks: {session.numTracks}</div>

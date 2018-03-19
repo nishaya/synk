@@ -8,7 +8,7 @@ interface Props {
 }
 
 export default ({ arrangement }: Props) => (
-  <div>
+  <div style={{ padding: '4px' }}>
     <Card>
       <CardHeader
         title="Arrangement"
