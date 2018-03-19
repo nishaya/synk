@@ -1,11 +1,11 @@
-import IconButton from 'material-ui/IconButton'
+import RaisedButton from 'material-ui/RaisedButton'
 import * as Icons from 'material-ui/svg-icons'
 import * as React from 'react'
 
 export default () => (
   <div>
-    <IconButton tooltip="Play">
-      <Icons.AvPlayArrow />
-    </IconButton>
+    <RaisedButton icon={<Icons.ImageLens color="red" />} label="Rec" />
+    <RaisedButton icon={<Icons.AvStop />} label="Stop" />
+    <RaisedButton icon={<Icons.AvPlayArrow />} label="Play" />
   </div>
 )
