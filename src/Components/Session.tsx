@@ -14,11 +14,15 @@ interface Props {
 }
 
 const BlockSelect = ({ blocks }: { blocks: Block[] }) => (
-  <SelectField>
+  <SelectField
+    onChange={(
+      e: React.SyntheticEvent<HTMLSelectElement>,
+      i: number,
+      v: string
+    ) => console.log('block selected', v)}
+  >
     {blocks.map((block: Block) => (
-      <MenuItem key={block.id} value={block.id}>
-        {block.name}
-      </MenuItem>
+      <MenuItem key={block.id} value={block.id} primaryText={block.name} />
     ))}
   </SelectField>
 )
