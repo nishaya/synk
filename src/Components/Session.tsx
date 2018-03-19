@@ -1,5 +1,6 @@
 import ArrangementComponent from 'Components/Arrangement'
 import BlockComponent from 'Components/Block'
+import BlockEditComponent from 'Components/BlockEdit'
 import RaisedButton from 'material-ui/RaisedButton'
 import * as React from 'react'
 import { Block, Session } from 'types'
@@ -18,6 +19,7 @@ export default ({ session }: Props) => (
         <BlockComponent block={block} />
       </div>
     ))}
+    <BlockEditComponent blocks={session.blocks} />
     <ArrangementComponent arrangement={session.arrangement} />
   </div>
 )
