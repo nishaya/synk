@@ -29,6 +29,6 @@ const session: Session = {
 
 export default () => (
   <div>
-    Mock<SessionComponent session={session} />
+    <SessionComponent session={session} />
   </div>
 )

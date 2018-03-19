@@ -4,7 +4,6 @@ import EditTools from 'Components/Controls/EditTools'
 import Transport from 'Components/Controls/Transport'
 import { Card, CardActions, CardHeader, CardText } from 'material-ui/Card'
 import MenuItem from 'material-ui/MenuItem'
-import RaisedButton from 'material-ui/RaisedButton'
 import SelectField from 'material-ui/SelectField'
 import * as React from 'react'
 import styled from 'styled-components'
@@ -35,7 +34,6 @@ const Tools = styled.div`
 export default ({ session }: Props) => (
   <div style={{ padding: '4px' }}>
     <h2>Session</h2>
-    <RaisedButton label="default" />
     <div>numTracks: {session.numTracks}</div>
     <div style={{ padding: '4px' }}>
       <Card>
