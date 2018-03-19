@@ -1,5 +1,6 @@
 import ArrangementComponent from 'Components/Arrangement'
 import BlocksComponent from 'Components/Blocks'
+import EditTools from 'Components/Controls/EditTools'
 import Transport from 'Components/Controls/Transport'
 import { Card, CardActions, CardHeader, CardText } from 'material-ui/Card'
 import MenuItem from 'material-ui/MenuItem'
@@ -31,7 +32,20 @@ export default ({ session }: Props) => (
       <Card>
         <CardHeader title="blocks" />
         <CardActions>
-          <Transport handleRec={() => console.log('rec button pushed')} />
+          <div style={{ width: '100%' }}>
+            <div style={{ display: 'inline-block', minWidth: '50%' }}>
+              <Transport handleRec={() => console.log('rec button pushed')} />
+            </div>
+            <div
+              style={{
+                display: 'inline-block',
+                minWidth: '50%',
+                textAlign: 'right'
+              }}
+            >
+              <EditTools />
+            </div>
+          </div>
         </CardActions>
         <CardText>
           <BlockSelect blocks={session.blocks} />
