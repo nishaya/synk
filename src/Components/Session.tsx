@@ -1,12 +1,13 @@
 import ArrangementComponent from 'Components/Arrangement'
-import BlockComponent from 'Components/Block'
 import BlocksComponent from 'Components/Blocks'
 import Transport from 'Components/Controls/Transport'
+import { Card, CardActions, CardHeader, CardText } from 'material-ui/Card'
 import MenuItem from 'material-ui/MenuItem'
 import RaisedButton from 'material-ui/RaisedButton'
 import SelectField from 'material-ui/SelectField'
 import * as React from 'react'
 import { Block, Session } from 'types'
+
 interface Props {
   session: Session
 }
@@ -26,14 +27,19 @@ export default ({ session }: Props) => (
     <h2>Session</h2>
     <RaisedButton label="default" />
     <div>numTracks: {session.numTracks}</div>
-    {session.blocks.map((block: Block) => (
-      <div key={block.id}>
-        <BlockComponent block={block} />
-      </div>
-    ))}
-    <Transport />
-    <BlockSelect blocks={session.blocks} />
-    <BlocksComponent blocks={session.blocks} />
+    <div style={{ padding: '4px' }}>
+      <Card>
+        <CardHeader title="blocks" />
+        <CardActions>
+          <Transport />
+        </CardActions>
+        <CardText>
+          <BlockSelect blocks={session.blocks} />
+          <BlocksComponent blocks={session.blocks} />
+        </CardText>
+      </Card>
+    </div>
+
     <ArrangementComponent arrangement={session.arrangement} />
   </div>
 )
