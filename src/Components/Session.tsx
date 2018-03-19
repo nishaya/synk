@@ -1,12 +1,12 @@
 import ArrangementComponent from 'Components/Arrangement'
 import BlockComponent from 'Components/Block'
-import BlockEditComponent from 'Components/BlockEdit'
+import BlocksComponent from 'Components/Blocks'
+import Transport from 'Components/Controls/Transport'
 import MenuItem from 'material-ui/MenuItem'
 import RaisedButton from 'material-ui/RaisedButton'
 import SelectField from 'material-ui/SelectField'
 import * as React from 'react'
 import { Block, Session } from 'types'
-
 interface Props {
   session: Session
 }
@@ -31,8 +31,9 @@ export default ({ session }: Props) => (
         <BlockComponent block={block} />
       </div>
     ))}
+    <Transport />
     <BlockSelect blocks={session.blocks} />
-    <BlockEditComponent blocks={session.blocks} />
+    <BlocksComponent blocks={session.blocks} />
     <ArrangementComponent arrangement={session.arrangement} />
   </div>
 )
