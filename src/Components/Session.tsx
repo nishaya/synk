@@ -31,7 +31,7 @@ export default ({ session }: Props) => (
       <Card>
         <CardHeader title="blocks" />
         <CardActions>
-          <Transport />
+          <Transport handleRec={() => console.log('rec button pushed')} />
         </CardActions>
         <CardText>
           <BlockSelect blocks={session.blocks} />
