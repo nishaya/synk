@@ -6,6 +6,7 @@ interface Props {}
 
 export default ({  }: Props) => (
   <div>
+    <RaisedButton icon={<Icons.ContentCreate />} label="Edit" />
     <RaisedButton icon={<Icons.ActionReorder />} label="Quantize" />
     <RaisedButton icon={<Icons.AvLibraryMusic />} label="Resolution" />
   </div>
