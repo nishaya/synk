@@ -9,6 +9,8 @@ export interface Track {
   preset: SynthPreset
   level: number
   pan: number
+  mute: boolean
+  solo: boolean
 }
 
 type SynthPresetType = 'osc' | 'drums' | 'fm'

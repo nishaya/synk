@@ -11,7 +11,9 @@ const session: Session = {
         oscillator: 'sawtooth'
       },
       level: 100,
-      pan: 0
+      pan: 0,
+      mute: false,
+      solo: false
     },
     {
       preset: {
@@ -19,7 +21,9 @@ const session: Session = {
         oscillator: 'triangle'
       },
       level: 100,
-      pan: 0
+      pan: 0,
+      mute: false,
+      solo: false
     },
     {
       preset: {
@@ -32,7 +36,9 @@ const session: Session = {
         }
       },
       level: 100,
-      pan: 0
+      pan: 0,
+      mute: false,
+      solo: false
     }
   ],
   blocks: [
