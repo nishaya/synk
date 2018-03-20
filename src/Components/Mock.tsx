@@ -12,6 +12,27 @@ const session: Session = {
       },
       level: 100,
       pan: 0
+    },
+    {
+      preset: {
+        type: 'osc',
+        oscillator: 'triangle'
+      },
+      level: 100,
+      pan: 0
+    },
+    {
+      preset: {
+        type: 'drums',
+        kick: {
+          level: 100
+        },
+        snare: {
+          level: 100
+        }
+      },
+      level: 100,
+      pan: 0
     }
   ],
   blocks: [
@@ -20,7 +41,15 @@ const session: Session = {
       name: 'A',
       patterns: [
         {
-          id: 'dummy',
+          id: 'dummy1-1',
+          notes: []
+        },
+        {
+          id: 'dummy1-2',
+          notes: []
+        },
+        {
+          id: 'dummy1-3',
           notes: []
         }
       ]
@@ -30,7 +59,15 @@ const session: Session = {
       name: 'B',
       patterns: [
         {
-          id: 'dummy',
+          id: 'dummy2-1',
+          notes: []
+        },
+        {
+          id: 'dummy2-2',
+          notes: []
+        },
+        {
+          id: 'dummy2-3',
           notes: []
         }
       ]
