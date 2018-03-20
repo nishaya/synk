@@ -15,13 +15,16 @@ interface Props {
 }
 
 const BlockSelect = ({
+  value,
   blocks,
   onChange
 }: {
+  value: string | null
   blocks: Block[]
   onChange: (v: string) => void
 }) => (
   <SelectField
+    value={value}
     onChange={(
       e: React.SyntheticEvent<HTMLSelectElement>,
       i: number,
@@ -47,9 +50,17 @@ interface State {
 }
 
 class SessionComponent extends React.Component<Props, State> {
-  state = {
+  state: State = {
     currentBlock: undefined
   }
+
+  componentWillMount() {
+    const { session: { blocks } } = this.props
+    if (blocks.length > 0) {
+      this.setState({ currentBlock: blocks[0] })
+    }
+  }
+
   render() {
     const { session } = this.props
     const { currentBlock } = this.state
@@ -74,6 +85,7 @@ class SessionComponent extends React.Component<Props, State> {
             </CardActions>
             <CardText>
               <BlockSelect
+                value={currentBlock ? currentBlock.id : null}
                 blocks={session.blocks}
                 onChange={(v: string) => {
                   this.setState({
