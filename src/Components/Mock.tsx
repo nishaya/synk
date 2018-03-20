@@ -4,16 +4,29 @@ import { Session } from 'types'
 
 const session: Session = {
   id: 'dummy',
-  numTracks: 3,
-  presets: [
+  tracks: [
     {
-      oscillator: 'sine'
+      preset: {
+        type: 'osc'
+      },
+      level: 100,
+      pan: 0
     }
   ],
   blocks: [
     {
-      id: 'dummy',
+      id: 'dummy1',
       name: 'A',
+      patterns: [
+        {
+          id: 'dummy',
+          notes: []
+        }
+      ]
+    },
+    {
+      id: 'dummy2',
+      name: 'B',
       patterns: [
         {
           id: 'dummy',

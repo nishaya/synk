@@ -1,9 +1,20 @@
 export interface Session {
   id: string
-  numTracks: number
-  presets: Preset[]
+  tracks: Track[]
   blocks: Block[]
   arrangement: Arrangement
+}
+
+export interface Track {
+  preset: SynthPreset
+  level: number
+  pan: number
+}
+
+type SynthPresetType = 'osc' | 'drums' | 'fm'
+
+export interface SynthPreset {
+  type: SynthPresetType
 }
 
 export interface Arrangement {
@@ -13,10 +24,6 @@ export interface Arrangement {
 export interface BlockInfo {
   blockId: string
   repeat: number
-}
-
-export interface Preset {
-  oscillator: OscillatorType
 }
 
 export interface Block {

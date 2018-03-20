@@ -38,7 +38,7 @@ const Tools = styled.div`
 export default ({ session }: Props) => (
   <div style={{ padding: '4px' }}>
     <h2>Session</h2>
-    <div>numTracks: {session.numTracks}</div>
+    <div>numTracks: {session.tracks.length}</div>
     <div style={{ padding: '4px' }}>
       <Card>
         <CardHeader title="blocks" />
