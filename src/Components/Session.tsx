@@ -13,13 +13,19 @@ interface Props {
   session: Session
 }
 
-const BlockSelect = ({ blocks }: { blocks: Block[] }) => (
+const BlockSelect = ({
+  blocks,
+  onChange
+}: {
+  blocks: Block[]
+  onChange: (v: string) => void
+}) => (
   <SelectField
     onChange={(
       e: React.SyntheticEvent<HTMLSelectElement>,
       i: number,
       v: string
-    ) => console.log('block selected', v)}
+    ) => onChange(v)}
   >
     {blocks.map((block: Block) => (
       <MenuItem key={block.id} value={block.id} primaryText={block.name} />
@@ -35,30 +41,42 @@ const Tools = styled.div`
   }
 `
 
-export default ({ session }: Props) => (
-  <div style={{ padding: '4px' }}>
-    <h2>Session</h2>
-    <div>numTracks: {session.tracks.length}</div>
-    <div style={{ padding: '4px' }}>
-      <Card>
-        <CardHeader title="blocks" />
-        <CardActions>
-          <Tools>
-            <div>
-              <Transport handleRec={() => console.log('rec button pushed')} />
-            </div>
-            <div>
-              <EditTools />
-            </div>
-          </Tools>
-        </CardActions>
-        <CardText>
-          <BlockSelect blocks={session.blocks} />
-          <BlocksComponent blocks={session.blocks} />
-        </CardText>
-      </Card>
-    </div>
+class SessionComponent extends React.Component<Props> {
+  render() {
+    const { session } = this.props
+    return (
+      <div style={{ padding: '4px' }}>
+        <h2>Session</h2>
+        <div>numTracks: {session.tracks.length}</div>
+        <div style={{ padding: '4px' }}>
+          <Card>
+            <CardHeader title="blocks" />
+            <CardActions>
+              <Tools>
+                <div>
+                  <Transport
+                    handleRec={() => console.log('rec button pushed')}
+                  />
+                </div>
+                <div>
+                  <EditTools />
+                </div>
+              </Tools>
+            </CardActions>
+            <CardText>
+              <BlockSelect
+                blocks={session.blocks}
+                onChange={(v: string) => console.log('select edit', v)}
+              />
+              <BlocksComponent blocks={session.blocks} />
+            </CardText>
+          </Card>
+        </div>
 
-    <ArrangementComponent arrangement={session.arrangement} />
-  </div>
-)
+        <ArrangementComponent arrangement={session.arrangement} />
+      </div>
+    )
+  }
+}
+
+export default SessionComponent
