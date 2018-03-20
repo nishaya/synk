@@ -7,7 +7,15 @@ interface Props {
 
 class TrackListComponent extends React.Component<Props> {
   render() {
-    return <div>Tracks</div>
+    const { tracks } = this.props
+    return (
+      <div>
+        <h3>Tracks</h3>
+        {tracks.map(({ level }: Track, i: number) => (
+          <div key={i}>{level}</div>
+        ))}
+      </div>
+    )
   }
 }
 
