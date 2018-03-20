@@ -13,7 +13,9 @@ export interface Track {
 
 type SynthPresetType = 'osc' | 'drums' | 'fm'
 
-export interface SynthPreset {
+export type SynthPreset = OscSynthPreset | FmSynthPreset | DrumsSynthPreset
+
+export interface BaseSynthPreset {
   type: SynthPresetType
 }
 
@@ -29,17 +31,23 @@ export function isDrumsSynthPreset(v: any): v is DrumsSynthPreset {
   return v.type === 'drums'
 }
 
-export interface OscSynthPreset extends SynthPreset {
+export interface OscSynthPreset extends BaseSynthPreset {
   type: 'osc'
   oscillator: OscillatorType
 }
 
-export interface FmSynthPreset extends SynthPreset {
+export interface FmSynthPreset extends BaseSynthPreset {
   type: 'fm'
 }
 
-export interface DrumsSynthPreset extends SynthPreset {
+export interface DrumsSynthPreset extends BaseSynthPreset {
   type: 'drums'
+  kick: DrumPreset
+  snare: DrumPreset
+}
+
+export interface DrumPreset {
+  level: 100
 }
 
 export interface Arrangement {

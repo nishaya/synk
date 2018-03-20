@@ -7,7 +7,8 @@ const session: Session = {
   tracks: [
     {
       preset: {
-        type: 'osc'
+        type: 'osc',
+        oscillator: 'sawtooth'
       },
       level: 100,
       pan: 0
