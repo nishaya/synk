@@ -1,4 +1,5 @@
 import ArrangementComponent from 'Components/Arrangement'
+import BlockEditComponent from 'Components/BlockEdit'
 import BlocksComponent from 'Components/Blocks'
 import EditTools from 'Components/Controls/EditTools'
 import Transport from 'Components/Controls/Transport'
@@ -41,9 +42,17 @@ const Tools = styled.div`
   }
 `
 
-class SessionComponent extends React.Component<Props> {
+interface State {
+  currentBlock: Block | undefined
+}
+
+class SessionComponent extends React.Component<Props, State> {
+  state = {
+    currentBlock: undefined
+  }
   render() {
     const { session } = this.props
+    const { currentBlock } = this.state
     return (
       <div style={{ padding: '4px' }}>
         <h2>Session</h2>
@@ -66,8 +75,18 @@ class SessionComponent extends React.Component<Props> {
             <CardText>
               <BlockSelect
                 blocks={session.blocks}
-                onChange={(v: string) => console.log('select edit', v)}
+                onChange={(v: string) => {
+                  this.setState({
+                    currentBlock: session.blocks.find((b: Block) => b.id === v)
+                  })
+                  console.log('select edit', v)
+                }}
               />
+              {currentBlock ? (
+                <BlockEditComponent block={currentBlock} />
+              ) : (
+                'no current block'
+              )}
               <BlocksComponent blocks={session.blocks} />
             </CardText>
           </Card>
