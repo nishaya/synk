@@ -3,6 +3,7 @@ import BlockEditComponent from 'Components/BlockEdit'
 import BlocksComponent from 'Components/Blocks'
 import EditTools from 'Components/Controls/EditTools'
 import Transport from 'Components/Controls/Transport'
+import TrackListComponent from 'Components/TrackList'
 import { Card, CardActions, CardHeader, CardText } from 'material-ui/Card'
 import MenuItem from 'material-ui/MenuItem'
 import SelectField from 'material-ui/SelectField'
@@ -84,6 +85,7 @@ class SessionComponent extends React.Component<Props, State> {
               </Tools>
             </CardActions>
             <CardText>
+              <TrackListComponent tracks={session.tracks} />
               <BlockSelect
                 value={currentBlock ? currentBlock.id : null}
                 blocks={session.blocks}
@@ -95,7 +97,7 @@ class SessionComponent extends React.Component<Props, State> {
                 }}
               />
               {currentBlock ? (
-                <BlockEditComponent block={currentBlock} />
+                <BlockEditComponent block={currentBlock} patternIndex={0} />
               ) : (
                 'no current block'
               )}

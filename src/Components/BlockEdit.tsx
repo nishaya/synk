@@ -1,18 +1,24 @@
 import PatternComponent from 'Components/Pattern'
 import * as React from 'react'
-import { Block, Pattern } from 'types'
+import { Block } from 'types'
 
 interface Props {
   block: Block
+  patternIndex: number
 }
 
-export default ({ block: moge }: Props) => (
-  <div>
-    <h3>Block</h3>
-    {moge.patterns.map((pattern: Pattern) => (
-      <div key={pattern.id}>
-        <PatternComponent pattern={pattern} />
-      </div>
-    ))}
-  </div>
-)
+export default ({ block, patternIndex }: Props) => {
+  const pattern = block.patterns[patternIndex]
+  return (
+    <div>
+      <h3>
+        Block{block.id} - {patternIndex}
+      </h3>
+      {pattern ? (
+        <div key={pattern.id}>
+          <PatternComponent pattern={pattern} />
+        </div>
+      ) : null}
+    </div>
+  )
+}
