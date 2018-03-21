@@ -1,5 +1,6 @@
 import * as React from 'react'
-import { Pattern } from 'types'
+import { Note, Pattern } from 'types'
+
 interface Props {
   pattern: Pattern
 }
@@ -7,6 +8,15 @@ interface Props {
 interface State {
   stageWidth: number
   stageHeight: number
+}
+
+const avgNotes = (notes: Note[]): number => {
+  if (notes.length === 0) return 0
+  return ~~(
+    notes.reduce<number>((sum: number, note: Note) => {
+      return sum + note.note
+    }, 0) / notes.length
+  )
 }
 
 class PatternComponent extends React.Component<Props, State> {
@@ -27,6 +37,7 @@ class PatternComponent extends React.Component<Props, State> {
     const { pattern } = this.props
     const { stageHeight, stageWidth } = this.state
     console.log(this.state)
+    console.log('average', avgNotes(pattern.notes))
     return (
       <div
         style={{ minHeight: '100%' }}
