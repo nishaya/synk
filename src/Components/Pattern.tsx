@@ -5,4 +5,8 @@ interface Props {
   pattern: Pattern
 }
 
-export default ({ pattern }: Props) => <div>Pattern</div>
+export default ({ pattern }: Props) => (
+  <div>
+    <pre>{JSON.stringify(pattern.notes, null, 4)}</pre>
+  </div>
+)

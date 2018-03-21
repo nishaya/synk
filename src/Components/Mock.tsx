@@ -6,7 +6,11 @@ const genNotes = (): Note[] => {
   const notes: Note[] = []
 
   for (let i = 0; i < 4; i++) {
-    notes.push({ note: 80 + i, duration: 480, velocity: 100 })
+    notes.push({
+      note: ~~(Math.random() * 10 + 50),
+      duration: 480,
+      velocity: 100
+    })
   }
 
   return notes
