@@ -3,17 +3,32 @@ import { Card, CardActions, CardHeader, CardText } from 'material-ui/Card'
 import Paper from 'material-ui/Paper'
 import * as React from 'react'
 import styled from 'styled-components'
-import { Arrangement, BlockInfo } from 'types'
+import { Arrangement, Block, BlockInfo } from 'types'
 
 interface Props {
   arrangement: Arrangement
+  blocks: Block[]
 }
 
-const Block = styled(Paper)`
+const BlockBase = styled(Paper)`
   display: inline-block;
   padding: 8px;
 `
-export default ({ arrangement }: Props) => (
+
+const blockStyle = {
+  display: 'inline-block',
+  padding: '2px'
+}
+
+const Block = ({ block }: { block: BlockInfo }) => {
+  return (
+    <div style={blockStyle}>
+      <BlockBase>{block.blockId}</BlockBase>
+    </div>
+  )
+}
+
+export default ({ arrangement, blocks }: Props) => (
   <div style={{ padding: '4px' }}>
     <Card>
       <CardHeader title="Arrangement" />
@@ -22,7 +37,7 @@ export default ({ arrangement }: Props) => (
       </CardActions>
       <CardText>
         {arrangement.blocks.map((b: BlockInfo, i: number) => (
-          <Block key={i}>{b.blockId}</Block>
+          <Block key={i} block={b} />
         ))}
       </CardText>
     </Card>

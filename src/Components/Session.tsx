@@ -106,7 +106,10 @@ class SessionComponent extends React.Component<Props, State> {
           </Card>
         </div>
 
-        <ArrangementComponent arrangement={session.arrangement} />
+        <ArrangementComponent
+          arrangement={session.arrangement}
+          blocks={session.blocks}
+        />
       </div>
     )
   }

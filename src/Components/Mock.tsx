@@ -45,6 +45,7 @@ const session: Session = {
     {
       id: 'b1',
       name: 'A',
+      bars: 4,
       patterns: [
         {
           id: 'dummy1-1',
@@ -63,6 +64,7 @@ const session: Session = {
     {
       id: 'b2',
       name: 'B',
+      bars: 4,
       patterns: [
         {
           id: 'dummy2-1',

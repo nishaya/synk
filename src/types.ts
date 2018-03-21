@@ -64,6 +64,7 @@ export interface BlockInfo {
 export interface Block {
   id: string
   name: string
+  bars: number
   patterns: Pattern[]
 }
 
