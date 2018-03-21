@@ -11,8 +11,10 @@ interface Props {
 }
 
 const BlockBase = styled(Paper)`
-  display: inline-block;
   padding: 8px;
+  width: 100%;
+  height: '64px';
+  line-height: 2em;
 `
 
 const blockStyle = {
@@ -20,10 +22,29 @@ const blockStyle = {
   padding: '2px'
 }
 
-const Block = ({ block }: { block: BlockInfo }) => {
+const Chip = styled.span`
+  margin-left: 4px;
+  padding: 4px;
+  background-color: #ccc;
+  color: #fff;
+`
+
+const barWidth = 32
+
+const Block = ({
+  blockInfo,
+  block
+}: {
+  blockInfo: BlockInfo
+  block: Block
+}) => {
+  const width = block.bars * blockInfo.repeat * barWidth
   return (
-    <div style={blockStyle}>
-      <BlockBase>{block.blockId}</BlockBase>
+    <div style={{ width: `${width}px`, ...blockStyle }}>
+      <BlockBase>
+        {block.name}
+        {blockInfo.repeat > 1 ? <Chip>x{blockInfo.repeat}</Chip> : null}
+      </BlockBase>
     </div>
   )
 }
@@ -36,9 +57,13 @@ export default ({ arrangement, blocks }: Props) => (
         <Transport />
       </CardActions>
       <CardText>
-        {arrangement.blocks.map((b: BlockInfo, i: number) => (
-          <Block key={i} block={b} />
-        ))}
+        {arrangement.blocks.map((blockInfo: BlockInfo, i: number) => {
+          const block = blocks.find((b: Block) => b.id === blockInfo.blockId)
+          if (block) {
+            return <Block key={i} block={block} blockInfo={blockInfo} />
+          }
+          return null
+        })}
       </CardText>
     </Card>
   </div>
