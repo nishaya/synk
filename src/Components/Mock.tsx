@@ -1,6 +1,16 @@
 import SessionComponent from 'Components/Session'
 import * as React from 'react'
-import { Session } from 'types'
+import { Note, Session } from 'types'
+
+const genNotes = (): Note[] => {
+  const notes: Note[] = []
+
+  for (let i = 0; i < 4; i++) {
+    notes.push({ note: 80 + i, duration: 480, velocity: 100 })
+  }
+
+  return notes
+}
 
 const session: Session = {
   id: 'dummy',
@@ -49,11 +59,11 @@ const session: Session = {
       patterns: [
         {
           id: 'dummy1-1',
-          notes: []
+          notes: genNotes()
         },
         {
           id: 'dummy1-2',
-          notes: []
+          notes: genNotes()
         },
         {
           id: 'dummy1-3',
@@ -68,7 +78,7 @@ const session: Session = {
       patterns: [
         {
           id: 'dummy2-1',
-          notes: []
+          notes: genNotes()
         },
         {
           id: 'dummy2-2',
