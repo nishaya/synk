@@ -68,8 +68,6 @@ class SessionComponent extends React.Component<Props, State> {
     const { currentBlock, currentTrack } = this.state
     return (
       <div style={{ padding: '4px' }}>
-        <h2>Session</h2>
-        <div>numTracks: {session.tracks.length}</div>
         <div style={{ padding: '4px' }}>
           <Card>
             <CardHeader title="blocks" />

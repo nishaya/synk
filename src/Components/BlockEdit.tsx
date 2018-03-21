@@ -16,7 +16,7 @@ export default ({ block, patternIndex }: Props) => {
         <CardHeader title={`Block${block.id} - ${patternIndex}`} />
         <CardText>
           {pattern ? (
-            <div key={pattern.id}>
+            <div style={{ height: '400px' }} key={pattern.id}>
               <PatternComponent pattern={pattern} />
             </div>
           ) : null}
