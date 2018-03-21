@@ -43,7 +43,7 @@ const session: Session = {
   ],
   blocks: [
     {
-      id: 'dummy1',
+      id: 'b1',
       name: 'A',
       patterns: [
         {
@@ -61,7 +61,7 @@ const session: Session = {
       ]
     },
     {
-      id: 'dummy2',
+      id: 'b2',
       name: 'B',
       patterns: [
         {
@@ -80,7 +80,16 @@ const session: Session = {
     }
   ],
   arrangement: {
-    blocks: []
+    blocks: [
+      {
+        blockId: 'b1',
+        repeat: 1
+      },
+      {
+        blockId: 'b2',
+        repeat: 2
+      }
+    ]
   }
 }
 
