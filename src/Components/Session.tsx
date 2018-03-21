@@ -1,6 +1,5 @@
 import ArrangementComponent from 'Components/Arrangement'
 import BlockEditComponent from 'Components/BlockEdit'
-import BlocksComponent from 'Components/Blocks'
 import EditTools from 'Components/Controls/EditTools'
 import Transport from 'Components/Controls/Transport'
 import TrackListComponent from 'Components/TrackList'
@@ -111,7 +110,6 @@ class SessionComponent extends React.Component<Props, State> {
               ) : (
                 'no current block'
               )}
-              <BlocksComponent blocks={session.blocks} />
             </CardText>
           </Card>
         </div>
