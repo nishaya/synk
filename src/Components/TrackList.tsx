@@ -3,16 +3,19 @@ import { Track } from 'types'
 
 interface Props {
   tracks: Track[]
+  onTrackChange: (index: number) => void
 }
 
 class TrackListComponent extends React.Component<Props> {
   render() {
-    const { tracks } = this.props
+    const { tracks, onTrackChange } = this.props
     return (
       <div>
         <h3>Tracks</h3>
         {tracks.map(({ level }: Track, i: number) => (
-          <div key={i}>{level}</div>
+          <div key={i} onClick={() => onTrackChange(i)}>
+            track #{i}
+          </div>
         ))}
       </div>
     )

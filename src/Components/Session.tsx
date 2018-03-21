@@ -48,11 +48,13 @@ const Tools = styled.div`
 
 interface State {
   currentBlock: Block | undefined
+  currentTrack: number
 }
 
 class SessionComponent extends React.Component<Props, State> {
   state: State = {
-    currentBlock: undefined
+    currentBlock: undefined,
+    currentTrack: 0
   }
 
   componentWillMount() {
@@ -64,7 +66,7 @@ class SessionComponent extends React.Component<Props, State> {
 
   render() {
     const { session } = this.props
-    const { currentBlock } = this.state
+    const { currentBlock, currentTrack } = this.state
     return (
       <div style={{ padding: '4px' }}>
         <h2>Session</h2>
@@ -85,7 +87,12 @@ class SessionComponent extends React.Component<Props, State> {
               </Tools>
             </CardActions>
             <CardText>
-              <TrackListComponent tracks={session.tracks} />
+              <TrackListComponent
+                tracks={session.tracks}
+                onTrackChange={(index: number) =>
+                  this.setState({ currentTrack: index })
+                }
+              />
               <BlockSelect
                 value={currentBlock ? currentBlock.id : null}
                 blocks={session.blocks}
@@ -97,7 +104,10 @@ class SessionComponent extends React.Component<Props, State> {
                 }}
               />
               {currentBlock ? (
-                <BlockEditComponent block={currentBlock} patternIndex={0} />
+                <BlockEditComponent
+                  block={currentBlock}
+                  patternIndex={currentTrack}
+                />
               ) : (
                 'no current block'
               )}
