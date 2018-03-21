@@ -75,6 +75,7 @@ export interface Pattern {
 
 export interface Note {
   note: number
+  position: number
   duration: number
   velocity: number
 }

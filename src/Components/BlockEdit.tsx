@@ -17,7 +17,7 @@ export default ({ block, patternIndex }: Props) => {
         <CardText>
           {pattern ? (
             <div style={{ height: '400px' }} key={pattern.id}>
-              <PatternComponent pattern={pattern} />
+              <PatternComponent pattern={pattern} bars={block.bars} />
             </div>
           ) : null}
         </CardText>

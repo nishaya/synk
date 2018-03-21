@@ -3,6 +3,7 @@ import { Note, Pattern } from 'types'
 
 interface Props {
   pattern: Pattern
+  bars: number
 }
 
 interface State {
@@ -26,6 +27,7 @@ const durationWidth = beatWidth / 480
 
 class PatternComponent extends React.Component<Props, State> {
   divElement: HTMLDivElement
+  svgElement: SVGSVGElement
 
   state: State = {
     stageWidth: 0,
@@ -39,7 +41,7 @@ class PatternComponent extends React.Component<Props, State> {
   }
 
   render() {
-    const { pattern } = this.props
+    const { pattern, bars } = this.props
     const { stageHeight, stageWidth } = this.state
     const avg = avgNotes(pattern.notes)
     const maxNote = avg + displayNotes / 2
@@ -57,9 +59,11 @@ class PatternComponent extends React.Component<Props, State> {
           }}
         >
           <svg
+            style={{ height: displayNotes * noteHeight }}
+            ref={(svg: SVGSVGElement) => (this.svgElement = svg)}
             id="grid"
             xmlns="http://www.w3.org/2000/svg"
-            viewBox={`0 0 ${stageWidth} ${displayNotes * noteHeight}`}
+            viewBox={`0 0 ${beatWidth * 4 * bars} ${displayNotes * noteHeight}`}
             preserveAspectRatio="xMidYMid meet"
           >
             {pattern.notes.map((note: Note, index: number) => {
@@ -69,10 +73,11 @@ class PatternComponent extends React.Component<Props, State> {
               return (
                 <rect
                   key={`note_${index}`}
-                  x={index * beatWidth}
+                  x={note.position * durationWidth}
                   y={(maxNote - note.note) * noteHeight}
                   width={durationWidth * note.duration}
                   height={noteHeight}
+                  style={{ fill: 'red', stroke: '#666', strokeWidth: 1 }}
                 />
               )
             })}

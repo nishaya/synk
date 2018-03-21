@@ -8,6 +8,7 @@ const genNotes = (): Note[] => {
   for (let i = 0; i < 4; i++) {
     notes.push({
       note: ~~(Math.random() * 10 + 50),
+      position: i * 480,
       duration: 480,
       velocity: 100
     })
