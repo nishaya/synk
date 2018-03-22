@@ -76,7 +76,10 @@ class PatternComponent extends React.Component<Props, State> {
     )
 
     this.svgElement.addEventListener('mouseup', this.handleMouseup.bind(this))
-    this.svgElement.addEventListener('mouseout', this.handleMouseout.bind(this))
+    this.svgElement.addEventListener(
+      'mouseleave',
+      this.handleMouseleave.bind(this)
+    )
     this.svgElement.addEventListener(
       'mousemove',
       this.handleMousemove.bind(this)
@@ -149,8 +152,8 @@ class PatternComponent extends React.Component<Props, State> {
     this.setState({ editNote: null })
   }
 
-  handleMouseout(e: MouseEvent) {
-    console.log('handleMouseout', e)
+  handleMouseleave(e: MouseEvent) {
+    console.log('handleMouseleave')
     this.setState({ editNote: null })
   }
 
