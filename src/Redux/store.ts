@@ -1,8 +1,11 @@
 import { applyMiddleware, combineReducers, compose, createStore } from 'redux'
 import { createLogger } from 'redux-logger'
+import { sessionReducers as Session, SessionState } from 'Redux/Session'
 import { isDevelopment } from 'Utils/env'
 
-const reducers = combineReducers({})
+const reducers = combineReducers({
+  Session
+})
 
 const middlewares = []
 let composeEnhancers = compose
@@ -26,4 +29,6 @@ const store = createStore(reducers, enhancer)
 
 export default store
 
-export type RootState = {}
+export type RootState = {
+  Session: SessionState
+}
