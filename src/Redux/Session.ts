@@ -9,7 +9,6 @@ import actionCreatorFactory from 'typescript-fsa'
 const actionCreator = actionCreatorFactory()
 
 export const addNote = actionCreator<{
-  sessionId: string
   blockId: string
   note: Note
 }>('SESSION_ADD_NOTE')

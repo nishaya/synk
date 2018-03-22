@@ -1,9 +1,11 @@
+import { PatternActions } from 'Containers/Session'
 import * as React from 'react'
-import { Note, Pattern } from 'types'
+import { Block, Note, Pattern } from 'types'
 
 interface Props {
   pattern: Pattern
-  bars: number
+  block: Block
+  actions: PatternActions
   quantize?: number
 }
 
@@ -134,9 +136,12 @@ class PatternComponent extends React.Component<Props, State> {
   }
 
   handleMouseup(e: MouseEvent) {
+    const { block: { id: blockId }, actions: { addNote } } = this.props
+    const { editNote } = this.state
     console.log('handleMouseup', e)
     const svgPoint = this.mouse2svgPoint(e)
     console.log(svgPoint)
+    addNote(blockId, { velocity: 100, ...editNote } as Note)
     this.setState({ editNote: null })
   }
 
@@ -168,7 +173,7 @@ class PatternComponent extends React.Component<Props, State> {
   }
 
   render() {
-    const { pattern, bars } = this.props
+    const { pattern, block: { bars } } = this.props
     const { stageHeight, stageWidth, editNote } = this.state
     const { maxNote, minNote } = this.noteRange()
     const noteStyle: React.CSSProperties = { ...defaultNoteStyle }

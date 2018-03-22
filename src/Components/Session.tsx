@@ -66,7 +66,7 @@ class SessionComponent extends React.Component<Props, State> {
   }
 
   render() {
-    const { session } = this.props
+    const { session, actions: { block: blockActions } } = this.props
     const { currentBlock, currentTrack } = this.state
     return (
       <div style={{ padding: '4px' }}>
@@ -104,6 +104,7 @@ class SessionComponent extends React.Component<Props, State> {
               />
               {currentBlock ? (
                 <BlockEditComponent
+                  actions={blockActions}
                   block={currentBlock}
                   patternIndex={currentTrack}
                 />
