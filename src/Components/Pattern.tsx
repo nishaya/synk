@@ -49,6 +49,11 @@ class PatternComponent extends React.Component<Props, State> {
     )
 
     this.svgElement.addEventListener('mouseup', this.handleMouseup.bind(this))
+    this.svgElement.addEventListener('mouseout', this.handleMouseout.bind(this))
+    this.svgElement.addEventListener(
+      'mousemove',
+      this.handleMousemove.bind(this)
+    )
   }
 
   mouse2svgPoint(e: MouseEvent): SVGPoint {
@@ -74,12 +79,27 @@ class PatternComponent extends React.Component<Props, State> {
     rect.setAttributeNS(ns, 'width', '32')
     rect.setAttributeNS(ns, 'height', '8')
     this.svgElement.appendChild(rect)
+
+    this.setState({ clicking: true })
+  }
+
+  handleMousemove(e: MouseEvent) {
+    const { clicking } = this.state
+    if (clicking) {
+      console.log('handleMousemove', e)
+    }
   }
 
   handleMouseup(e: MouseEvent) {
     console.log('handleMouseup', e)
     const svgPoint = this.mouse2svgPoint(e)
     console.log(svgPoint)
+    this.setState({ clicking: false })
+  }
+
+  handleMouseout(e: MouseEvent) {
+    console.log('handleMouseout', e)
+    this.setState({ clicking: false })
   }
 
   render() {
@@ -101,7 +121,10 @@ class PatternComponent extends React.Component<Props, State> {
           }}
         >
           <svg
-            style={{ height: displayNotes * noteHeight }}
+            style={{
+              height: displayNotes * noteHeight,
+              backgroundColor: '#ccc'
+            }}
             ref={(svg: SVGSVGElement) => (this.svgElement = svg)}
             id="grid"
             xmlns="http://www.w3.org/2000/svg"
