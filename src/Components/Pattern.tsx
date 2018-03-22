@@ -136,12 +136,16 @@ class PatternComponent extends React.Component<Props, State> {
   }
 
   handleMouseup(e: MouseEvent) {
-    const { block: { id: blockId }, actions: { addNote } } = this.props
+    const {
+      block: { id: blockId },
+      pattern: { id: patternId },
+      actions: { addNote }
+    } = this.props
     const { editNote } = this.state
     console.log('handleMouseup', e)
-    const svgPoint = this.mouse2svgPoint(e)
-    console.log(svgPoint)
-    addNote(blockId, { velocity: 100, ...editNote } as Note)
+    if (editNote) {
+      addNote(blockId, patternId, { velocity: 100, ...editNote } as Note)
+    }
     this.setState({ editNote: null })
   }
 

@@ -7,7 +7,7 @@ import { RootState } from 'Redux/store'
 import { Note } from 'types'
 
 export interface PatternActions {
-  addNote: (blockId: string, note: Note) => void
+  addNote: (blockId: string, patternId: string, note: Note) => void
 }
 
 export interface BlockActions {
@@ -26,8 +26,8 @@ const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
   actions: {
     block: {
       pattern: {
-        addNote: (blockId: string, note: Note) => {
-          dispatch(addNote({ blockId, note }))
+        addNote: (blockId: string, patternId: string, note: Note) => {
+          dispatch(addNote({ blockId, patternId, note }))
         }
       }
     }
