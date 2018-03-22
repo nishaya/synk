@@ -37,7 +37,7 @@ const displayNotes = 48
 const beatWidth = 64
 const durationWidth = beatWidth / 480
 
-const noteStyle = { fill: 'red', stroke: '#666', strokeWidth: 1 }
+const defaultNoteStyle = { fill: 'red', stroke: '#666', strokeWidth: 1 }
 
 class PatternComponent extends React.Component<Props, State> {
   divElement: HTMLDivElement
@@ -160,9 +160,11 @@ class PatternComponent extends React.Component<Props, State> {
     const { pattern, bars } = this.props
     const { stageHeight, stageWidth, editNote } = this.state
     const { maxNote, minNote } = this.noteRange()
+    const noteStyle: React.CSSProperties = { ...defaultNoteStyle }
     let editingNote = null
     if (editNote) {
       console.log('editing', editNote)
+      noteStyle.pointerEvents = 'none'
       editingNote = (
         <rect
           key="note_editing"
@@ -170,7 +172,7 @@ class PatternComponent extends React.Component<Props, State> {
           y={(maxNote - editNote.note) * noteHeight}
           width={durationWidth * editNote.duration}
           height={noteHeight}
-          style={{ ...noteStyle, pointerEvents: 'none' }}
+          style={noteStyle}
         />
       )
     }
