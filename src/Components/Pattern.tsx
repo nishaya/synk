@@ -4,12 +4,23 @@ import { Note, Pattern } from 'types'
 interface Props {
   pattern: Pattern
   bars: number
+  quantize?: number
+}
+
+interface DefaultProps {
+  quantize: number
+}
+
+interface EditNote {
+  note: number
+  duration: number
+  position: number
 }
 
 interface State {
   stageWidth: number
   stageHeight: number
-  clicking: boolean
+  editNote: EditNote | null
 }
 
 const avgNotes = (notes: Note[]): number => {
@@ -23,7 +34,7 @@ const avgNotes = (notes: Note[]): number => {
 
 const noteHeight = 8
 const displayNotes = 48
-const beatWidth = 32
+const beatWidth = 64
 const durationWidth = beatWidth / 480
 
 const noteStyle = { fill: 'red', stroke: '#666', strokeWidth: 1 }
@@ -35,7 +46,11 @@ class PatternComponent extends React.Component<Props, State> {
   state: State = {
     stageWidth: 0,
     stageHeight: 0,
-    clicking: false
+    editNote: null
+  }
+
+  static defaultProps: DefaultProps = {
+    quantize: 120
   }
 
   componentDidMount() {
@@ -80,13 +95,18 @@ class PatternComponent extends React.Component<Props, State> {
     rect.setAttributeNS(ns, 'height', '8')
     this.svgElement.appendChild(rect)
 
-    this.setState({ clicking: true })
+    const { note, position } = this.svgPoint2NoteInfo(svgPoint)
+    this.setState({ editNote: { note, duration: 480, position } })
   }
 
   handleMousemove(e: MouseEvent) {
-    const { clicking } = this.state
-    if (clicking) {
+    e.preventDefault() // prevent drag
+    const { editNote } = this.state
+    if (editNote) {
       console.log('handleMousemove', e)
+      this.setState({
+        editNote: { ...editNote, note: ~~(Math.random() * 10 + 40) }
+      })
     }
   }
 
@@ -94,20 +114,43 @@ class PatternComponent extends React.Component<Props, State> {
     console.log('handleMouseup', e)
     const svgPoint = this.mouse2svgPoint(e)
     console.log(svgPoint)
-    this.setState({ clicking: false })
+    this.setState({ editNote: null })
   }
 
   handleMouseout(e: MouseEvent) {
     console.log('handleMouseout', e)
-    this.setState({ clicking: false })
+    this.setState({ editNote: null })
+  }
+
+  svgPoint2NoteInfo(pt: SVGPoint): { note: number; position: number } {
+    const { quantize } = this.props
+    let position = pt.x / durationWidth
+    if (typeof quantize === 'number') {
+      position = ~~(position / quantize) * quantize
+    }
+    return { note: 40, position }
   }
 
   render() {
     const { pattern, bars } = this.props
-    const { stageHeight, stageWidth } = this.state
+    const { stageHeight, stageWidth, editNote } = this.state
     const avg = avgNotes(pattern.notes)
     const maxNote = avg + displayNotes / 2
     const minNote = maxNote - displayNotes
+    let editingNote = null
+    if (editNote) {
+      console.log('editing', editNote)
+      editingNote = (
+        <rect
+          key="note_editing"
+          x={editNote.position * durationWidth}
+          y={(maxNote - editNote.note) * noteHeight}
+          width={durationWidth * editNote.duration}
+          height={noteHeight}
+          style={{ ...noteStyle, pointerEvents: 'none' }}
+        />
+      )
+    }
     return (
       <div
         style={{ minHeight: '100%' }}
@@ -123,7 +166,7 @@ class PatternComponent extends React.Component<Props, State> {
           <svg
             style={{
               height: displayNotes * noteHeight,
-              backgroundColor: '#ccc'
+              backgroundColor: '#ddd'
             }}
             ref={(svg: SVGSVGElement) => (this.svgElement = svg)}
             id="grid"
@@ -146,6 +189,7 @@ class PatternComponent extends React.Component<Props, State> {
                 />
               )
             })}
+            {editingNote}
           </svg>
           <pre>{JSON.stringify(pattern.notes, null, 4)}</pre>
         </div>
