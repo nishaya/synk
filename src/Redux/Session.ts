@@ -1,5 +1,5 @@
 import { Action } from 'redux'
-import { Session } from 'types'
+import { Note, Session } from 'types'
 import { isType } from 'typescript-fsa'
 import { session } from 'Utils/fixtures'
 
@@ -8,9 +8,11 @@ import actionCreatorFactory from 'typescript-fsa'
 // action
 const actionCreator = actionCreatorFactory()
 
-export const updateMessage = actionCreator<string>(
-  'NOTIFICATION_UPDATE_MESSAGE'
-)
+export const addNote = actionCreator<{
+  sessionId: string
+  blockId: string
+  note: Note
+}>('SESSION_ADD_NOTE')
 
 // reducer
 export interface SessionState {
@@ -23,7 +25,8 @@ export const sessionReducers = (
   state: SessionState = initialState,
   action: Action
 ): SessionState => {
-  if (isType(action, updateMessage)) {
+  if (isType(action, addNote)) {
+    console.log('Action - addNote', action.payload)
     return { ...state }
   }
   return state

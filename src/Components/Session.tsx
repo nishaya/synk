@@ -3,6 +3,7 @@ import BlockEditComponent from 'Components/BlockEdit'
 import EditTools from 'Components/Controls/EditTools'
 import Transport from 'Components/Controls/Transport'
 import TrackListComponent from 'Components/TrackList'
+import { SessionActions } from 'Containers/Session'
 import { Card, CardActions, CardHeader, CardText } from 'material-ui/Card'
 import MenuItem from 'material-ui/MenuItem'
 import SelectField from 'material-ui/SelectField'
@@ -12,6 +13,7 @@ import { Block, Session } from 'types'
 
 interface Props {
   session: Session
+  actions: SessionActions
 }
 
 const BlockSelect = ({
