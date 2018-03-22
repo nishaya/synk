@@ -217,7 +217,14 @@ class PatternComponent extends React.Component<Props, State> {
                   fill="#ddd"
                 />
                 <line stroke="#aaa" x1="0" y1="0" x2={barWidth} y2="0" />
-                <line stroke="#666" x1="0" y1="0" x2="0" y2={noteHeight} />
+                <line
+                  stroke="#999"
+                  strokeWidth="4"
+                  x1="0"
+                  y1="0"
+                  x2="0"
+                  y2={noteHeight}
+                />
                 <line
                   stroke="#aaa"
                   x1={beatWidth * 1}
