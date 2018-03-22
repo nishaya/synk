@@ -40,6 +40,25 @@ class PatternComponent extends React.Component<Props, State> {
     const stageHeight = this.divElement.clientHeight
     const stageWidth = this.divElement.clientWidth
     this.setState({ stageHeight, stageWidth })
+
+    this.svgElement.addEventListener('click', (e: MouseEvent) => {
+      console.log('onckick', e)
+      const pt = this.svgElement.createSVGPoint()
+      pt.x = e.clientX
+      pt.y = e.clientY
+      const svgPoint = pt.matrixTransform(
+        this.svgElement.getScreenCTM().inverse()
+      )
+      console.log('svgPoint', svgPoint)
+
+      const ns = this.svgElement.getAttribute('xmlns') as string
+      const rect = document.createElementNS(ns, 'rect')
+      rect.setAttributeNS(ns, 'x', `${svgPoint.x}`)
+      rect.setAttributeNS(ns, 'y', `${svgPoint.y}`)
+      rect.setAttributeNS(ns, 'width', '32')
+      rect.setAttributeNS(ns, 'height', '8')
+      this.svgElement.appendChild(rect)
+    })
   }
 
   render() {
