@@ -104,7 +104,6 @@ class PatternComponent extends React.Component<Props, State> {
     const { editNote } = this.state
     if (editNote) {
       const { quantize } = this.props
-      console.log('handleMousemove', e)
       const svgPoint = this.mouse2svgPoint(e)
       const { note, position } = this.svgPoint2NoteInfo(svgPoint)
       let { duration } = editNote
@@ -165,6 +164,7 @@ class PatternComponent extends React.Component<Props, State> {
     const { maxNote, minNote } = this.noteRange()
     const noteStyle: React.CSSProperties = { ...defaultNoteStyle }
     let editingNote = null
+    const barWidth = beatWidth * 4
     if (editNote) {
       console.log('editing', editNote)
       noteStyle.pointerEvents = 'none'
@@ -197,11 +197,59 @@ class PatternComponent extends React.Component<Props, State> {
               backgroundColor: '#ddd'
             }}
             ref={(svg: SVGSVGElement) => (this.svgElement = svg)}
-            id="grid"
             xmlns="http://www.w3.org/2000/svg"
             viewBox={`0 0 ${beatWidth * 4 * bars} ${displayNotes * noteHeight}`}
             preserveAspectRatio="xMidYMid meet"
           >
+            <defs>
+              <pattern
+                id="Grid"
+                x="0"
+                y="0"
+                width={barWidth}
+                height={noteHeight}
+                patternUnits="userSpaceOnUse"
+              >
+                <rect
+                  x="0"
+                  y="0"
+                  width={barWidth}
+                  height={noteHeight}
+                  fill="#ddd"
+                />
+                <line stroke="#aaa" x1="0" y1="0" x2={barWidth} y2="0" />
+                <line stroke="#666" x1="0" y1="0" x2="0" y2={noteHeight} />
+                <line
+                  stroke="#aaa"
+                  x1={beatWidth * 1}
+                  y1="0"
+                  x2={beatWidth * 1}
+                  y2={noteHeight}
+                />
+                <line
+                  stroke="#aaa"
+                  x1={beatWidth * 2}
+                  y1="0"
+                  x2={beatWidth * 2}
+                  y2={noteHeight}
+                />
+                <line
+                  stroke="#aaa"
+                  x1={beatWidth * 3}
+                  y1="0"
+                  x2={beatWidth * 3}
+                  y2={noteHeight}
+                />
+              </pattern>
+            </defs>
+            <rect
+              fill="url(#Grid)"
+              x="0"
+              y="0"
+              width={beatWidth * 4 * bars}
+              height={displayNotes * noteHeight}
+              style={{ pointerEvents: 'none' }}
+            />
             {pattern.notes.map((note: Note, index: number) => {
               if (note.note < minNote || maxNote < note.note) {
                 return null
