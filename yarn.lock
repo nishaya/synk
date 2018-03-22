@@ -202,12 +202,6 @@
     "@types/node" "*"
     "@types/react" "*"
 
-"@types/react-rnd@^7.3.0":
-  version "7.3.0"
-  resolved "https://registry.yarnpkg.com/@types/react-rnd/-/react-rnd-7.3.0.tgz#4d398b4aa53571fc0d96a8b478396f038a949b7e"
-  dependencies:
-    "@types/react" "*"
-
 "@types/react@*", "@types/react@^16.0.40":
   version "16.0.40"
   resolved "https://registry.yarnpkg.com/@types/react/-/react-16.0.40.tgz#caabc2296886f40b67f6fc80f0f3464476461df9"
@@ -1305,10 +1299,6 @@ class-utils@^0.3.5:
     define-property "^0.2.5"
     isobject "^3.0.0"
     static-extend "^0.1.1"
-
-classnames@^2.2.5:
-  version "2.2.5"
-  resolved "https://registry.yarnpkg.com/classnames/-/classnames-2.2.5.tgz#fb3801d453467649ef3603c7d61a02bd129bde6d"
 
 clean-css@4.1.x:
   version "4.1.11"
@@ -6393,10 +6383,6 @@ rc@^1.0.1, rc@^1.1.6, rc@^1.1.7:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
-re-resizable@^4.4.5:
-  version "4.4.5"
-  resolved "https://registry.yarnpkg.com/re-resizable/-/re-resizable-4.4.5.tgz#27fdc6d3aefe8e4fefb69fc835b94fb21dc7d4ee"
-
 react-dev-utils@4.2.1:
   version "4.2.1"
   resolved "https://registry.yarnpkg.com/react-dev-utils/-/react-dev-utils-4.2.1.tgz#9f2763e7bafa1a1b9c52254d2a479deec280f111"
@@ -6429,13 +6415,6 @@ react-dom@^16.2.0:
     object-assign "^4.1.1"
     prop-types "^15.6.0"
 
-react-draggable@^3.0.5:
-  version "3.0.5"
-  resolved "https://registry.yarnpkg.com/react-draggable/-/react-draggable-3.0.5.tgz#c031e0ed4313531f9409d6cd84c8ebcec0ddfe2d"
-  dependencies:
-    classnames "^2.2.5"
-    prop-types "^15.6.0"
-
 react-error-overlay@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/react-error-overlay/-/react-error-overlay-3.0.0.tgz#c2bc8f4d91f1375b3dad6d75265d51cd5eeaf655"
@@ -6448,13 +6427,6 @@ react-event-listener@^0.5.1:
     fbjs "^0.8.16"
     prop-types "^15.6.0"
     warning "^3.0.0"
-
-react-rnd@^7.3.1:
-  version "7.3.1"
-  resolved "https://registry.yarnpkg.com/react-rnd/-/react-rnd-7.3.1.tgz#c8c00b8e03a36daf5379aafa7417f138e1a80b82"
-  dependencies:
-    re-resizable "^4.4.5"
-    react-draggable "^3.0.5"
 
 react-scripts-ts@2.13.0:
   version "2.13.0"
