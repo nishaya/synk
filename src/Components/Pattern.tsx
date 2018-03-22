@@ -37,7 +37,17 @@ const displayNotes = 48
 const beatWidth = 64
 const durationWidth = beatWidth / 480
 
+const defaultNoteStyle = { fill: 'red', stroke: '#666', strokeWidth: 0 }
+const noteRound = 4
+const noteOffset = 1
+const gridBgColor = '#fff'
+
+/*
 const defaultNoteStyle = { fill: 'red', stroke: '#666', strokeWidth: 1 }
+const noteRound = 0
+const noteOffset = 0
+const gridBgColor = '#eee'
+*/
 
 class PatternComponent extends React.Component<Props, State> {
   divElement: HTMLDivElement
@@ -170,9 +180,11 @@ class PatternComponent extends React.Component<Props, State> {
       editingNote = (
         <rect
           key="note_editing"
+          rx={noteRound}
+          ry={noteRound}
           x={editNote.position * durationWidth}
           y={(maxNote - editNote.note) * noteHeight}
-          width={durationWidth * editNote.duration}
+          width={durationWidth * editNote.duration - noteOffset}
           height={noteHeight}
           style={noteStyle}
         />
@@ -214,33 +226,36 @@ class PatternComponent extends React.Component<Props, State> {
                   y="0"
                   width={barWidth}
                   height={noteHeight}
-                  fill="#ddd"
+                  fill={gridBgColor}
                 />
                 <line stroke="#aaa" x1="0" y1="0" x2={barWidth} y2="0" />
                 <line
-                  stroke="#999"
-                  strokeWidth="4"
+                  stroke="#aaa"
+                  strokeWidth="3"
                   x1="0"
                   y1="0"
                   x2="0"
                   y2={noteHeight}
                 />
                 <line
-                  stroke="#aaa"
+                  stroke="#bbb"
+                  strokeDasharray="5 3"
                   x1={beatWidth * 1}
                   y1="0"
                   x2={beatWidth * 1}
                   y2={noteHeight}
                 />
                 <line
-                  stroke="#aaa"
+                  stroke="#bbb"
+                  strokeDasharray="5 3"
                   x1={beatWidth * 2}
                   y1="0"
                   x2={beatWidth * 2}
                   y2={noteHeight}
                 />
                 <line
-                  stroke="#aaa"
+                  stroke="#bbb"
+                  strokeDasharray="5 3"
                   x1={beatWidth * 3}
                   y1="0"
                   x2={beatWidth * 3}
@@ -263,9 +278,11 @@ class PatternComponent extends React.Component<Props, State> {
               return (
                 <rect
                   key={`note_${index}`}
+                  rx={noteRound}
+                  ry={noteRound}
                   x={note.position * durationWidth}
                   y={(maxNote - note.note) * noteHeight}
-                  width={durationWidth * note.duration}
+                  width={durationWidth * note.duration - noteOffset}
                   height={noteHeight}
                   style={noteStyle}
                 />
