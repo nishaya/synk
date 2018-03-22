@@ -78,7 +78,6 @@ class PatternComponent extends React.Component<Props, State> {
     const svgPoint = pt.matrixTransform(
       this.svgElement.getScreenCTM().inverse()
     )
-    console.log('mouse2svgPoint', e, svgPoint)
     return svgPoint
   }
 
