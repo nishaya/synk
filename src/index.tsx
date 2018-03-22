@@ -5,6 +5,8 @@ import 'index.css'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
+import { Provider } from 'react-redux'
+import store from 'Redux/store'
 
 const {
   REACT_APP_FIREBASE_API_KEY: apiKey,
@@ -60,7 +62,9 @@ console.log(messaging)
 }
 ReactDOM.render(
   <MuiThemeProvider>
-    <App />
+    <Provider store={store}>
+      <App />
+    </Provider>
   </MuiThemeProvider>,
   document.getElementById('root') as HTMLElement
 )
