@@ -25,6 +25,8 @@ const displayNotes = 48
 const beatWidth = 32
 const durationWidth = beatWidth / 480
 
+const noteStyle = { fill: 'red', stroke: '#666', strokeWidth: 1 }
+
 class PatternComponent extends React.Component<Props, State> {
   divElement: HTMLDivElement
   svgElement: SVGSVGElement
@@ -77,7 +79,7 @@ class PatternComponent extends React.Component<Props, State> {
                   y={(maxNote - note.note) * noteHeight}
                   width={durationWidth * note.duration}
                   height={noteHeight}
-                  style={{ fill: 'red', stroke: '#666', strokeWidth: 1 }}
+                  style={noteStyle}
                 />
               )
             })}
