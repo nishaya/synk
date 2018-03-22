@@ -9,6 +9,7 @@ interface Props {
 interface State {
   stageWidth: number
   stageHeight: number
+  clicking: boolean
 }
 
 const avgNotes = (notes: Note[]): number => {
@@ -33,7 +34,8 @@ class PatternComponent extends React.Component<Props, State> {
 
   state: State = {
     stageWidth: 0,
-    stageHeight: 0
+    stageHeight: 0,
+    clicking: false
   }
 
   componentDidMount() {
@@ -41,24 +43,43 @@ class PatternComponent extends React.Component<Props, State> {
     const stageWidth = this.divElement.clientWidth
     this.setState({ stageHeight, stageWidth })
 
-    this.svgElement.addEventListener('click', (e: MouseEvent) => {
-      console.log('onckick', e)
-      const pt = this.svgElement.createSVGPoint()
-      pt.x = e.clientX
-      pt.y = e.clientY
-      const svgPoint = pt.matrixTransform(
-        this.svgElement.getScreenCTM().inverse()
-      )
-      console.log('svgPoint', svgPoint)
+    this.svgElement.addEventListener(
+      'mousedown',
+      this.handleMousedown.bind(this)
+    )
 
-      const ns = this.svgElement.getAttribute('xmlns') as string
-      const rect = document.createElementNS(ns, 'rect')
-      rect.setAttributeNS(ns, 'x', `${svgPoint.x}`)
-      rect.setAttributeNS(ns, 'y', `${svgPoint.y}`)
-      rect.setAttributeNS(ns, 'width', '32')
-      rect.setAttributeNS(ns, 'height', '8')
-      this.svgElement.appendChild(rect)
-    })
+    this.svgElement.addEventListener('mouseup', this.handleMouseup.bind(this))
+  }
+
+  mouse2svgPoint(e: MouseEvent): SVGPoint {
+    const pt = this.svgElement.createSVGPoint()
+    pt.x = e.clientX
+    pt.y = e.clientY
+    const svgPoint = pt.matrixTransform(
+      this.svgElement.getScreenCTM().inverse()
+    )
+    console.log('mouse2svgPoint', e, svgPoint)
+    return svgPoint
+  }
+
+  handleMousedown(e: MouseEvent) {
+    console.log('mousedown', e)
+
+    const svgPoint = this.mouse2svgPoint(e)
+
+    const ns = this.svgElement.getAttribute('xmlns') as string
+    const rect = document.createElementNS(ns, 'rect')
+    rect.setAttributeNS(ns, 'x', `${svgPoint.x}`)
+    rect.setAttributeNS(ns, 'y', `${svgPoint.y}`)
+    rect.setAttributeNS(ns, 'width', '32')
+    rect.setAttributeNS(ns, 'height', '8')
+    this.svgElement.appendChild(rect)
+  }
+
+  handleMouseup(e: MouseEvent) {
+    console.log('handleMouseup', e)
+    const svgPoint = this.mouse2svgPoint(e)
+    console.log(svgPoint)
   }
 
   render() {
