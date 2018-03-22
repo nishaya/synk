@@ -103,9 +103,21 @@ class PatternComponent extends React.Component<Props, State> {
     e.preventDefault() // prevent drag
     const { editNote } = this.state
     if (editNote) {
+      const { quantize } = this.props
       console.log('handleMousemove', e)
+      const svgPoint = this.mouse2svgPoint(e)
+      const { note, position } = this.svgPoint2NoteInfo(svgPoint)
+      let { duration } = editNote
+      if (position < editNote.position) {
+        duration = quantize || 0
+      } else {
+        duration = quantize
+          ? ~~((position - editNote.position) / quantize + 1) * quantize
+          : position - editNote.position
+      }
+
       this.setState({
-        editNote: { ...editNote, note: ~~(Math.random() * 10 + 40) }
+        editNote: { ...editNote, note, duration }
       })
     }
   }
@@ -124,19 +136,30 @@ class PatternComponent extends React.Component<Props, State> {
 
   svgPoint2NoteInfo(pt: SVGPoint): { note: number; position: number } {
     const { quantize } = this.props
+    const { maxNote } = this.noteRange()
     let position = pt.x / durationWidth
+
+    // quantize
     if (typeof quantize === 'number') {
       position = ~~(position / quantize) * quantize
     }
-    return { note: 40, position }
+
+    const note = ~~(maxNote - pt.y / noteHeight) + 1
+    return { note, position }
+  }
+
+  noteRange(): { avg: number; minNote: number; maxNote: number } {
+    const { pattern } = this.props
+    const avg = avgNotes(pattern.notes)
+    const maxNote = avg + displayNotes / 2
+    const minNote = maxNote - displayNotes
+    return { avg, maxNote, minNote }
   }
 
   render() {
     const { pattern, bars } = this.props
     const { stageHeight, stageWidth, editNote } = this.state
-    const avg = avgNotes(pattern.notes)
-    const maxNote = avg + displayNotes / 2
-    const minNote = maxNote - displayNotes
+    const { maxNote, minNote } = this.noteRange()
     let editingNote = null
     if (editNote) {
       console.log('editing', editNote)
