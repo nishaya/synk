@@ -35,7 +35,7 @@ const avgNotes = (notes: Note[]): number => {
 }
 
 const noteHeight = 8
-const displayNotes = 48
+const displayNotes = 60
 const beatWidth = 64
 const durationWidth = beatWidth / 480
 
@@ -299,7 +299,6 @@ class PatternComponent extends React.Component<Props, State> {
             })}
             {editingNote}
           </svg>
-          <pre>{JSON.stringify(pattern.notes, null, 4)}</pre>
         </div>
       </div>
     )
