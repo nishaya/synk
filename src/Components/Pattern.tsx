@@ -116,9 +116,12 @@ class PatternComponent extends React.Component<Props, State> {
           : position - editNote.position
       }
 
-      this.setState({
-        editNote: { ...editNote, note, duration }
-      })
+      if (editNote.note !== note || editNote.duration !== duration) {
+        console.log('state updated')
+        this.setState({
+          editNote: { ...editNote, note, duration }
+        })
+      }
     }
   }
 
