@@ -19,7 +19,8 @@ export interface SessionActions {
 }
 
 const mapStateToProps = (state: RootState) => ({
-  session: state.Session.session
+  session: state.Session.session,
+  settings: state.UI
 })
 
 const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({

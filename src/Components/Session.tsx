@@ -8,12 +8,14 @@ import { Card, CardActions, CardHeader, CardText } from 'material-ui/Card'
 import MenuItem from 'material-ui/MenuItem'
 import SelectField from 'material-ui/SelectField'
 import * as React from 'react'
+import { UIState } from 'Redux/UI'
 import styled from 'styled-components'
 import { Block, Session } from 'types'
 
 interface Props {
   session: Session
   actions: SessionActions
+  settings: UIState
 }
 
 const BlockSelect = ({
