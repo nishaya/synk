@@ -96,6 +96,7 @@ class SessionComponent extends React.Component<Props, State> {
                 <div style={{ width: '200px' }}>
                   <TrackListComponent
                     tracks={session.tracks}
+                    settings={settings}
                     onTrackChange={(index: number) =>
                       this.setState({ currentTrack: index })
                     }
