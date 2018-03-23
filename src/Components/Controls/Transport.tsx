@@ -12,8 +12,9 @@ const Time = styled.span`
   margin-left: 16px;
   margin-right: 16px;
   font-size: 32px;
-  font-weight: 600;
-  font-family: 'Monotype Corsiva';
+  color: #355c7d;
+  font-weight: 700;
+  font-family: 'Roboto Mono', monospace;
   letter-spacing: 0.1em;
 `
 
