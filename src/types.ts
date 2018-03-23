@@ -87,3 +87,5 @@ export interface SynthPlayInfo {
   duration: number
   time?: number // undefined = play immediately
 }
+
+export type SynthStopHandler = () => void
