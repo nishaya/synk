@@ -13,7 +13,10 @@ class SynthComponent extends React.Component<Props> {
     const handler: SynthPlayHandler = (
       info: SynthPlayInfo
     ): SynthStopHandler => {
-      const stopHandler: SynthStopHandler = () => {}
+      console.log('play synth', info)
+      const stopHandler: SynthStopHandler = () => {
+        console.log('stop synth', info)
+      }
       return stopHandler
     }
     initSynth(trackIndex, handler)

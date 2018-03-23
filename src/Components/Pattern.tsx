@@ -99,14 +99,23 @@ class PatternComponent extends React.Component<Props, State> {
 
     const svgPoint = this.mouse2svgPoint(e)
     const { note, position } = this.svgPoint2NoteInfo(svgPoint)
-    this.setState({
-      editNote: {
-        ...noteDefaults,
+    const editNote = {
+      ...noteDefaults,
+      note,
+      position,
+      duration: this.getDuration()
+    }
+
+    const handler = this.getSynthHandler()
+    if (handler) {
+      handler({
         note,
-        position,
-        duration: this.getDuration()
-      }
-    })
+        duration: editNote.duration,
+        velocity: editNote.velocity
+      })
+    }
+
+    this.setState({ editNote })
   }
 
   getTrackColor(): string {
