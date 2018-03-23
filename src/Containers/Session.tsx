@@ -2,7 +2,7 @@ import SessionComponent from 'Components/Session'
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
 import { Action } from 'redux'
-import { addNote } from 'Redux/Session'
+import { addNote, changeTrackLevel } from 'Redux/Session'
 import { RootState } from 'Redux/store'
 import { setCurrentTrack } from 'Redux/UI'
 import { Note } from 'types'
@@ -14,6 +14,7 @@ export interface PatternActions {
 export interface BlockActions {}
 export interface TrackActions {
   setCurrentTrack: (trackIndex: number) => void
+  changeTrackLevel: (trackIndex: number, level: number) => void
 }
 
 export interface SessionActions {
@@ -33,6 +34,9 @@ const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
     track: {
       setCurrentTrack: (trackIndex: number) => {
         dispatch(setCurrentTrack({ trackIndex }))
+      },
+      changeTrackLevel: (trackIndex: number, level: number) => {
+        dispatch(changeTrackLevel({ trackIndex, level }))
       }
     },
     pattern: {

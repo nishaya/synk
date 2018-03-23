@@ -95,6 +95,7 @@ class SessionComponent extends React.Component<Props, State> {
                   <TrackListComponent
                     tracks={session.tracks}
                     settings={settings}
+                    actions={actions.track}
                     onTrackChange={(index: number) =>
                       actions.track.setCurrentTrack(index)
                     }

@@ -14,6 +14,11 @@ export const addNote = actionCreator<{
   note: Note
 }>('SESSION_ADD_NOTE')
 
+export const changeTrackLevel = actionCreator<{
+  trackIndex: number
+  level: number
+}>('SESSION_CHANGE_TRACK_LEVEL')
+
 // reducer
 export interface SessionState {
   readonly session: Session
@@ -44,6 +49,15 @@ export const sessionReducers = (
     if (pattern) {
       console.log('pattern', pattern)
       pattern.notes.push(note)
+    }
+    return state
+  }
+  if (isType(action, changeTrackLevel)) {
+    const { trackIndex, level } = action.payload
+    console.log('Action - changeTrackLevel', action.payload)
+    const track = state.session.tracks[trackIndex]
+    if (track) {
+      track.level = level
     }
     return state
   }
