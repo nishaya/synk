@@ -14,17 +14,20 @@ export const setQuantize = actionCreator<{
 // reducer
 export interface PatternUIState {
   quantize: number
+  duration: number
 }
 
-export interface BlockUIState {
-  pattern: PatternUIState
-}
+export interface BlockUIState {}
 
 export interface UIState {
+  readonly pattern: PatternUIState
   readonly block: BlockUIState
 }
 
-const initialState: UIState = { block: { pattern: { quantize: 120 } } }
+const initialState: UIState = {
+  block: {},
+  pattern: { quantize: 120, duration: 120 }
+}
 
 export const uiReducers = (
   state: UIState = initialState,
@@ -33,7 +36,7 @@ export const uiReducers = (
   if (isType(action, setQuantize)) {
     const { quantize } = action.payload
     console.log('Action - setQuantize', action.payload)
-    return merge(state, { block: { pattern: { quantize } } })
+    return merge(state, { pattern: { quantize } })
   }
   return state
 }

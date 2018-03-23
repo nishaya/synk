@@ -108,12 +108,21 @@ class PatternComponent extends React.Component<Props, State> {
 
     const { note, position } = this.svgPoint2NoteInfo(svgPoint)
     this.setState({
-      editNote: { ...noteDefaults, note, position }
+      editNote: {
+        ...noteDefaults,
+        note,
+        position,
+        duration: this.getDuration()
+      }
     })
   }
 
   getQuantize(): number {
-    return this.props.settings.block.pattern.quantize
+    return this.props.settings.pattern.quantize
+  }
+
+  getDuration(): number {
+    return this.props.settings.pattern.duration
   }
 
   handleMousemove(e: MouseEvent) {
