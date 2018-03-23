@@ -1,11 +1,13 @@
 import { applyMiddleware, combineReducers, compose, createStore } from 'redux'
 import { createLogger } from 'redux-logger'
 import { sessionReducers as Session, SessionState } from 'Redux/Session'
+import { synthReducers as Synth, SynthState } from 'Redux/Synth'
 import { uiReducers as UI, UIState } from 'Redux/UI'
 import { isDevelopment } from 'Utils/env'
 
 const reducers = combineReducers({
   Session,
+  Synth,
   UI
 })
 
@@ -34,4 +36,5 @@ export default store
 export type RootState = {
   Session: SessionState
   UI: UIState
+  Synth: SynthState
 }
