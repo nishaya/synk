@@ -10,11 +10,10 @@ export interface PatternActions {
   addNote: (blockId: string, patternId: string, note: Note) => void
 }
 
-export interface BlockActions {
-  pattern: PatternActions
-}
+export interface BlockActions {}
 
 export interface SessionActions {
+  pattern: PatternActions
   block: BlockActions
 }
 
@@ -25,11 +24,10 @@ const mapStateToProps = (state: RootState) => ({
 
 const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
   actions: {
-    block: {
-      pattern: {
-        addNote: (blockId: string, patternId: string, note: Note) => {
-          dispatch(addNote({ blockId, patternId, note }))
-        }
+    block: {},
+    pattern: {
+      addNote: (blockId: string, patternId: string, note: Note) => {
+        dispatch(addNote({ blockId, patternId, note }))
       }
     }
   }

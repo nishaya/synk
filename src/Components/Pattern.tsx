@@ -1,5 +1,5 @@
 import { NoteInfo } from 'Components/Edit/NoteInfo'
-import { PatternActions } from 'Containers/Session'
+import { SessionActions } from 'Containers/Session'
 import * as React from 'react'
 import { UIState } from 'Redux/UI'
 import { Block, Note, Pattern } from 'types'
@@ -7,7 +7,7 @@ import { Block, Note, Pattern } from 'types'
 interface Props {
   pattern: Pattern
   block: Block
-  actions: PatternActions
+  actions: SessionActions
   settings: UIState
 }
 
@@ -147,7 +147,7 @@ class PatternComponent extends React.Component<Props, State> {
     const {
       block: { id: blockId },
       pattern: { id: patternId },
-      actions: { addNote }
+      actions: { pattern: { addNote } }
     } = this.props
     const { editNote } = this.state
     console.log('handleMouseup', e)
