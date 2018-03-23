@@ -3,7 +3,7 @@ import { SessionActions } from 'Containers/Session'
 import * as React from 'react'
 import { SynthState } from 'Redux/Synth'
 import { UIState } from 'Redux/UI'
-import { Block, Note, Pattern, SynthPlayHandler } from 'types'
+import { Block, Note, Pattern, SynthPlayHandler, SynthStopHandler } from 'types'
 
 interface Props {
   block: Block
@@ -17,6 +17,7 @@ interface State {
   stageHeight: number
   editNote: Note | null
   previewNote: Note | null
+  stopHandler: SynthStopHandler | null
 }
 
 const avgNotes = (notes: Note[]): number => {
@@ -60,7 +61,8 @@ class PatternComponent extends React.Component<Props, State> {
     stageWidth: 0,
     stageHeight: 0,
     editNote: null,
-    previewNote: null
+    previewNote: null,
+    stopHandler: null
   }
 
   componentDidMount() {
@@ -106,16 +108,30 @@ class PatternComponent extends React.Component<Props, State> {
       duration: this.getDuration()
     }
 
+    const stopHandler = this.triggerSynthPlay(editNote)
+
+    this.setState({ editNote, stopHandler })
+  }
+
+  triggerSynthPlay(note: Note): SynthStopHandler | null {
     const handler = this.getSynthHandler()
     if (handler) {
-      handler({
-        note,
-        duration: editNote.duration,
-        velocity: editNote.velocity
+      return handler({
+        note: note.note,
+        duration: note.duration,
+        velocity: note.velocity
       })
     }
+    return null
+  }
 
-    this.setState({ editNote })
+  triggerSynthStop(): boolean {
+    const { stopHandler } = this.state
+    if (stopHandler) {
+      stopHandler()
+      return true
+    }
+    return false
   }
 
   getTrackColor(): string {
@@ -154,6 +170,13 @@ class PatternComponent extends React.Component<Props, State> {
       }
 
       if (editNote.note !== note || editNote.duration !== duration) {
+        if (editNote.note !== note) {
+          this.triggerSynthStop()
+          const stopHandler = this.triggerSynthPlay(editNote)
+          if (stopHandler) {
+            this.setState({ stopHandler })
+          }
+        }
         console.log('state updated')
         this.setState({
           editNote: { ...editNote, note, duration }
@@ -185,12 +208,14 @@ class PatternComponent extends React.Component<Props, State> {
         addNote(blockId, pattern.id, { ...editNote })
       }
     }
+    this.triggerSynthStop()
 
     this.setState({ editNote: null, previewNote: null })
   }
 
   handleMouseleave(e: MouseEvent) {
     console.log('handleMouseleave')
+    this.triggerSynthStop()
     this.setState({ editNote: null, previewNote: null })
   }
 
