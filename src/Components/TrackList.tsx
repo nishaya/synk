@@ -11,6 +11,7 @@ interface Props {
 class TrackListComponent extends React.Component<Props> {
   render() {
     const { tracks, onTrackChange, settings } = this.props
+    const { currentTrack } = settings.track
     return (
       <div>
         <h3>Tracks</h3>
@@ -18,7 +19,7 @@ class TrackListComponent extends React.Component<Props> {
           const color = settings.track.trackColors[i] || '#fff'
           return (
             <div key={i} onClick={() => onTrackChange(i)} style={{ color }}>
-              track #{i}
+              track #{i} {currentTrack === i ? ' <' : null}
             </div>
           )
         })}
