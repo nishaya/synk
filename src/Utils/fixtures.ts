@@ -133,6 +133,14 @@ export const session: Session = {
       {
         blockId: 'b2',
         repeat: 2
+      },
+      {
+        blockId: 'b1',
+        repeat: 1
+      },
+      {
+        blockId: 'b2',
+        repeat: 1
       }
     ]
   }
