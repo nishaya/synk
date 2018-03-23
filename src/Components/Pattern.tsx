@@ -115,7 +115,7 @@ class PatternComponent extends React.Component<Props, State> {
 
     const { note, position } = this.svgPoint2NoteInfo(svgPoint)
     this.setState({
-      editNote: { note, position, ...noteDefaults }
+      editNote: { ...noteDefaults, note, position }
     })
   }
 
@@ -142,7 +142,7 @@ class PatternComponent extends React.Component<Props, State> {
         })
       }
     } else {
-      this.setState({ previewNote: { ...noteDefaults, note } })
+      this.setState({ previewNote: { ...noteDefaults, note, position } })
     }
   }
 
