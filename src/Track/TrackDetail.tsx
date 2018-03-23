@@ -9,8 +9,14 @@ interface Props {
 
 const TrackDetail = ({ track, settings }: Props) => {
   const color = settings.track.trackColors[track.index] || '#fff'
+  const currentTrack = settings.track.currentTrack
 
-  return <div style={{ backgroundColor: color }}>track #{track.index}</div>
+  return (
+    <div style={{ backgroundColor: color }}>
+      track #{track.index}
+      {track.index === currentTrack ? <div>CURRENT TRACK</div> : null}
+    </div>
+  )
 }
 
 export default TrackDetail
