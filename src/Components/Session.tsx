@@ -2,11 +2,10 @@ import ArrangementComponent from 'Components/Arrangement'
 import BlockEditComponent from 'Components/BlockEdit'
 import EditTools from 'Components/Controls/EditTools'
 import Transport from 'Components/Controls/Transport'
+import BlockSelect from 'Components/Session/BlockSelect'
 import TrackListComponent from 'Components/TrackList'
 import { SessionActions } from 'Containers/Session'
 import { Card, CardActions, CardHeader, CardText } from 'material-ui/Card'
-import MenuItem from 'material-ui/MenuItem'
-import SelectField from 'material-ui/SelectField'
 import * as React from 'react'
 import { SynthState } from 'Redux/Synth'
 import { UIState } from 'Redux/UI'
@@ -19,29 +18,6 @@ interface Props {
   settings: UIState
   synth: SynthState
 }
-
-const BlockSelect = ({
-  value,
-  blocks,
-  onChange
-}: {
-  value: string | null
-  blocks: Block[]
-  onChange: (v: string) => void
-}) => (
-  <SelectField
-    value={value}
-    onChange={(
-      e: React.SyntheticEvent<HTMLSelectElement>,
-      i: number,
-      v: string
-    ) => onChange(v)}
-  >
-    {blocks.map((block: Block) => (
-      <MenuItem key={block.id} value={block.id} primaryText={block.name} />
-    ))}
-  </SelectField>
-)
 
 const Tools = styled.div`
   display: flex;
