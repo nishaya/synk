@@ -6,6 +6,7 @@ export interface Session {
 }
 
 export interface Track {
+  index: number
   preset: SynthPreset
   level: number
   pan: number

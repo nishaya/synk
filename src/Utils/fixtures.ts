@@ -19,6 +19,7 @@ export const session: Session = {
   id: 'dummy',
   tracks: [
     {
+      index: 0,
       preset: {
         type: 'osc',
         oscillator: 'sawtooth'
@@ -29,6 +30,7 @@ export const session: Session = {
       solo: false
     },
     {
+      index: 1,
       preset: {
         type: 'osc',
         oscillator: 'triangle'
@@ -39,6 +41,7 @@ export const session: Session = {
       solo: false
     },
     {
+      index: 2,
       preset: {
         type: 'drums',
         kick: {

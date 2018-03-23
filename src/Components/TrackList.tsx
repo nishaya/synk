@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { UIState } from 'Redux/UI'
+import TrackDetail from 'Track/TrackDetail'
 import { Track } from 'types'
 
 interface Props {
@@ -11,15 +12,13 @@ interface Props {
 class TrackListComponent extends React.Component<Props> {
   render() {
     const { tracks, onTrackChange, settings } = this.props
-    const { currentTrack } = settings.track
     return (
       <div>
         <h3>Tracks</h3>
-        {tracks.map(({ level }: Track, i: number) => {
-          const color = settings.track.trackColors[i] || '#fff'
+        {tracks.map((track: Track, i: number) => {
           return (
-            <div key={i} onClick={() => onTrackChange(i)} style={{ color }}>
-              track #{i} {currentTrack === i ? ' <' : null}
+            <div key={track.index} onClick={() => onTrackChange(i)}>
+              <TrackDetail track={track} settings={settings} />
             </div>
           )
         })}
