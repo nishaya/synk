@@ -119,7 +119,7 @@ export const session: Session = {
         },
         {
           id: 'dummy2-3',
-          notes: []
+          notes: genDrums()
         }
       ]
     }
