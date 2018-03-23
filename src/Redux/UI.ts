@@ -18,15 +18,22 @@ export interface PatternUIState {
 }
 
 export interface BlockUIState {}
+export interface TrackUIState {
+  trackColors: string[]
+}
 
 export interface UIState {
   readonly pattern: PatternUIState
   readonly block: BlockUIState
+  readonly track: TrackUIState
 }
 
 const initialState: UIState = {
   block: {},
-  pattern: { quantize: 120, duration: 120 }
+  pattern: { quantize: 120, duration: 120 },
+  track: {
+    trackColors: ['#0ff', '#f00', '#f0f']
+  }
 }
 
 export const uiReducers = (

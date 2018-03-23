@@ -13,22 +13,19 @@ interface Props {
 }
 
 export default ({ block, patternIndex, actions, settings }: Props) => {
-  const pattern = block.patterns[patternIndex]
   return (
     <div style={{ padding: '4px' }}>
       <Card>
         <CardHeader title={`Block${block.id} - ${patternIndex}`} />
         <CardText>
-          {pattern ? (
-            <div style={{ height: '400px' }} key={pattern.id}>
-              <PatternComponent
-                settings={settings}
-                pattern={pattern}
-                block={block}
-                actions={actions}
-              />
-            </div>
-          ) : null}
+          <div style={{ height: '400px' }}>
+            <PatternComponent
+              settings={settings}
+              block={block}
+              patternIndex={patternIndex}
+              actions={actions}
+            />
+          </div>
         </CardText>
       </Card>
     </div>

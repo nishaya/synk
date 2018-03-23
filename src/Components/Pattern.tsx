@@ -5,7 +5,7 @@ import { UIState } from 'Redux/UI'
 import { Block, Note, Pattern } from 'types'
 
 interface Props {
-  pattern: Pattern
+  patternIndex: number
   block: Block
   actions: SessionActions
   settings: UIState
@@ -108,6 +108,11 @@ class PatternComponent extends React.Component<Props, State> {
     })
   }
 
+  getTrackColor(): string {
+    const { patternIndex } = this.props
+    return this.props.settings.track.trackColors[patternIndex] || '#f00'
+  }
+
   getQuantize(): number {
     return this.props.settings.pattern.quantize
   }
@@ -143,17 +148,25 @@ class PatternComponent extends React.Component<Props, State> {
     }
   }
 
+  getPattern(): Pattern | undefined {
+    const { block, patternIndex } = this.props
+    return block.patterns[patternIndex]
+  }
+
   handleMouseup(e: MouseEvent) {
     const {
       block: { id: blockId },
-      pattern: { id: patternId },
       actions: { pattern: { addNote } }
     } = this.props
-    const { editNote } = this.state
-    console.log('handleMouseup', e)
-    if (editNote) {
-      addNote(blockId, patternId, { ...editNote })
+    const pattern = this.getPattern()
+    if (pattern) {
+      const { editNote } = this.state
+      console.log('handleMouseup', e)
+      if (editNote) {
+        addNote(blockId, pattern.id, { ...editNote })
+      }
     }
+
     this.setState({ editNote: null, previewNote: null })
   }
 
@@ -164,7 +177,11 @@ class PatternComponent extends React.Component<Props, State> {
 
   svgPoint2NoteInfo(pt: SVGPoint): { note: number; position: number } {
     const quantize = this.getQuantize()
-    const { maxNote } = this.noteRange()
+    const pattern = this.getPattern()
+    if (!pattern) {
+      return { note: 0, position: 0 }
+    }
+    const { maxNote } = this.noteRange(pattern)
     let position = pt.x / durationWidth
 
     // quantize
@@ -176,8 +193,9 @@ class PatternComponent extends React.Component<Props, State> {
     return { note, position }
   }
 
-  noteRange(): { avg: number; minNote: number; maxNote: number } {
-    const { pattern } = this.props
+  noteRange(
+    pattern: Pattern
+  ): { avg: number; minNote: number; maxNote: number } {
     const avg = avgNotes(pattern.notes)
     const maxNote = avg + displayNotes / 2
     const minNote = maxNote - displayNotes
@@ -185,10 +203,16 @@ class PatternComponent extends React.Component<Props, State> {
   }
 
   render() {
-    const { pattern, block: { bars } } = this.props
+    const pattern = this.getPattern()
+    if (!pattern) return null
+    const { block: { bars } } = this.props
     const { stageHeight, stageWidth, editNote, previewNote } = this.state
-    const { maxNote, minNote } = this.noteRange()
-    const noteStyle: React.CSSProperties = { ...defaultNoteStyle }
+    const { maxNote, minNote } = this.noteRange(pattern)
+    const trackColor = this.getTrackColor()
+    const noteStyle: React.CSSProperties = {
+      ...defaultNoteStyle,
+      fill: trackColor
+    }
     let editingNote = null
     const barWidth = beatWidth * 4
     if (editNote) {
