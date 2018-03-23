@@ -110,6 +110,7 @@ class SessionComponent extends React.Component<Props, State> {
                     tracks={session.tracks}
                     settings={settings}
                     actions={actions.track}
+                    synthActions={actions.synth}
                     onTrackChange={(index: number) =>
                       actions.track.setCurrentTrack(index)
                     }

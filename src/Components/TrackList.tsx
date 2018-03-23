@@ -1,19 +1,27 @@
-import { TrackActions } from 'Containers/Session'
+import SynthComponent from 'Components/Track/Synth'
+import TrackDetail from 'Components/Track/TrackDetail'
+import { SynthActions, TrackActions } from 'Containers/Session'
 import * as React from 'react'
 import { UIState } from 'Redux/UI'
-import TrackDetail from 'Track/TrackDetail'
 import { Track } from 'types'
 
 interface Props {
   tracks: Track[]
   settings: UIState
   actions: TrackActions
+  synthActions: SynthActions
   onTrackChange: (index: number) => void
 }
 
 class TrackListComponent extends React.Component<Props> {
   render() {
-    const { tracks, onTrackChange, settings, actions } = this.props
+    const {
+      tracks,
+      onTrackChange,
+      settings,
+      actions,
+      synthActions
+    } = this.props
     return (
       <div>
         {tracks.map((track: Track, i: number) => {
@@ -24,6 +32,7 @@ class TrackListComponent extends React.Component<Props> {
                 track={track}
                 settings={settings}
               />
+              <SynthComponent track={track} actions={synthActions} />
             </div>
           )
         })}

@@ -4,9 +4,9 @@ import { Dispatch } from 'redux'
 import { Action } from 'redux'
 import { addNote, changeTrackLevel } from 'Redux/Session'
 import { RootState } from 'Redux/store'
-import { initSynth, SynthPlayHandler } from 'Redux/Synth'
+import { initSynth } from 'Redux/Synth'
 import { setCurrentTrack } from 'Redux/UI'
-import { Note } from 'types'
+import { Note, SynthPlayHandler } from 'types'
 
 export interface PatternActions {
   addNote: (blockId: string, patternId: string, note: Note) => void

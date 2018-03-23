@@ -1,14 +1,12 @@
 import { merge } from 'lodash'
 import { Action } from 'redux'
-import { SynthPlayInfo, SynthStopHandler } from 'types'
+import { SynthPlayHandler } from 'types'
 import { isType } from 'typescript-fsa'
 
 import actionCreatorFactory from 'typescript-fsa'
 
 // action
 const actionCreator = actionCreatorFactory()
-
-export type SynthPlayHandler = (info: SynthPlayInfo) => SynthStopHandler
 
 export const initSynth = actionCreator<{
   trackIndex: number

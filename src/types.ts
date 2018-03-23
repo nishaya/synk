@@ -89,3 +89,4 @@ export interface SynthPlayInfo {
 }
 
 export type SynthStopHandler = () => void
+export type SynthPlayHandler = (info: SynthPlayInfo) => SynthStopHandler
