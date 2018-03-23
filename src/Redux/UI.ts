@@ -33,12 +33,20 @@ export interface UIState {
   readonly track: TrackUIState
 }
 
+const defaultTrackColors = [
+  '#F67280',
+  '#C06C84',
+  '#6C5B7B',
+  '#355C7D',
+  '#F8B195'
+]
+
 const initialState: UIState = {
   block: {},
   pattern: { quantize: 120, duration: 120 },
   track: {
     currentTrack: 0,
-    trackColors: ['#0ff', '#f00', '#f0f']
+    trackColors: defaultTrackColors
   }
 }
 

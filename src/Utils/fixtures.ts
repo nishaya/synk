@@ -1,4 +1,7 @@
 import { Note, Session } from 'types'
+import { BEAT_LENGTH } from 'Utils/time'
+
+const BARS = 4
 
 const genNotes = (): Note[] => {
   const notes: Note[] = []
@@ -10,6 +13,30 @@ const genNotes = (): Note[] => {
       duration: 480,
       velocity: 100
     })
+  }
+
+  return notes
+}
+
+const genDrums = (barlength: number = 4): Note[] => {
+  const notes: Note[] = []
+  for (let i = 0; i < BARS; i++) {
+    for (let j = 0; j < 4; j++) {
+      notes.push(
+        {
+          note: 24,
+          position: i * 4 * BEAT_LENGTH + BEAT_LENGTH * j,
+          duration: 120,
+          velocity: 100
+        },
+        {
+          note: 31,
+          position: i * 4 * BEAT_LENGTH + BEAT_LENGTH * j + 240,
+          duration: 120,
+          velocity: 100
+        }
+      )
+    }
   }
 
   return notes
@@ -73,7 +100,7 @@ export const session: Session = {
         },
         {
           id: 'dummy1-3',
-          notes: []
+          notes: genDrums()
         }
       ]
     },
