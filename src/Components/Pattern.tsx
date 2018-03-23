@@ -5,7 +5,6 @@ import { UIState } from 'Redux/UI'
 import { Block, Note, Pattern } from 'types'
 
 interface Props {
-  patternIndex: number
   block: Block
   actions: SessionActions
   settings: UIState
@@ -109,7 +108,7 @@ class PatternComponent extends React.Component<Props, State> {
   }
 
   getTrackColor(): string {
-    const { patternIndex } = this.props
+    const { currentTrack: patternIndex } = this.props.settings.track
     return this.props.settings.track.trackColors[patternIndex] || '#f00'
   }
 
@@ -149,7 +148,10 @@ class PatternComponent extends React.Component<Props, State> {
   }
 
   getPattern(): Pattern | undefined {
-    const { block, patternIndex } = this.props
+    const {
+      block,
+      settings: { track: { currentTrack: patternIndex } }
+    } = this.props
     return block.patterns[patternIndex]
   }
 

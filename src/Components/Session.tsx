@@ -55,13 +55,11 @@ const EditArea = styled.div`
 
 interface State {
   currentBlock: Block | undefined
-  currentTrack: number
 }
 
 class SessionComponent extends React.Component<Props, State> {
   state: State = {
-    currentBlock: undefined,
-    currentTrack: 0
+    currentBlock: undefined
   }
 
   componentWillMount() {
@@ -73,7 +71,7 @@ class SessionComponent extends React.Component<Props, State> {
 
   render() {
     const { session, actions, settings } = this.props
-    const { currentBlock, currentTrack } = this.state
+    const { currentBlock } = this.state
     return (
       <div style={{ padding: '4px' }}>
         <div style={{ padding: '4px' }}>
@@ -98,7 +96,7 @@ class SessionComponent extends React.Component<Props, State> {
                     tracks={session.tracks}
                     settings={settings}
                     onTrackChange={(index: number) =>
-                      this.setState({ currentTrack: index })
+                      actions.track.setCurrentTrack(index)
                     }
                   />
                 </div>
@@ -119,7 +117,6 @@ class SessionComponent extends React.Component<Props, State> {
                     <BlockEditComponent
                       actions={actions}
                       block={currentBlock}
-                      patternIndex={currentTrack}
                       settings={settings}
                     />
                   ) : (

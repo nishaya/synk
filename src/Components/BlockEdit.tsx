@@ -7,22 +7,20 @@ import { Block } from 'types'
 
 interface Props {
   block: Block
-  patternIndex: number
   actions: SessionActions
   settings: UIState
 }
 
-export default ({ block, patternIndex, actions, settings }: Props) => {
+export default ({ block, actions, settings }: Props) => {
   return (
     <div style={{ padding: '4px' }}>
       <Card>
-        <CardHeader title={`Block${block.id} - ${patternIndex}`} />
+        <CardHeader title={`Block${block.id}`} />
         <CardText>
           <div style={{ height: '400px' }}>
             <PatternComponent
               settings={settings}
               block={block}
-              patternIndex={patternIndex}
               actions={actions}
             />
           </div>
