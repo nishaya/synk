@@ -80,3 +80,10 @@ export interface Note {
   duration: number
   velocity: number
 }
+
+export interface SynthPlayInfo {
+  note: number
+  veolocity: number
+  duration: number
+  time?: number // undefined = play immediately
+}

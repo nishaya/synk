@@ -1,5 +1,6 @@
 import { merge } from 'lodash'
 import { Action } from 'redux'
+import { SynthPlayInfo } from 'types'
 import { isType } from 'typescript-fsa'
 
 import actionCreatorFactory from 'typescript-fsa'
@@ -7,11 +8,6 @@ import actionCreatorFactory from 'typescript-fsa'
 // action
 const actionCreator = actionCreatorFactory()
 
-export interface SynthPlayInfo {
-  note: number
-  veolocity: number
-  duration: number
-}
 export type SynthPlayHandler = (info: SynthPlayInfo) => void
 
 export const initSynth = actionCreator<{
