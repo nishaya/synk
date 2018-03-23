@@ -11,7 +11,7 @@ const actionCreator = actionCreatorFactory()
 export const initSynth = actionCreator<{
   trackIndex: number
   handler: SynthPlayHandler
-}>('UI_SET_QUANTIZE')
+}>('SYNTH_INIT_SYNTH')
 
 export interface SynthState {
   handlers: SynthPlayHandler[]
@@ -26,6 +26,7 @@ export const synthReducers = (
   action: Action
 ): SynthState => {
   if (isType(action, initSynth)) {
+    console.log('Action:ininSynth', action)
     const { trackIndex, handler } = action.payload
     const { handlers } = state
     handlers[trackIndex] = handler
