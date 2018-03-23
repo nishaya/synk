@@ -157,12 +157,12 @@ class PatternComponent extends React.Component<Props, State> {
     if (editNote) {
       addNote(blockId, patternId, { ...editNote })
     }
-    this.setState({ editNote: null })
+    this.setState({ editNote: null, previewNote: null })
   }
 
   handleMouseleave(e: MouseEvent) {
     console.log('handleMouseleave')
-    this.setState({ editNote: null })
+    this.setState({ editNote: null, previewNote: null })
   }
 
   svgPoint2NoteInfo(pt: SVGPoint): { note: number; position: number } {
