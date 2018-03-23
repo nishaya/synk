@@ -8,7 +8,10 @@ interface Props {
 }
 
 const previewStyle = {
-  fontSize: 'middle'
+  fontSize: 'middle',
+  color: '#355c7d',
+  letterSpacing: '0.1em',
+  fontFamily: "'Roboto Mono', monospace"
 }
 
 export const NoteInfo = ({ editNote, previewNote }: Props) => {

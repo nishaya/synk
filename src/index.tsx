@@ -60,6 +60,7 @@ console.log(messaging)
       console.log('Unable to get permission to notify.', err)
     })
 }
+
 ReactDOM.render(
   <MuiThemeProvider>
     <Provider store={store}>
