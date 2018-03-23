@@ -16,7 +16,6 @@ class TrackListComponent extends React.Component<Props> {
     const { tracks, onTrackChange, settings, actions } = this.props
     return (
       <div>
-        <h3>Tracks</h3>
         {tracks.map((track: Track, i: number) => {
           return (
             <div key={track.index} onClick={() => onTrackChange(i)}>

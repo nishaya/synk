@@ -89,9 +89,23 @@ class SessionComponent extends React.Component<Props, State> {
                 </div>
               </Tools>
             </CardActions>
-            <CardText>
+            <CardText style={{ padding: 4 }}>
               <EditArea>
-                <div style={{ width: '200px' }}>
+                <div style={{ width: '300px' }}>
+                  <div style={{ padding: 8 }}>
+                    <BlockSelect
+                      value={currentBlock ? currentBlock.id : null}
+                      blocks={session.blocks}
+                      onChange={(v: string) => {
+                        this.setState({
+                          currentBlock: session.blocks.find(
+                            (b: Block) => b.id === v
+                          )
+                        })
+                        console.log('select edit', v)
+                      }}
+                    />
+                  </div>
                   <TrackListComponent
                     tracks={session.tracks}
                     settings={settings}
@@ -102,18 +116,6 @@ class SessionComponent extends React.Component<Props, State> {
                   />
                 </div>
                 <div style={{ flex: 1 }}>
-                  <BlockSelect
-                    value={currentBlock ? currentBlock.id : null}
-                    blocks={session.blocks}
-                    onChange={(v: string) => {
-                      this.setState({
-                        currentBlock: session.blocks.find(
-                          (b: Block) => b.id === v
-                        )
-                      })
-                      console.log('select edit', v)
-                    }}
-                  />
                   {currentBlock ? (
                     <BlockEditComponent
                       actions={actions}

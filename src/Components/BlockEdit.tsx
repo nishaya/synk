@@ -1,6 +1,6 @@
 import PatternComponent from 'Components/Pattern'
 import { SessionActions } from 'Containers/Session'
-import { Card, CardHeader, CardText } from 'material-ui/Card'
+import { Card, CardText } from 'material-ui/Card'
 import * as React from 'react'
 import { UIState } from 'Redux/UI'
 import { Block } from 'types'
@@ -15,7 +15,6 @@ export default ({ block, actions, settings }: Props) => {
   return (
     <div style={{ padding: '4px' }}>
       <Card>
-        <CardHeader title={`Block${block.id}`} />
         <CardText>
           <div style={{ height: '400px' }}>
             <PatternComponent
