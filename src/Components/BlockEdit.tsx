@@ -2,6 +2,7 @@ import PatternComponent from 'Components/Pattern'
 import { SessionActions } from 'Containers/Session'
 import { Card, CardText } from 'material-ui/Card'
 import * as React from 'react'
+import { SynthState } from 'Redux/Synth'
 import { UIState } from 'Redux/UI'
 import { Block } from 'types'
 
@@ -9,9 +10,10 @@ interface Props {
   block: Block
   actions: SessionActions
   settings: UIState
+  synth: SynthState
 }
 
-export default ({ block, actions, settings }: Props) => {
+export default ({ block, actions, settings, synth }: Props) => {
   return (
     <div style={{ padding: '4px' }}>
       <Card>
@@ -21,6 +23,7 @@ export default ({ block, actions, settings }: Props) => {
               settings={settings}
               block={block}
               actions={actions}
+              synth={synth}
             />
           </div>
         </CardText>

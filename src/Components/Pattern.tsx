@@ -1,13 +1,15 @@
 import { NoteInfo } from 'Components/Edit/NoteInfo'
 import { SessionActions } from 'Containers/Session'
 import * as React from 'react'
+import { SynthState } from 'Redux/Synth'
 import { UIState } from 'Redux/UI'
-import { Block, Note, Pattern } from 'types'
+import { Block, Note, Pattern, SynthPlayHandler } from 'types'
 
 interface Props {
   block: Block
   actions: SessionActions
   settings: UIState
+  synth: SynthState
 }
 
 interface State {
@@ -118,6 +120,12 @@ class PatternComponent extends React.Component<Props, State> {
 
   getDuration(): number {
     return this.props.settings.pattern.duration
+  }
+
+  getSynthHandler(): SynthPlayHandler | undefined {
+    const { synth: { handlers } } = this.props
+    const { currentTrack } = this.props.settings.track
+    return handlers[currentTrack]
   }
 
   handleMousemove(e: MouseEvent) {
