@@ -2,18 +2,21 @@ import PatternComponent from 'Components/Pattern'
 import { BlockActions } from 'Containers/Session'
 import { Card, CardHeader, CardText } from 'material-ui/Card'
 import * as React from 'react'
+import { UIState } from 'Redux/UI'
 import { Block } from 'types'
 
 interface Props {
   block: Block
   patternIndex: number
   actions: BlockActions
+  settings: UIState
 }
 
 export default ({
   block,
   patternIndex,
-  actions: { pattern: patternActions }
+  actions: { pattern: patternActions },
+  settings
 }: Props) => {
   const pattern = block.patterns[patternIndex]
   return (
@@ -24,6 +27,7 @@ export default ({
           {pattern ? (
             <div style={{ height: '400px' }} key={pattern.id}>
               <PatternComponent
+                settings={settings}
                 pattern={pattern}
                 block={block}
                 actions={patternActions}

@@ -1,3 +1,4 @@
+import { merge } from 'lodash'
 import { Action } from 'redux'
 import { isType } from 'typescript-fsa'
 
@@ -11,11 +12,19 @@ export const setQuantize = actionCreator<{
 }>('UI_SET_QUANTIZE')
 
 // reducer
-export interface UIState {
-  readonly pattern: { quantize: number }
+export interface PatternUIState {
+  quantize: number
 }
 
-const initialState: UIState = { pattern: { quantize: 120 } }
+export interface BlockUIState {
+  pattern: PatternUIState
+}
+
+export interface UIState {
+  readonly block: BlockUIState
+}
+
+const initialState: UIState = { block: { pattern: { quantize: 120 } } }
 
 export const uiReducers = (
   state: UIState = initialState,
@@ -24,7 +33,7 @@ export const uiReducers = (
   if (isType(action, setQuantize)) {
     const { quantize } = action.payload
     console.log('Action - setQuantize', action.payload)
-    return { ...state, pattern: { ...state.pattern, quantize } }
+    return merge(state, { block: { pattern: { quantize } } })
   }
   return state
 }

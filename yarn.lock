@@ -178,6 +178,10 @@
   version "22.2.0"
   resolved "https://registry.yarnpkg.com/@types/jest/-/jest-22.2.0.tgz#55ce83139f7ad1b48b414c3927746614c6963c0f"
 
+"@types/lodash@^4.14.106":
+  version "4.14.106"
+  resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.106.tgz#6093e9a02aa567ddecfe9afadca89e53e5dce4dd"
+
 "@types/material-ui@^0.21.1":
   version "0.21.1"
   resolved "https://registry.yarnpkg.com/@types/material-ui/-/material-ui-0.21.1.tgz#ddb6aaa7659cbf58b448c405e4872def2650cbab"

@@ -1,17 +1,14 @@
 import { NoteInfo } from 'Components/Edit/NoteInfo'
 import { PatternActions } from 'Containers/Session'
 import * as React from 'react'
+import { UIState } from 'Redux/UI'
 import { Block, Note, Pattern } from 'types'
 
 interface Props {
   pattern: Pattern
   block: Block
   actions: PatternActions
-  quantize?: number
-}
-
-interface DefaultProps {
-  quantize: number
+  settings: UIState
 }
 
 interface State {
@@ -65,10 +62,6 @@ class PatternComponent extends React.Component<Props, State> {
     previewNote: null
   }
 
-  static defaultProps: DefaultProps = {
-    quantize: 120
-  }
-
   componentDidMount() {
     const stageHeight = this.divElement.clientHeight
     const stageWidth = this.divElement.clientWidth
@@ -119,13 +112,17 @@ class PatternComponent extends React.Component<Props, State> {
     })
   }
 
+  getQuantize(): number {
+    return this.props.settings.block.pattern.quantize
+  }
+
   handleMousemove(e: MouseEvent) {
     e.preventDefault() // prevent drag
     const { editNote } = this.state
     const svgPoint = this.mouse2svgPoint(e)
     const { note, position } = this.svgPoint2NoteInfo(svgPoint)
     if (editNote) {
-      const { quantize } = this.props
+      const quantize = this.getQuantize()
       let { duration } = editNote
       if (position < editNote.position) {
         duration = quantize || 0
@@ -166,7 +163,7 @@ class PatternComponent extends React.Component<Props, State> {
   }
 
   svgPoint2NoteInfo(pt: SVGPoint): { note: number; position: number } {
-    const { quantize } = this.props
+    const quantize = this.getQuantize()
     const { maxNote } = this.noteRange()
     let position = pt.x / durationWidth
 
