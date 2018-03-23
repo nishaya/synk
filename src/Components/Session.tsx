@@ -49,6 +49,10 @@ const Tools = styled.div`
   }
 `
 
+const EditArea = styled.div`
+  display: flex;
+`
+
 interface State {
   currentBlock: Block | undefined
   currentTrack: number
@@ -88,32 +92,40 @@ class SessionComponent extends React.Component<Props, State> {
               </Tools>
             </CardActions>
             <CardText>
-              <TrackListComponent
-                tracks={session.tracks}
-                onTrackChange={(index: number) =>
-                  this.setState({ currentTrack: index })
-                }
-              />
-              <BlockSelect
-                value={currentBlock ? currentBlock.id : null}
-                blocks={session.blocks}
-                onChange={(v: string) => {
-                  this.setState({
-                    currentBlock: session.blocks.find((b: Block) => b.id === v)
-                  })
-                  console.log('select edit', v)
-                }}
-              />
-              {currentBlock ? (
-                <BlockEditComponent
-                  actions={actions}
-                  block={currentBlock}
-                  patternIndex={currentTrack}
-                  settings={settings}
-                />
-              ) : (
-                'no current block'
-              )}
+              <EditArea>
+                <div style={{ width: '200px' }}>
+                  <TrackListComponent
+                    tracks={session.tracks}
+                    onTrackChange={(index: number) =>
+                      this.setState({ currentTrack: index })
+                    }
+                  />
+                </div>
+                <div style={{ flex: 1 }}>
+                  <BlockSelect
+                    value={currentBlock ? currentBlock.id : null}
+                    blocks={session.blocks}
+                    onChange={(v: string) => {
+                      this.setState({
+                        currentBlock: session.blocks.find(
+                          (b: Block) => b.id === v
+                        )
+                      })
+                      console.log('select edit', v)
+                    }}
+                  />
+                  {currentBlock ? (
+                    <BlockEditComponent
+                      actions={actions}
+                      block={currentBlock}
+                      patternIndex={currentTrack}
+                      settings={settings}
+                    />
+                  ) : (
+                    'no current block'
+                  )}
+                </div>
+              </EditArea>
             </CardText>
           </Card>
         </div>
