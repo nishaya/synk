@@ -97,15 +97,6 @@ class PatternComponent extends React.Component<Props, State> {
     console.log('mousedown', e)
 
     const svgPoint = this.mouse2svgPoint(e)
-
-    const ns = this.svgElement.getAttribute('xmlns') as string
-    const rect = document.createElementNS(ns, 'rect')
-    rect.setAttributeNS(ns, 'x', `${svgPoint.x}`)
-    rect.setAttributeNS(ns, 'y', `${svgPoint.y}`)
-    rect.setAttributeNS(ns, 'width', '32')
-    rect.setAttributeNS(ns, 'height', '8')
-    this.svgElement.appendChild(rect)
-
     const { note, position } = this.svgPoint2NoteInfo(svgPoint)
     this.setState({
       editNote: {
