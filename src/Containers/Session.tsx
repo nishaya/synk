@@ -31,7 +31,8 @@ export interface SessionActions {
 
 const mapStateToProps = (state: RootState) => ({
   session: state.Session.session,
-  settings: state.UI
+  settings: state.UI,
+  synth: state.Synth
 })
 
 const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
