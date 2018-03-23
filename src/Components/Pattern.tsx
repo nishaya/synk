@@ -1,3 +1,4 @@
+import { NoteInfo } from 'Components/Edit/NoteInfo'
 import { PatternActions } from 'Containers/Session'
 import * as React from 'react'
 import { Block, Note, Pattern } from 'types'
@@ -13,16 +14,11 @@ interface DefaultProps {
   quantize: number
 }
 
-interface EditNote {
-  note: number
-  duration: number
-  position: number
-}
-
 interface State {
   stageWidth: number
   stageHeight: number
-  editNote: EditNote | null
+  editNote: Note | null
+  previewNote: Note | null
 }
 
 const avgNotes = (notes: Note[]): number => {
@@ -32,6 +28,13 @@ const avgNotes = (notes: Note[]): number => {
       return sum + note.note
     }, 0) / notes.length
   )
+}
+
+const noteDefaults: Note = {
+  note: 0,
+  velocity: 0,
+  duration: 480,
+  position: 0
 }
 
 const noteHeight = 8
@@ -58,7 +61,8 @@ class PatternComponent extends React.Component<Props, State> {
   state: State = {
     stageWidth: 0,
     stageHeight: 0,
-    editNote: null
+    editNote: null,
+    previewNote: null
   }
 
   static defaultProps: DefaultProps = {
@@ -110,16 +114,18 @@ class PatternComponent extends React.Component<Props, State> {
     this.svgElement.appendChild(rect)
 
     const { note, position } = this.svgPoint2NoteInfo(svgPoint)
-    this.setState({ editNote: { note, duration: 480, position } })
+    this.setState({
+      editNote: { note, position, ...noteDefaults }
+    })
   }
 
   handleMousemove(e: MouseEvent) {
     e.preventDefault() // prevent drag
     const { editNote } = this.state
+    const svgPoint = this.mouse2svgPoint(e)
+    const { note, position } = this.svgPoint2NoteInfo(svgPoint)
     if (editNote) {
       const { quantize } = this.props
-      const svgPoint = this.mouse2svgPoint(e)
-      const { note, position } = this.svgPoint2NoteInfo(svgPoint)
       let { duration } = editNote
       if (position < editNote.position) {
         duration = quantize || 0
@@ -135,6 +141,8 @@ class PatternComponent extends React.Component<Props, State> {
           editNote: { ...editNote, note, duration }
         })
       }
+    } else {
+      this.setState({ previewNote: { ...noteDefaults, note } })
     }
   }
 
@@ -147,7 +155,7 @@ class PatternComponent extends React.Component<Props, State> {
     const { editNote } = this.state
     console.log('handleMouseup', e)
     if (editNote) {
-      addNote(blockId, patternId, { velocity: 100, ...editNote } as Note)
+      addNote(blockId, patternId, { ...editNote })
     }
     this.setState({ editNote: null })
   }
@@ -181,7 +189,7 @@ class PatternComponent extends React.Component<Props, State> {
 
   render() {
     const { pattern, block: { bars } } = this.props
-    const { stageHeight, stageWidth, editNote } = this.state
+    const { stageHeight, stageWidth, editNote, previewNote } = this.state
     const { maxNote, minNote } = this.noteRange()
     const noteStyle: React.CSSProperties = { ...defaultNoteStyle }
     let editingNote = null
@@ -207,6 +215,7 @@ class PatternComponent extends React.Component<Props, State> {
         style={{ minHeight: '100%' }}
         ref={(div: HTMLDivElement) => (this.divElement = div)}
       >
+        <NoteInfo editNote={editNote} previewNote={previewNote} />
         <div
           style={{
             overflow: 'auto',
