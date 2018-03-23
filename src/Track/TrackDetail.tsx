@@ -1,3 +1,4 @@
+import Slider from 'material-ui/Slider'
 import * as React from 'react'
 import { UIState } from 'Redux/UI'
 import { Track } from 'types'
@@ -12,8 +13,13 @@ const TrackDetail = ({ track, settings }: Props) => {
   const currentTrack = settings.track.currentTrack
 
   return (
-    <div style={{ backgroundColor: color }}>
-      track #{track.index}
+    <div>
+      <div style={{ backgroundColor: color, padding: 8 }}>
+        track #{track.index}
+      </div>
+      <div style={{ padding: 8 }}>
+        <Slider value={track.level} min={0} max={127} />
+      </div>
       {track.index === currentTrack ? <div>CURRENT TRACK</div> : null}
     </div>
   )
