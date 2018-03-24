@@ -118,7 +118,6 @@ class PatternComponent extends React.Component<Props, State> {
     if (handler) {
       return handler({
         note: note.note,
-        duration: note.duration,
         velocity: note.velocity
       })
     }

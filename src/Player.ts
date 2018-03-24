@@ -1,9 +1,9 @@
 import { getAudioCtx } from 'Synth/audio'
 import { Block, Note, Pattern, SynthPlayHandler } from 'types'
-import { sec2pos } from 'Utils/time'
+import { BEAT_LENGTH, sec2pos } from 'Utils/time'
 
 // const UNIT = 480
-const LOOP_TIME = 500
+const LOOP_TIME = 80
 
 export interface PlayerUpdateInfo {
   cursor: number
@@ -102,15 +102,21 @@ class Player {
     notes.map((scheduledNote: ScheduledNote) => {
       const handler = this.synthPlayHandlers[scheduledNote.patternIndex]
       if (handler) {
-        const { note: { note, velocity } } = scheduledNote
+        const { note: { note, velocity, position, duration } } = scheduledNote
 
+        const diff = position - start
         handler({
           note,
           velocity,
-          duration: 0.1
+          duration: this.pos2sec(duration),
+          time: now + this.pos2sec(diff)
         })
       }
     })
+  }
+
+  pos2sec(pos: number): number {
+    return pos / BEAT_LENGTH * (60 / this.bpm)
   }
 }
 
