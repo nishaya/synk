@@ -6,7 +6,7 @@ import { Synthesizer } from './OscSynth'
 interface SynthOptions {}
 
 const NOTE_KICK = 36
-// const NOTE_CHH = 43
+const NOTE_CHH = 43
 
 const defaultPreset: DrumsSynthPreset = {
   type: 'drums',
@@ -33,11 +33,39 @@ class DrumsSynth implements Synthesizer {
     const { note } = info
     if (note === NOTE_KICK) {
       this.playKick(info)
+    } else if (note === NOTE_CHH) {
+      this.playHihat(info, false)
     }
     const stopHandler = () => {
       console.log('stop drums(dummy)', info)
     }
     return stopHandler
+  }
+
+  playHihat(info: SynthPlayInfo, open: boolean = false): void {
+    const source = this.ctx.createBufferSource()
+    let duration = 0.01
+    let release = 0.02
+    const gain = this.ctx.createGain()
+
+    if (open) {
+      duration = 0.01
+      release = 0.4
+    }
+
+    const { velocity } = info
+    const start = info.time || this.ctx.currentTime
+
+    source.buffer = this.noise
+    source.loop = true
+    const volume = velocity / 127 * 0.3
+    gain.gain.setValueAtTime(volume, start)
+    gain.gain.setValueAtTime(volume, start + duration)
+    gain.gain.linearRampToValueAtTime(0, start + duration + release)
+    source.connect(gain)
+    gain.connect(this.ctx.destination)
+    source.start(start)
+    source.stop(start + duration + release)
   }
 
   playKick(info: SynthPlayInfo): void {
