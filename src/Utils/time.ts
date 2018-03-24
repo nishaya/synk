@@ -9,3 +9,11 @@ export const position2time = (time: number, bpb: number = 4): string => {
   const steps = time % BEAT_LENGTH
   return sprintf('%03d:%02d:%03d', bars, beats, steps)
 }
+
+export const secPerBeat = (bpm: number) => {
+  return 3600 / bpm
+}
+
+export const sec2pos = (sec: number, bpm: number) => {
+  return secPerBeat(bpm) / 480 * sec
+}
