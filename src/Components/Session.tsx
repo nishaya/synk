@@ -6,11 +6,14 @@ import BlockSelect from 'Components/Session/BlockSelect'
 import TrackListComponent from 'Components/TrackList'
 import { SessionActions } from 'Containers/Session'
 import { Card, CardActions, CardHeader, CardText } from 'material-ui/Card'
+import Player, { PlayerUpdateInfo } from 'Player'
 import * as React from 'react'
 import { SynthState } from 'Redux/Synth'
 import { UIState } from 'Redux/UI'
 import styled from 'styled-components'
 import { Block, Session } from 'types'
+
+const blockPlayer = new Player()
 
 interface Props {
   session: Session
@@ -38,6 +41,13 @@ interface State {
 class SessionComponent extends React.Component<Props, State> {
   state: State = {
     currentBlock: undefined
+  }
+
+  componentDidMount() {
+    blockPlayer.onUpdate = (info: PlayerUpdateInfo) => {
+      console.log('player updated', info)
+    }
+    blockPlayer.play(this.props.settings.block.cursor)
   }
 
   componentWillMount() {
