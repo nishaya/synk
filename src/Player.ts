@@ -2,7 +2,7 @@ import { getAudioCtx } from 'Synth/audio'
 import { sec2pos } from 'Utils/time'
 
 // const UNIT = 480
-const LOOP_TIME = 400
+const LOOP_TIME = 500
 
 export interface PlayerUpdateInfo {
   cursor: number
@@ -10,7 +10,7 @@ export interface PlayerUpdateInfo {
 
 class Player {
   cursor: number
-  bpm: number = 130
+  bpm: number = 60
   ctx: AudioContext
   intervalId: number
 
@@ -39,11 +39,10 @@ class Player {
   }
 
   loop() {
-    console.log('player loop', this.cursor)
-
     const now = this.ctx.currentTime
     const diff = now - this.prevTime
     const move = sec2pos(diff, this.bpm)
+    console.log('player loop', this.cursor, diff, move)
     this.cursor += move
 
     this.onUpdate({ cursor: this.cursor })

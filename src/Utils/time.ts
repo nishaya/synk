@@ -11,9 +11,9 @@ export const position2time = (time: number, bpb: number = 4): string => {
 }
 
 export const secPerBeat = (bpm: number) => {
-  return 3600 / bpm
+  return 60 / bpm
 }
 
 export const sec2pos = (sec: number, bpm: number) => {
-  return secPerBeat(bpm) / 480 * sec
+  return BEAT_LENGTH / secPerBeat(bpm) * sec
 }
