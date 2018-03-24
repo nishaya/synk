@@ -7,6 +7,7 @@ interface SynthOptions {}
 
 const NOTE_KICK = 36
 const NOTE_CHH = 43
+const NOTE_OHH = 47
 
 const defaultPreset: DrumsSynthPreset = {
   type: 'drums',
@@ -35,6 +36,8 @@ class DrumsSynth implements Synthesizer {
       this.playKick(info)
     } else if (note === NOTE_CHH) {
       this.playHihat(info, false)
+    } else if (note === NOTE_OHH) {
+      this.playHihat(info, true)
     }
     const stopHandler = () => {
       console.log('stop drums(dummy)', info)
@@ -46,11 +49,13 @@ class DrumsSynth implements Synthesizer {
     const source = this.ctx.createBufferSource()
     let duration = 0.01
     let release = 0.02
+    let sustain = 1.0
     const gain = this.ctx.createGain()
 
     if (open) {
-      duration = 0.01
-      release = 0.4
+      duration = 0.001
+      release = 0.3
+      sustain = 0.5
     }
 
     const { velocity } = info
@@ -60,8 +65,8 @@ class DrumsSynth implements Synthesizer {
     source.loop = true
     const volume = velocity / 127 * 0.3
     gain.gain.setValueAtTime(volume, start)
-    gain.gain.setValueAtTime(volume, start + duration)
-    gain.gain.linearRampToValueAtTime(0, start + duration + release)
+    gain.gain.setValueAtTime(volume * sustain, start + duration)
+    gain.gain.exponentialRampToValueAtTime(0.01, start + duration + release)
     source.connect(gain)
     gain.connect(this.ctx.destination)
     source.start(start)

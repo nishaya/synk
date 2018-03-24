@@ -30,6 +30,12 @@ const genDrums = (bars: number = 4): Note[] => {
         },
         {
           note: 43,
+          position: i * 4 * BEAT_LENGTH + BEAT_LENGTH * j,
+          duration: 120,
+          velocity: 100
+        },
+        {
+          note: 47,
           position: i * 4 * BEAT_LENGTH + BEAT_LENGTH * j + 240,
           duration: 120,
           velocity: 100
