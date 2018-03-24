@@ -1,5 +1,5 @@
 import App from 'App'
-import AuthComponent from 'Components/Auth'
+import AuthContainer from 'Containers/Auth'
 import 'index.css'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import * as React from 'react'
@@ -13,9 +13,9 @@ initFirebase()
 ReactDOM.render(
   <MuiThemeProvider>
     <Provider store={store}>
-      <AuthComponent>
+      <AuthContainer>
         <App />
-      </AuthComponent>
+      </AuthContainer>
     </Provider>
   </MuiThemeProvider>,
   document.getElementById('root') as HTMLElement

@@ -1,7 +1,10 @@
+import { AuthActions } from 'Containers/Auth'
 import * as React from 'react'
 import { anonAuth } from 'Utils/firebase'
 
-interface Props {}
+interface Props {
+  actions: AuthActions
+}
 interface State {
   user: firebase.User | null
 }
