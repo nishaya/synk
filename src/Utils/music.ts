@@ -26,3 +26,7 @@ export const note2name = (note: number): string => {
   const o = Math.floor(note / 12) - 2
   return `${roots[m]}${o}`
 }
+
+export const note2freq = (note: number): number => {
+  return 440 * 2 ** ((note - 69) / 12)
+}

@@ -5,10 +5,11 @@ const BARS = 4
 
 const genNotes = (): Note[] => {
   const notes: Note[] = []
+  // TODO: use scale
 
   for (let i = 0; i < 4; i++) {
     notes.push({
-      note: ~~(Math.random() * 10 + 50),
+      note: ~~(Math.random() * 10 + 70),
       position: i * 480,
       duration: 480,
       velocity: 100
@@ -24,13 +25,13 @@ const genDrums = (barlength: number = 4): Note[] => {
     for (let j = 0; j < 4; j++) {
       notes.push(
         {
-          note: 24,
+          note: 36,
           position: i * 4 * BEAT_LENGTH + BEAT_LENGTH * j,
           duration: 120,
           velocity: 100
         },
         {
-          note: 31,
+          note: 43,
           position: i * 4 * BEAT_LENGTH + BEAT_LENGTH * j + 240,
           duration: 120,
           velocity: 100

@@ -1,4 +1,5 @@
 import { SynthPlayInfo, SynthStopHandler } from 'types'
+import { note2freq } from 'Utils/music'
 import { getAudioCtx } from './audio'
 
 interface SynthOptions {
@@ -23,6 +24,7 @@ class OscSynth {
 
   play(info: SynthPlayInfo): SynthStopHandler {
     const osc = this.ctx.createOscillator()
+    osc.frequency.value = note2freq(info.note)
     osc.connect(this.ctx.destination)
 
     console.log('synth play', info)
