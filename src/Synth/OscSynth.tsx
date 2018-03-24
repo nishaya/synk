@@ -27,7 +27,7 @@ class OscSynth implements Synthesizer {
     let osc: OscillatorNode | undefined = this.ctx.createOscillator()
     let gain: GainNode | undefined = this.ctx.createGain()
     osc.type = this.preset.oscillator
-    osc.frequency.value = note2freq(info.note)
+    osc.frequency.setValueAtTime(note2freq(info.note), this.ctx.currentTime)
 
     console.log('synth play', info)
 
