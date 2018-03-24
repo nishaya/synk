@@ -2,7 +2,7 @@ import { getAudioCtx } from 'Synth/audio'
 import { sec2pos } from 'Utils/time'
 
 // const UNIT = 480
-const LOOP_TIME = 50
+const LOOP_TIME = 500
 
 export interface PlayerUpdateInfo {
   cursor: number
