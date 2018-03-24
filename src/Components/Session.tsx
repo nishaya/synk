@@ -69,6 +69,14 @@ class SessionComponent extends React.Component<Props, State> {
     }
   }
 
+  blockChanged(block: Block) {
+    if (blockPlayer.playing) {
+      blockPlayer.endPosition = block.bars * BEAT_LENGTH * 4
+      blockPlayer.block = block
+      blockPlayer.cursor = 0
+    }
+  }
+
   render() {
     const { session, actions, settings, synth } = this.props
     const { currentBlock } = this.state
@@ -83,7 +91,11 @@ class SessionComponent extends React.Component<Props, State> {
                   <Transport
                     handleRec={() => console.log('rec button pushed')}
                     onStop={() => {
-                      blockPlayer.stop()
+                      if (blockPlayer.playing) {
+                        blockPlayer.stop()
+                      } else {
+                        actions.block.setBlockCursor(0)
+                      }
                     }}
                     onPlay={() => {
                       this.playBlockPlayer()
@@ -104,10 +116,14 @@ class SessionComponent extends React.Component<Props, State> {
                       value={currentBlock ? currentBlock.id : null}
                       blocks={session.blocks}
                       onChange={(v: string) => {
+                        const block = session.blocks.find(
+                          (b: Block) => b.id === v
+                        )
+                        if (block) {
+                          this.blockChanged(block)
+                        }
                         this.setState({
-                          currentBlock: session.blocks.find(
-                            (b: Block) => b.id === v
-                          )
+                          currentBlock: block
                         })
                         console.log('select edit', v)
                       }}

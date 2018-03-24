@@ -1,5 +1,6 @@
 import { DrumsSynthPreset, SynthPlayInfo, SynthStopHandler } from 'types'
 import { getAudioCtx } from './audio'
+import { generateWhiteNoise } from './noise'
 import { Synthesizer } from './OscSynth'
 
 interface SynthOptions {}
@@ -20,9 +21,12 @@ const defaultPreset: DrumsSynthPreset = {
 class DrumsSynth implements Synthesizer {
   preset: DrumsSynthPreset
   ctx: AudioContext
+  noise: AudioBuffer
+
   constructor(preset: SynthOptions) {
     this.preset = { ...defaultPreset, ...preset }
     this.ctx = getAudioCtx()
+    this.noise = generateWhiteNoise(this.ctx)
   }
 
   play(info: SynthPlayInfo): SynthStopHandler {

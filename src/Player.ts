@@ -69,7 +69,7 @@ class Player {
     const diff = now - this.prevTime
     const move = sec2pos(diff, this.bpm)
     const restPos = this.endPosition - this.cursor
-    console.log('player loop', this.cursor, diff, move)
+    // console.log('player loop', this.cursor, diff, move)
     this.cursor = ~~(this.cursor + move)
     this.scheduleNotes(now, startPos, this.cursor)
 
@@ -108,7 +108,6 @@ class Player {
         )
       })
     }
-    console.log('notes', notes)
     notes.map((scheduledNote: ScheduledNote) => {
       const handler = this.synthPlayHandlers[scheduledNote.patternIndex]
       if (handler) {
