@@ -15,6 +15,10 @@ export const setCurrentTrack = actionCreator<{
   trackIndex: number
 }>('UI_SET_CURRENT_TRACK')
 
+export const setBlockCursor = actionCreator<{
+  cursor: number
+}>('UI_SET_BLOCK_CURSOR')
+
 // reducer
 export interface PatternUIState {
   quantize: number
@@ -75,6 +79,10 @@ export const uiReducers = (
     const { trackIndex: currentTrack } = action.payload
     console.log('Action - setCurrentTrack', action.payload)
     return { ...merge(state, { track: { currentTrack } }) }
+  }
+  if (isType(action, setBlockCursor)) {
+    const { cursor } = action.payload
+    return { ...merge(state, { block: { cursor } }) }
   }
   return state
 }

@@ -12,6 +12,7 @@ import { SynthState } from 'Redux/Synth'
 import { UIState } from 'Redux/UI'
 import styled from 'styled-components'
 import { Block, Session } from 'types'
+import { BEAT_LENGTH } from 'Utils/time'
 
 const blockPlayer = new Player()
 
@@ -44,16 +45,27 @@ class SessionComponent extends React.Component<Props, State> {
   }
 
   componentDidMount() {
-    blockPlayer.onUpdate = (info: PlayerUpdateInfo) => {
-      console.log('player updated', info)
-    }
-    blockPlayer.play(this.props.settings.block.cursor)
+    this.playBlockPlayer()
   }
 
   componentWillMount() {
     const { session: { blocks } } = this.props
     if (blocks.length > 0) {
       this.setState({ currentBlock: blocks[0] })
+    }
+  }
+
+  playBlockPlayer() {
+    const { currentBlock } = this.state
+    if (currentBlock) {
+      const { actions } = this.props
+      blockPlayer.endPosition = currentBlock.bars * BEAT_LENGTH * 4
+      blockPlayer.loop = true
+      blockPlayer.onUpdate = (info: PlayerUpdateInfo) => {
+        console.log('player updated', info)
+        actions.block.setBlockCursor(info.cursor)
+      }
+      blockPlayer.play(this.props.settings.block.cursor)
     }
   }
 
