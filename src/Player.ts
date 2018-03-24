@@ -29,6 +29,8 @@ class Player {
   block: Block
   synthPlayHandlers: SynthPlayHandler[] = []
 
+  playing: boolean = false
+
   onUpdate: (info: PlayerUpdateInfo) => void = (info: PlayerUpdateInfo) => {}
 
   constructor() {
@@ -42,17 +44,23 @@ class Player {
   }
 
   play(cursor: number) {
+    if (this.playing) {
+      console.log('already playing')
+      return
+    }
     this.cursor = cursor
     // this.bpm = bpm
     this.startTime = this.ctx.currentTime
     this.prevTime = this.startTime
     this.intervalId = setInterval(this.mainLoop.bind(this), LOOP_TIME)
+    this.playing = true
   }
 
   stop() {
     if (this.intervalId) {
       clearInterval(this.intervalId)
     }
+    this.playing = false
   }
 
   mainLoop() {
