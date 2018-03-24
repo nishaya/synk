@@ -1,5 +1,4 @@
 import { DrumsSynthPreset, SynthPlayInfo, SynthStopHandler } from 'types'
-import { note2freq } from 'Utils/music'
 import { getAudioCtx } from './audio'
 import { Synthesizer } from './OscSynth'
 
@@ -40,18 +39,27 @@ class DrumsSynth implements Synthesizer {
   playKick(info: SynthPlayInfo): void {
     console.log('play kick', info)
     const osc = this.ctx.createOscillator()
+    const gain = this.ctx.createGain()
     osc.type = 'sine'
-    osc.connect(this.ctx.destination)
-    const start = info.time || this.ctx.currentTime
-    osc.frequency.setValueAtTime(110, start)
-    const attack = start + 0.05
-    osc.frequency.exponentialRampToValueAtTime(880, start)
-    const decay = attack + 0.2
-    osc.frequency.exponentialRampToValueAtTime(220, decay)
-    const sustain = decay + 0.3
-    osc.frequency.exponentialRampToValueAtTime(110, sustain)
 
-    osc.connect(this.ctx.destination)
+    const start = info.time || this.ctx.currentTime
+    const attack = start + 0.05
+    const decay = attack + 0.2
+    const sustain = decay + 0.1
+
+    osc.frequency.setValueAtTime(340, start)
+    gain.gain.setValueAtTime(0, start)
+    gain.gain.linearRampToValueAtTime(1, start + 0.01)
+
+    osc.frequency.exponentialRampToValueAtTime(80, attack)
+
+    osc.frequency.exponentialRampToValueAtTime(30, decay)
+    gain.gain.setValueAtTime(1, decay)
+
+    gain.gain.linearRampToValueAtTime(0, sustain)
+
+    gain.connect(this.ctx.destination)
+    osc.connect(gain)
     osc.start(start)
     osc.stop(sustain)
   }
