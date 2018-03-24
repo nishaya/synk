@@ -1,6 +1,6 @@
 import { SynthActions } from 'Containers/Session'
 import * as React from 'react'
-import Tone from 'tone'
+import OscSynth from 'Synth/OscSynth'
 import { SynthPlayHandler, SynthPlayInfo, SynthStopHandler, Track } from 'types'
 
 interface Props {
@@ -9,16 +9,15 @@ interface Props {
 }
 
 class SynthComponent extends React.Component<Props> {
+  synth: OscSynth
   componentDidMount() {
+    this.synth = new OscSynth()
     const { track: { index: trackIndex }, actions: { initSynth } } = this.props
     const handler: SynthPlayHandler = (
       info: SynthPlayInfo
     ): SynthStopHandler => {
       console.log('play synth', info)
-      const stopHandler: SynthStopHandler = () => {
-        console.log('stop synth', info)
-      }
-      return stopHandler
+      return this.synth.play(info)
     }
     initSynth(trackIndex, handler)
   }
