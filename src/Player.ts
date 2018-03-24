@@ -3,7 +3,7 @@ import { Block, Note, Pattern, SynthPlayHandler } from 'types'
 import { BEAT_LENGTH, sec2pos } from 'Utils/time'
 
 // const UNIT = 480
-const LOOP_TIME = 300
+const LOOP_TIME = 50
 
 export interface PlayerUpdateInfo {
   cursor: number
@@ -16,7 +16,7 @@ interface ScheduledNote {
 
 class Player {
   cursor: number
-  bpm: number = 120
+  bpm: number = 130
   ctx: AudioContext
   intervalId: number
 
@@ -68,6 +68,7 @@ class Player {
     const now = this.ctx.currentTime
     const diff = now - this.prevTime
     const move = sec2pos(diff, this.bpm)
+    const restPos = this.endPosition - this.cursor
     console.log('player loop', this.cursor, diff, move)
     this.cursor = ~~(this.cursor + move)
     this.scheduleNotes(now, startPos, this.cursor)
@@ -76,6 +77,7 @@ class Player {
       if (this.loop) {
         // TODO: schedule 0 to cursor
         this.cursor = this.cursor % this.endPosition
+        this.scheduleNotes(now + this.pos2sec(restPos), 0, this.cursor)
       } else {
         this.cursor = this.endPosition
         this.stop()

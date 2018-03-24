@@ -54,7 +54,7 @@ const defaultTrackColors = [
 
 const initialState: UIState = {
   block: {
-    cursor: 960
+    cursor: 0
   },
   pattern: { quantize: 120, duration: 120 },
   track: {
