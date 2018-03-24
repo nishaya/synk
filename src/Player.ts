@@ -46,7 +46,7 @@ class Player {
     const diff = now - this.prevTime
     const move = sec2pos(diff, this.bpm)
     console.log('player loop', this.cursor, diff, move)
-    this.cursor += move
+    this.cursor = ~~(this.cursor + move)
     if (this.cursor > this.endPosition) {
       if (this.loop) {
         // TODO: schedule 0 to cursor
