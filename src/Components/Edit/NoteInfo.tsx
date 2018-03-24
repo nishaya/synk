@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { Note } from 'types'
+import { note2name } from 'Utils/music'
 import { position2time } from 'Utils/time'
 
 interface Props {
@@ -20,7 +21,9 @@ export const NoteInfo = ({ editNote, previewNote }: Props) => {
     <div>
       <code style={previewStyle}>
         {note
-          ? `${position2time(note.position)} ${note.note} - ${note.duration}`
+          ? `${position2time(note.position)} ${note2name(note.note)} - ${
+              note.duration
+            }`
           : '-'}
       </code>
     </div>
