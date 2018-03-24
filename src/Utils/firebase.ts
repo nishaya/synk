@@ -7,3 +7,21 @@ export const initFirebase = () => {
     apiKey
   })
 }
+
+export const anonAuth = (onAuth: (user: firebase.User) => void): void => {
+  firebase.auth().onAuthStateChanged((user: firebase.User) => {
+    console.log('onAuthStateChanged', user)
+    if (user) {
+      onAuth(user)
+    }
+  })
+  firebase
+    .auth()
+    .signInAnonymously()
+    .then((value: any) => {
+      console.log('signInAnonymously', value)
+    })
+    .catch((error: firebase.FirebaseError) => {
+      console.log('anonAuth error', error)
+    })
+}

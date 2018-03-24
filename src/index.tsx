@@ -5,9 +5,12 @@ import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 import store from 'Redux/store'
-import { initFirebase } from 'Utils/firebase'
+import { anonAuth, initFirebase } from 'Utils/firebase'
 
 initFirebase()
+anonAuth((user: firebase.User) => {
+  console.log('anonAuth success', user)
+})
 
 ReactDOM.render(
   <MuiThemeProvider>
