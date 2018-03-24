@@ -56,7 +56,15 @@ export default ({ arrangement, blocks, settings }: Props) => (
     <Card>
       <CardHeader title="Arrangement" />
       <CardActions>
-        <Transport cursor={settings.arrangement.cursor} />
+        <Transport
+          cursor={settings.arrangement.cursor}
+          onStop={() => {
+            console.log('stop')
+          }}
+          onPlay={() => {
+            console.log('play')
+          }}
+        />
       </CardActions>
       <CardText>
         {arrangement.blocks.map((blockInfo: BlockInfo, i: number) => {

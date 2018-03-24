@@ -82,6 +82,12 @@ class SessionComponent extends React.Component<Props, State> {
                 <div>
                   <Transport
                     handleRec={() => console.log('rec button pushed')}
+                    onStop={() => {
+                      blockPlayer.stop()
+                    }}
+                    onPlay={() => {
+                      this.playBlockPlayer()
+                    }}
                     cursor={settings.block.cursor}
                   />
                 </div>
