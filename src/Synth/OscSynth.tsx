@@ -59,6 +59,10 @@ class OscSynth implements Synthesizer {
       if (osc) osc.stop(release)
     }
 
+    if (info.duration) {
+      stop(start + info.duration)
+    }
+
     const stopHandler = () => {
       stop()
     }

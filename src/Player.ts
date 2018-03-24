@@ -1,5 +1,5 @@
 import { getAudioCtx } from 'Synth/audio'
-import { Block, Note, Pattern } from 'types'
+import { Block, Note, Pattern, SynthPlayHandler } from 'types'
 import { sec2pos } from 'Utils/time'
 
 // const UNIT = 480
@@ -16,7 +16,7 @@ interface ScheduledNote {
 
 class Player {
   cursor: number
-  bpm: number = 130
+  bpm: number = 120
   ctx: AudioContext
   intervalId: number
 
@@ -27,6 +27,7 @@ class Player {
   loop: boolean = true
 
   block: Block
+  synthPlayHandlers: SynthPlayHandler[] = []
 
   onUpdate: (info: PlayerUpdateInfo) => void = (info: PlayerUpdateInfo) => {}
 
@@ -61,7 +62,7 @@ class Player {
     const move = sec2pos(diff, this.bpm)
     console.log('player loop', this.cursor, diff, move)
     this.cursor = ~~(this.cursor + move)
-    this.scheduleBlock(now, startPos, this.cursor)
+    this.scheduleNotes(now, startPos, this.cursor)
 
     if (this.cursor > this.endPosition) {
       if (this.loop) {
@@ -78,7 +79,7 @@ class Player {
     this.prevTime = now
   }
 
-  scheduleBlock(now: number, start: number, end: number) {
+  scheduleNotes(now: number, start: number, end: number) {
     console.log('cheduleBlock', now, start, end)
     const notes: ScheduledNote[] = []
     if (this.block) {
@@ -98,6 +99,18 @@ class Player {
       })
     }
     console.log('notes', notes)
+    notes.map((scheduledNote: ScheduledNote) => {
+      const handler = this.synthPlayHandlers[scheduledNote.patternIndex]
+      if (handler) {
+        const { note: { note, velocity } } = scheduledNote
+
+        handler({
+          note,
+          velocity,
+          duration: 0.1
+        })
+      }
+    })
   }
 }
 

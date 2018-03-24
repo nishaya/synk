@@ -58,9 +58,10 @@ class SessionComponent extends React.Component<Props, State> {
   playBlockPlayer() {
     const { currentBlock } = this.state
     if (currentBlock) {
-      const { actions } = this.props
+      const { actions, synth } = this.props
       blockPlayer.endPosition = currentBlock.bars * BEAT_LENGTH * 4
       blockPlayer.loop = true
+      blockPlayer.synthPlayHandlers = synth.handlers
       blockPlayer.onUpdate = (info: PlayerUpdateInfo) => {
         console.log('player updated', info)
         actions.block.setBlockCursor(info.cursor)
