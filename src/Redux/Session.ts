@@ -19,12 +19,17 @@ export const changeTrackLevel = actionCreator<{
   level: number
 }>('SESSION_CHANGE_TRACK_LEVEL')
 
+export const setUserId = actionCreator<{
+  userId: string
+}>('SESSION_SET_USER_ID')
+
 // reducer
 export interface SessionState {
   readonly session: Session
+  readonly userId: string | null
 }
 
-const initialState: SessionState = { session }
+const initialState: SessionState = { session, userId: null }
 
 const findPattern = (
   session: Session,
@@ -60,6 +65,10 @@ export const sessionReducers = (
       track.level = level
     }
     return state
+  }
+  if (isType(action, setUserId)) {
+    const { userId } = action.payload
+    return { ...state, userId }
   }
   return state
 }
