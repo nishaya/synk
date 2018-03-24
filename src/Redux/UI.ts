@@ -21,16 +21,23 @@ export interface PatternUIState {
   duration: number
 }
 
-export interface BlockUIState {}
+export interface BlockUIState {
+  cursor: number
+}
 export interface TrackUIState {
   trackColors: string[]
   currentTrack: number
+}
+
+export interface ArrangementState {
+  cursor: number
 }
 
 export interface UIState {
   readonly pattern: PatternUIState
   readonly block: BlockUIState
   readonly track: TrackUIState
+  readonly arrangement: ArrangementState
 }
 
 const defaultTrackColors = [
@@ -42,11 +49,16 @@ const defaultTrackColors = [
 ]
 
 const initialState: UIState = {
-  block: {},
+  block: {
+    cursor: 960
+  },
   pattern: { quantize: 120, duration: 120 },
   track: {
     currentTrack: 0,
     trackColors: defaultTrackColors
+  },
+  arrangement: {
+    cursor: 0
   }
 }
 

@@ -60,6 +60,7 @@ class SessionComponent extends React.Component<Props, State> {
                 <div>
                   <Transport
                     handleRec={() => console.log('rec button pushed')}
+                    cursor={settings.block.cursor}
                   />
                 </div>
                 <div>
@@ -114,6 +115,7 @@ class SessionComponent extends React.Component<Props, State> {
         <ArrangementComponent
           arrangement={session.arrangement}
           blocks={session.blocks}
+          settings={settings}
         />
       </div>
     )

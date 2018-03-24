@@ -2,12 +2,14 @@ import Transport from 'Components/Controls/Transport'
 import { Card, CardActions, CardHeader, CardText } from 'material-ui/Card'
 import Paper from 'material-ui/Paper'
 import * as React from 'react'
+import { UIState } from 'Redux/UI'
 import styled from 'styled-components'
 import { Arrangement, Block, BlockInfo } from 'types'
 
 interface Props {
   arrangement: Arrangement
   blocks: Block[]
+  settings: UIState
 }
 
 const BlockBase = styled(Paper)`
@@ -49,12 +51,12 @@ const Block = ({
   )
 }
 
-export default ({ arrangement, blocks }: Props) => (
+export default ({ arrangement, blocks, settings }: Props) => (
   <div style={{ padding: '4px' }}>
     <Card>
       <CardHeader title="Arrangement" />
       <CardActions>
-        <Transport />
+        <Transport cursor={settings.arrangement.cursor} />
       </CardActions>
       <CardText>
         {arrangement.blocks.map((blockInfo: BlockInfo, i: number) => {

@@ -6,6 +6,7 @@ import { position2time } from 'Utils/time'
 
 interface Props {
   handleRec?: () => void
+  cursor: number
 }
 
 const Time = styled.span`
@@ -18,7 +19,7 @@ const Time = styled.span`
   letter-spacing: 0.1em;
 `
 
-export default ({ handleRec }: Props) => (
+export default ({ handleRec, cursor }: Props) => (
   <div>
     {handleRec ? (
       <RaisedButton
@@ -29,6 +30,6 @@ export default ({ handleRec }: Props) => (
     ) : null}
     <RaisedButton icon={<Icons.AvStop />} label="Stop" />
     <RaisedButton icon={<Icons.AvPlayArrow />} label="Play" />
-    <Time>{position2time(0)}</Time>
+    <Time>{position2time(cursor)}</Time>
   </div>
 )
