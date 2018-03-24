@@ -31,7 +31,7 @@ const avgNotes = (notes: Note[]): number => {
 
 const noteDefaults: Note = {
   note: 0,
-  velocity: 0,
+  velocity: 100,
   duration: 480,
   position: 0
 }
@@ -170,16 +170,17 @@ class PatternComponent extends React.Component<Props, State> {
       }
 
       if (editNote.note !== note || editNote.duration !== duration) {
+        const newNote = { ...editNote, note, duration }
         if (editNote.note !== note) {
           this.triggerSynthStop()
-          const stopHandler = this.triggerSynthPlay(editNote)
+          const stopHandler = this.triggerSynthPlay(newNote)
           if (stopHandler) {
             this.setState({ stopHandler })
           }
         }
         console.log('state updated')
         this.setState({
-          editNote: { ...editNote, note, duration }
+          editNote: newNote
         })
       }
     } else {

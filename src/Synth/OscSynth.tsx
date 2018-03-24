@@ -24,17 +24,43 @@ class OscSynth implements Synthesizer {
   }
 
   play(info: SynthPlayInfo): SynthStopHandler {
-    const osc = this.ctx.createOscillator()
+    let osc: OscillatorNode | undefined = this.ctx.createOscillator()
+    let gain: GainNode | undefined = this.ctx.createGain()
     osc.type = this.preset.oscillator
     osc.frequency.value = note2freq(info.note)
-    osc.connect(this.ctx.destination)
 
     console.log('synth play', info)
+
+    const start = info.time || this.ctx.currentTime
+    const attack = start + 0.05
+    const decay = attack + 0.1
+
+    const volume = info.velocity / 127 * 0.5
+
+    gain.gain.setValueAtTime(0, start)
+    gain.gain.linearRampToValueAtTime(volume, start + 0.005)
+    gain.gain.setValueAtTime(volume, decay)
+
+    gain.connect(this.ctx.destination)
+    osc.connect(gain)
+
+    osc.addEventListener('ended', () => {
+      console.log('cleanup nodes')
+      osc = undefined
+      gain = undefined
+    })
+
     osc.start(info.time || this.ctx.currentTime)
 
-    const stopHandler = () => {
+    const stop = (time: number = this.ctx.currentTime) => {
       console.log('synth stop')
-      osc.stop(this.ctx.currentTime)
+      const release = time + 0.1
+      if (gain) gain.gain.linearRampToValueAtTime(0, release)
+      if (osc) osc.stop(release)
+    }
+
+    const stopHandler = () => {
+      stop()
     }
     return stopHandler
   }

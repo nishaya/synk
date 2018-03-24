@@ -47,14 +47,16 @@ class DrumsSynth implements Synthesizer {
     const decay = attack + 0.1
     const sustain = decay + 0.05
 
+    const volume = info.velocity / 127 * 0.5
+
     osc.frequency.setValueAtTime(340, start)
     gain.gain.setValueAtTime(0, start)
-    gain.gain.linearRampToValueAtTime(1, start + 0.01)
+    gain.gain.linearRampToValueAtTime(volume, start + 0.01)
 
     osc.frequency.exponentialRampToValueAtTime(80, attack)
 
     osc.frequency.exponentialRampToValueAtTime(30, decay)
-    gain.gain.setValueAtTime(1, decay)
+    gain.gain.setValueAtTime(volume, decay)
 
     gain.gain.linearRampToValueAtTime(0, sustain)
 
