@@ -1,4 +1,5 @@
 import { getAudioCtx } from 'Synth/audio'
+import { Block } from 'types'
 import { sec2pos } from 'Utils/time'
 
 // const UNIT = 480
@@ -20,11 +21,18 @@ class Player {
   endPosition: number
   loop: boolean = true
 
+  block: Block
+
   onUpdate: (info: PlayerUpdateInfo) => void = (info: PlayerUpdateInfo) => {}
 
   constructor() {
     this.cursor = 0
     this.ctx = getAudioCtx()
+  }
+
+  playBlock(cursor: number, block: Block) {
+    this.block = block
+    this.play(cursor)
   }
 
   play(cursor: number) {
@@ -42,11 +50,14 @@ class Player {
   }
 
   mainLoop() {
+    const startPos = this.cursor
     const now = this.ctx.currentTime
     const diff = now - this.prevTime
     const move = sec2pos(diff, this.bpm)
     console.log('player loop', this.cursor, diff, move)
     this.cursor = ~~(this.cursor + move)
+    this.scheduleBlock(startPos, this.cursor)
+
     if (this.cursor > this.endPosition) {
       if (this.loop) {
         // TODO: schedule 0 to cursor
@@ -61,6 +72,8 @@ class Player {
 
     this.prevTime = now
   }
+
+  scheduleBlock(start: number, end: number) {}
 }
 
 export default Player

@@ -65,7 +65,7 @@ class SessionComponent extends React.Component<Props, State> {
         console.log('player updated', info)
         actions.block.setBlockCursor(info.cursor)
       }
-      blockPlayer.play(this.props.settings.block.cursor)
+      blockPlayer.playBlock(this.props.settings.block.cursor, currentBlock)
     }
   }
 
