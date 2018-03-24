@@ -45,7 +45,6 @@ class OscSynth implements Synthesizer {
     osc.connect(gain)
 
     osc.addEventListener('ended', () => {
-      console.log('cleanup nodes')
       osc = undefined
       gain = undefined
     })
@@ -53,8 +52,7 @@ class OscSynth implements Synthesizer {
     osc.start(info.time || this.ctx.currentTime)
 
     const stop = (time: number = this.ctx.currentTime) => {
-      console.log('synth stop')
-      const release = time + 0.3
+      const release = time + 0.1
       if (gain) gain.gain.linearRampToValueAtTime(0, release)
       if (osc) osc.stop(release)
     }

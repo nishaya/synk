@@ -64,7 +64,6 @@ class DrumsSynth implements Synthesizer {
     osc.connect(gain)
 
     osc.addEventListener('ended', () => {
-      console.log('cleanup nodes')
       osc = undefined
       gain = undefined
     })

@@ -3,7 +3,7 @@ import { Block, Note, Pattern, SynthPlayHandler } from 'types'
 import { BEAT_LENGTH, sec2pos } from 'Utils/time'
 
 // const UNIT = 480
-const LOOP_TIME = 80
+const LOOP_TIME = 300
 
 export interface PlayerUpdateInfo {
   cursor: number

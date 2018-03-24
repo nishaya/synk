@@ -63,7 +63,6 @@ class SessionComponent extends React.Component<Props, State> {
       blockPlayer.loop = true
       blockPlayer.synthPlayHandlers = synth.handlers
       blockPlayer.onUpdate = (info: PlayerUpdateInfo) => {
-        console.log('player updated', info)
         actions.block.setBlockCursor(info.cursor)
       }
       blockPlayer.playBlock(this.props.settings.block.cursor, currentBlock)

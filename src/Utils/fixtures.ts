@@ -1,17 +1,15 @@
 import { Note, Session } from 'types'
 import { BEAT_LENGTH } from 'Utils/time'
 
-const BARS = 4
-
-const genNotes = (): Note[] => {
+const genNotes = (bars: number = 4): Note[] => {
   const notes: Note[] = []
   // TODO: use scale
 
-  for (let i = 0; i < 4; i++) {
+  for (let i = 0; i < 16 * bars; i++) {
     notes.push({
-      note: ~~(Math.random() * 10 + 70),
-      position: i * 480,
-      duration: 480,
+      note: ~~(Math.random() * 4) * 3 + 30,
+      position: i * 120,
+      duration: 60,
       velocity: 100
     })
   }
@@ -19,9 +17,9 @@ const genNotes = (): Note[] => {
   return notes
 }
 
-const genDrums = (barlength: number = 4): Note[] => {
+const genDrums = (bars: number = 4): Note[] => {
   const notes: Note[] = []
-  for (let i = 0; i < BARS; i++) {
+  for (let i = 0; i < bars; i++) {
     for (let j = 0; j < 4; j++) {
       notes.push(
         {
@@ -89,19 +87,19 @@ export const session: Session = {
     {
       id: 'b1',
       name: 'A',
-      bars: 4,
+      bars: 1,
       patterns: [
         {
           id: 'dummy1-1',
-          notes: genNotes()
+          notes: genNotes(1)
         },
         {
           id: 'dummy1-2',
-          notes: genNotes()
+          notes: genNotes(1)
         },
         {
           id: 'dummy1-3',
-          notes: genDrums()
+          notes: genDrums(1)
         }
       ]
     },
