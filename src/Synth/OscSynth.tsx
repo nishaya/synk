@@ -1,4 +1,4 @@
-import { SynthPlayInfo, SynthStopHandler } from 'types'
+import { OscSynthPreset, SynthPlayInfo, SynthStopHandler } from 'types'
 import { note2freq } from 'Utils/music'
 import { getAudioCtx } from './audio'
 
@@ -6,24 +6,26 @@ interface SynthOptions {
   oscillator?: OscillatorType
 }
 
-interface SynthProps {
-  oscillator: OscillatorType
+const defaultPreset: OscSynthPreset = {
+  type: 'osc',
+  oscillator: 'square'
 }
 
-const defaultProps: SynthProps = {
-  oscillator: 'sine'
+export interface Synthesizer {
+  play(info: SynthPlayInfo): SynthStopHandler
 }
 
-class OscSynth {
-  props: SynthProps
+class OscSynth implements Synthesizer {
+  preset: OscSynthPreset
   ctx: AudioContext
-  constructor(options: SynthOptions = defaultProps) {
-    this.props = { ...options, ...defaultProps }
+  constructor(preset: SynthOptions) {
+    this.preset = { ...defaultPreset, ...preset }
     this.ctx = getAudioCtx()
   }
 
   play(info: SynthPlayInfo): SynthStopHandler {
     const osc = this.ctx.createOscillator()
+    osc.type = this.preset.oscillator
     osc.frequency.value = note2freq(info.note)
     osc.connect(this.ctx.destination)
 

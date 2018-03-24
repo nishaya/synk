@@ -1,25 +1,44 @@
 import { SynthActions } from 'Containers/Session'
 import * as React from 'react'
-import OscSynth from 'Synth/OscSynth'
-import { SynthPlayHandler, SynthPlayInfo, SynthStopHandler, Track } from 'types'
+import OscSynth, { Synthesizer } from 'Synth/OscSynth'
+import {
+  isOscSynthPreset,
+  SynthPlayHandler,
+  SynthPlayInfo,
+  SynthPreset,
+  SynthStopHandler,
+  Track
+} from 'types'
 
 interface Props {
   actions: SynthActions
   track: Track
 }
 
+const synthFactory = (preset: SynthPreset): Synthesizer | null => {
+  if (isOscSynthPreset(preset)) {
+    return new OscSynth(preset)
+  }
+  return null
+}
 class SynthComponent extends React.Component<Props> {
-  synth: OscSynth
+  synth: Synthesizer
   componentDidMount() {
-    this.synth = new OscSynth()
-    const { track: { index: trackIndex }, actions: { initSynth } } = this.props
-    const handler: SynthPlayHandler = (
-      info: SynthPlayInfo
-    ): SynthStopHandler => {
-      console.log('play synth', info)
-      return this.synth.play(info)
+    const {
+      track: { index: trackIndex, preset },
+      actions: { initSynth }
+    } = this.props
+    const synth = synthFactory(preset)
+    if (synth) {
+      this.synth = synth
+      const handler: SynthPlayHandler = (
+        info: SynthPlayInfo
+      ): SynthStopHandler => {
+        console.log('play synth', info)
+        return this.synth.play(info)
+      }
+      initSynth(trackIndex, handler)
     }
-    initSynth(trackIndex, handler)
   }
   render() {
     return null
