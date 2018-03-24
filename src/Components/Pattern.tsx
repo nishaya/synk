@@ -250,7 +250,7 @@ class PatternComponent extends React.Component<Props, State> {
   render() {
     const pattern = this.getPattern()
     if (!pattern) return null
-    const { block: { bars } } = this.props
+    const { block: { bars }, settings } = this.props
     const { stageHeight, stageWidth, editNote, previewNote } = this.state
     const { maxNote, minNote } = this.noteRange(pattern)
     const trackColor = this.getTrackColor()
@@ -260,6 +260,7 @@ class PatternComponent extends React.Component<Props, State> {
     }
     let editingNote = null
     const barWidth = beatWidth * 4
+    const cursorX = settings.block.cursor / 480 * beatWidth
     if (editNote) {
       console.log('editing', editNote)
       noteStyle.pointerEvents = 'none'
@@ -375,6 +376,14 @@ class PatternComponent extends React.Component<Props, State> {
                 />
               )
             })}
+            <line
+              stroke="#000"
+              x1={cursorX}
+              y1="0"
+              x2={cursorX}
+              y2={stageHeight}
+              style={{ pointerEvents: 'none' }}
+            />
             {editingNote}
           </svg>
         </div>
