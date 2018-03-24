@@ -45,7 +45,7 @@ class SessionComponent extends React.Component<Props, State> {
   }
 
   componentDidMount() {
-    this.playBlockPlayer()
+    // this.playBlockPlayer()
   }
 
   componentWillMount() {
