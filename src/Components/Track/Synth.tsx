@@ -1,5 +1,6 @@
 import { SynthActions } from 'Containers/Session'
 import * as React from 'react'
+import Tone from 'tone'
 import { SynthPlayHandler, SynthPlayInfo, SynthStopHandler, Track } from 'types'
 
 interface Props {
