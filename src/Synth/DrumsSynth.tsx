@@ -38,14 +38,14 @@ class DrumsSynth implements Synthesizer {
 
   playKick(info: SynthPlayInfo): void {
     console.log('play kick', info)
-    const osc = this.ctx.createOscillator()
-    const gain = this.ctx.createGain()
+    let osc: OscillatorNode | undefined = this.ctx.createOscillator()
+    let gain: GainNode | undefined = this.ctx.createGain()
     osc.type = 'sine'
 
     const start = info.time || this.ctx.currentTime
     const attack = start + 0.05
-    const decay = attack + 0.2
-    const sustain = decay + 0.1
+    const decay = attack + 0.1
+    const sustain = decay + 0.05
 
     osc.frequency.setValueAtTime(340, start)
     gain.gain.setValueAtTime(0, start)
@@ -60,6 +60,13 @@ class DrumsSynth implements Synthesizer {
 
     gain.connect(this.ctx.destination)
     osc.connect(gain)
+
+    osc.addEventListener('ended', () => {
+      console.log('cleanup nodes')
+      osc = undefined
+      gain = undefined
+    })
+
     osc.start(start)
     osc.stop(sustain)
   }
