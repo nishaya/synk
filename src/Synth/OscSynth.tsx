@@ -31,15 +31,15 @@ class OscSynth implements Synthesizer {
 
     console.log('synth play', info)
 
-    const start = info.time || this.ctx.currentTime
-    const attack = start + 0.05
-    const decay = attack + 0.1
-
     const volume = info.velocity / 127 * 0.5
+    const start = info.time || this.ctx.currentTime
+    const attack = start + 0.005
+    const sustain = volume * 0.6
+    const decay = attack + 0.4
 
     gain.gain.setValueAtTime(0, start)
-    gain.gain.linearRampToValueAtTime(volume, start + 0.005)
-    gain.gain.setValueAtTime(volume, decay)
+    gain.gain.linearRampToValueAtTime(volume, attack)
+    gain.gain.linearRampToValueAtTime(sustain, decay)
 
     gain.connect(this.ctx.destination)
     osc.connect(gain)
@@ -54,7 +54,7 @@ class OscSynth implements Synthesizer {
 
     const stop = (time: number = this.ctx.currentTime) => {
       console.log('synth stop')
-      const release = time + 0.1
+      const release = time + 0.3
       if (gain) gain.gain.linearRampToValueAtTime(0, release)
       if (osc) osc.stop(release)
     }
