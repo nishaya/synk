@@ -261,6 +261,7 @@ class PatternComponent extends React.Component<Props, State> {
     let editingNote = null
     const barWidth = beatWidth * 4
     const cursorX = settings.block.cursor / 480 * beatWidth
+    const svgHeight = displayNotes * noteHeight
     if (editNote) {
       console.log('editing', editNote)
       noteStyle.pointerEvents = 'none'
@@ -292,12 +293,12 @@ class PatternComponent extends React.Component<Props, State> {
         >
           <svg
             style={{
-              height: displayNotes * noteHeight,
+              height: svgHeight,
               backgroundColor: '#ddd'
             }}
             ref={(svg: SVGSVGElement) => (this.svgElement = svg)}
             xmlns="http://www.w3.org/2000/svg"
-            viewBox={`0 0 ${beatWidth * 4 * bars} ${displayNotes * noteHeight}`}
+            viewBox={`0 0 ${beatWidth * 4 * bars} ${svgHeight}`}
             preserveAspectRatio="xMidYMid meet"
           >
             <defs>
@@ -356,7 +357,7 @@ class PatternComponent extends React.Component<Props, State> {
               x="0"
               y="0"
               width={beatWidth * 4 * bars}
-              height={displayNotes * noteHeight}
+              height={svgHeight}
               style={{ pointerEvents: 'none' }}
             />
             {pattern.notes.map((note: Note, index: number) => {
@@ -377,12 +378,12 @@ class PatternComponent extends React.Component<Props, State> {
               )
             })}
             <line
-              stroke="#000"
+              stroke="#ff0"
               x1={cursorX}
               y1="0"
               x2={cursorX}
-              y2={stageHeight}
-              style={{ pointerEvents: 'none' }}
+              y2={svgHeight}
+              style={{ pointerEvents: 'none', mixBlendMode: 'difference' }}
             />
             {editingNote}
           </svg>
