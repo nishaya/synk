@@ -14,9 +14,11 @@ class AuthComponent extends React.Component<Props, State> {
     user: null
   }
   componentDidMount() {
+    const { actions: { setUserId } } = this.props
     anonAuth((user: firebase.User) => {
       console.log('AuthComponent', user)
       this.setState({ user })
+      setUserId(user.uid)
     })
   }
   render() {
