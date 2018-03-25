@@ -90,5 +90,9 @@ export const uiReducers = (
     const { cursor } = action.payload
     return { ...merge(state, { block: { cursor } }) }
   }
+  if (isType(action, setCurrentBlockIndex)) {
+    const { currentBlockIndex } = action.payload
+    return { ...merge(state, { block: { currentBlockIndex } }) }
+  }
   return state
 }
