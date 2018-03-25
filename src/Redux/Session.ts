@@ -1,7 +1,7 @@
 import { Action } from 'redux'
 import { Block, Note, Pattern, Session } from 'types'
 import { isType } from 'typescript-fsa'
-import { session } from 'Utils/fixtures'
+import { session as dummySession } from 'Utils/fixtures'
 
 import * as firebase from 'firebase'
 require('firebase/firestore')
@@ -36,7 +36,7 @@ export interface SessionState {
   readonly userId: string | null
 }
 
-const initialState: SessionState = { session, userId: null }
+const initialState: SessionState = { session: dummySession, userId: null }
 
 interface FoundPattern {
   pattern: Pattern
@@ -69,16 +69,21 @@ export const sessionReducers = (
   if (isType(action, addNote)) {
     const { blockId, patternId, note } = action.payload
     console.log('Action - addNote', action.payload, note)
-    const found = findPattern(state.session, blockId, patternId)
+    const newSession = JSON.parse(JSON.stringify(state.session))
+    const found = findPattern(newSession, blockId, patternId)
     if (found) {
       const { pattern } = found
       console.log('pattern', pattern)
       pattern.notes.push(note)
 
-      const doc = firebase.firestore().doc(`/sessions/${state.session.id}`)
-      doc.set(state.session)
+      console.log('state session', state.session)
+
+      const doc = firebase.firestore().doc(`/sessions/${newSession.id}`)
+      doc.set(newSession).then((v: any) => {
+        console.log('set', v)
+      })
     }
-    return state
+    return { ...state, session: newSession }
   }
   if (isType(action, changeTrackLevel)) {
     const { trackIndex, level } = action.payload
@@ -95,8 +100,9 @@ export const sessionReducers = (
   }
   if (isType(action, initSession)) {
     const { session } = action.payload
-    // return { ...state, session: JSON.parse(JSON.stringify(session)) }
-    return { ...state, session }
+    console.log('initSession', session)
+    return { ...state, session: JSON.parse(JSON.stringify(session)) }
+    // return { ...state, session }
   }
   return state
 }

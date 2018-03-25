@@ -44,6 +44,7 @@ class LoaderComponent extends React.Component<
         .then((docRef: firebase.firestore.DocumentReference) => {
           console.log('firestore added', docRef)
           newSession.id = docRef.id
+          docRef.update({ id: docRef.id })
           actions.initSession(newSession)
           history.push(`/session/${docRef.id}`)
         })
@@ -62,6 +63,7 @@ class LoaderComponent extends React.Component<
             console.log('loaded', data)
             const loadedSession = data as Session
             loadedSession.id = snapshot.id
+            console.log('loadedsession', loadedSession.id)
             actions.initSession(loadedSession)
             history.push(`/session/${sessionId}`)
           } else {

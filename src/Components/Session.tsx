@@ -63,6 +63,7 @@ class SessionComponent extends React.Component<
         console.log('not loaded')
         history.push(`/loader/${sessionId}`)
       } else {
+        console.log('watch db')
         const doc = firebase.firestore().doc(`/sessions/${sessionId}`)
         doc.onSnapshot((changed: firebase.firestore.DocumentSnapshot) => {
           const data = changed.data() as Session
@@ -108,6 +109,10 @@ class SessionComponent extends React.Component<
       blockPlayer.block = block
       blockPlayer.cursor = 0
     }
+  }
+
+  componentWillReceiveProps(nextProps: Props) {
+    console.log('Session updated', this.props, nextProps)
   }
 
   render() {
