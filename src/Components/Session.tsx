@@ -8,6 +8,7 @@ import { SessionActions } from 'Containers/Session'
 import { Card, CardActions, CardHeader, CardText } from 'material-ui/Card'
 import Player, { PlayerUpdateInfo } from 'Player'
 import * as React from 'react'
+import { RouteComponentProps, withRouter } from 'react-router'
 import { SynthState } from 'Redux/Synth'
 import { UIState } from 'Redux/UI'
 import styled from 'styled-components'
@@ -39,13 +40,31 @@ interface State {
   currentBlock: Block | undefined
 }
 
-class SessionComponent extends React.Component<Props, State> {
+interface RouteParams {
+  sessionId?: string
+}
+
+class SessionComponent extends React.Component<
+  Props & RouteComponentProps<RouteParams>,
+  State
+> {
   state: State = {
     currentBlock: undefined
   }
 
   componentDidMount() {
-    // this.playBlockPlayer()
+    const { match, session, history } = this.props
+    console.log('params', match)
+    if (match.params && match.params.sessionId) {
+      const { sessionId } = match.params
+      if (session.id !== sessionId) {
+        console.log('not loaded')
+        history.push(`/loader/${sessionId}`)
+      }
+    } else {
+      console.log('no sessionId')
+      history.push('/loader/new')
+    }
   }
 
   componentWillMount() {
@@ -166,4 +185,4 @@ class SessionComponent extends React.Component<Props, State> {
   }
 }
 
-export default SessionComponent
+export default withRouter(SessionComponent)

@@ -20,7 +20,7 @@ ReactDOM.render(
       <AuthContainer>
         <BrowserRouter>
           <Switch>
-            <Route path="/session" component={App} />
+            <Route path="/session/:sessionId?" component={App} />
             <Route path="/loader/:sessionId" component={Loader} />
             <Route component={SplashComponent} />
           </Switch>
