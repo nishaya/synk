@@ -7,7 +7,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
-import { Route } from 'react-router'
+import { Route, Switch } from 'react-router'
 import { BrowserRouter } from 'react-router-dom'
 import store from 'Redux/store'
 import { initFirebase } from 'Utils/firebase'
@@ -19,11 +19,11 @@ ReactDOM.render(
     <Provider store={store}>
       <AuthContainer>
         <BrowserRouter>
-          <div>
+          <Switch>
             <Route path="/session" component={App} />
-            <Route path="/loader" component={Loader} />
+            <Route path="/loader/:sessionId" component={Loader} />
             <Route component={SplashComponent} />
-          </div>
+          </Switch>
         </BrowserRouter>
       </AuthContainer>
     </Provider>
