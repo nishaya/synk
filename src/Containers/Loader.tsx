@@ -1,26 +1,63 @@
 import * as React from 'react'
-import { match, withRouter } from 'react-router'
+import { RouteComponentProps, withRouter } from 'react-router'
+import { session } from 'Utils/fixtures'
+
+import { connect } from 'react-redux'
+import { Dispatch } from 'redux'
+import { Action } from 'redux'
+import { initSession } from 'Redux/Session'
+import { RootState } from 'Redux/store'
+import { Session } from 'types'
+
+interface Params {
+  sessionId?: string
+}
 
 interface Props {
-  match?: match<{ sessionId?: string }>
   history: any
+  actions: LoaderActions
 }
 
-const LoaderComponent = ({ match, history }: Props) => {
-  console.log('loader params', match)
-  const sessionId =
-    match && match.params && match.params.sessionId
-      ? match.params.sessionId
-      : 'new'
+class LoaderComponent extends React.Component<
+  Props & RouteComponentProps<Params>
+> {
+  componentDidMount() {
+    const { actions, match, history } = this.props
 
-  if (!sessionId || sessionId == 'new') {
-    console.log('create new')
-    history.push(`/session/${sessionId}`)
-  } else {
-    console.log('load session')
-    history.push(`/session/${sessionId}`)
+    console.log('loader params', match)
+    const sessionId =
+      match && match.params && match.params.sessionId
+        ? match.params.sessionId
+        : 'new'
+
+    if (!sessionId || sessionId == 'new') {
+      console.log('create new')
+      const newSession = session
+      actions.initSession(newSession)
+      history.push(`/session/${sessionId}`)
+    } else {
+      console.log('load session')
+      history.push(`/session/${sessionId}`)
+    }
+    console.log('history', history)
   }
-  console.log('history', history)
-  return <div>loader</div>
+  render() {
+    return <div>loader</div>
+  }
 }
-export default withRouter(LoaderComponent)
+const LoaderWithRouter = withRouter(LoaderComponent)
+
+export interface LoaderActions {
+  initSession: (session: Session) => void
+}
+
+const mapStateToProps = (state: RootState) => ({})
+
+const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
+  actions: {
+    initSession: (session: Session) => {
+      dispatch(initSession({ session }))
+    }
+  }
+})
+export default connect(mapStateToProps, mapDispatchToProps)(LoaderWithRouter)

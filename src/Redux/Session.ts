@@ -23,6 +23,10 @@ export const setUserId = actionCreator<{
   userId: string
 }>('SESSION_SET_USER_ID')
 
+export const initSession = actionCreator<{
+  session: Session
+}>('SESSION_INIT_SESSION')
+
 // reducer
 export interface SessionState {
   readonly session: Session
@@ -69,6 +73,10 @@ export const sessionReducers = (
   if (isType(action, setUserId)) {
     const { userId } = action.payload
     return { ...state, userId }
+  }
+  if (isType(action, initSession)) {
+    const { session } = action.payload
+    return { ...state, session }
   }
   return state
 }
