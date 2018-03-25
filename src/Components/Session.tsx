@@ -117,7 +117,7 @@ class SessionComponent extends React.Component<
 
   render() {
     const { session, actions, settings, synth } = this.props
-    const { currentBlock } = this.state
+    const currentBlock = session.blocks[settings.block.currentBlockIndex]
     return (
       <div style={{ padding: '4px' }}>
         <div style={{ padding: '4px' }}>
@@ -151,9 +151,16 @@ class SessionComponent extends React.Component<
                 <div style={{ width: '300px' }}>
                   <div style={{ padding: 8 }}>
                     <BlockSelect
-                      value={currentBlock ? currentBlock.id : null}
+                      value={settings.block.currentBlockIndex}
                       blocks={session.blocks}
-                      onChange={(v: string) => {
+                      onChange={(blockIndex: number) => {
+                        const block = session.blocks[blockIndex]
+                        if (block) {
+                          this.blockChanged(block)
+                        }
+                        actions.block.setCurrentBlockIndex(blockIndex)
+
+                        /*
                         const block = session.blocks.find(
                           (b: Block) => b.id === v
                         )
@@ -164,6 +171,7 @@ class SessionComponent extends React.Component<
                           currentBlock: block
                         })
                         console.log('select edit', v)
+                        */
                       }}
                     />
                   </div>

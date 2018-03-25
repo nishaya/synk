@@ -5,7 +5,7 @@ import { Action } from 'redux'
 import { addNote, changeTrackLevel, initSession } from 'Redux/Session'
 import { RootState } from 'Redux/store'
 import { initSynth } from 'Redux/Synth'
-import { setBlockCursor, setCurrentTrack } from 'Redux/UI'
+import { setBlockCursor, setCurrentBlockIndex, setCurrentTrack } from 'Redux/UI'
 import { Note, Session, SynthPlayHandler } from 'types'
 
 export interface PatternActions {
@@ -18,6 +18,7 @@ export interface SynthActions {
 
 export interface BlockActions {
   setBlockCursor: (cursor: number) => void
+  setCurrentBlockIndex: (blockIndex: number) => void
 }
 export interface TrackActions {
   setCurrentTrack: (trackIndex: number) => void
@@ -46,6 +47,9 @@ const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
     block: {
       setBlockCursor: (cursor: number) => {
         dispatch(setBlockCursor({ cursor }))
+      },
+      setCurrentBlockIndex: (currentBlockIndex: number) => {
+        dispatch(setCurrentBlockIndex({ currentBlockIndex }))
       }
     },
     track: {

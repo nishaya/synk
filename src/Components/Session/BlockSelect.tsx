@@ -8,20 +8,20 @@ const BlockSelect = ({
   blocks,
   onChange
 }: {
-  value: string | null
+  value: number | null
   blocks: Block[]
-  onChange: (v: string) => void
+  onChange: (blockIndex: number) => void
 }) => (
   <SelectField
     value={value}
     onChange={(
       e: React.SyntheticEvent<HTMLSelectElement>,
       i: number,
-      v: string
-    ) => onChange(v)}
+      v: number
+    ) => onChange(i)}
   >
-    {blocks.map((block: Block) => (
-      <MenuItem key={block.id} value={block.id} primaryText={block.name} />
+    {blocks.map((block: Block, i: number) => (
+      <MenuItem key={block.id} value={i} primaryText={block.name} />
     ))}
   </SelectField>
 )
