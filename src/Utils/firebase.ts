@@ -2,13 +2,17 @@ import * as firebase from 'firebase'
 
 const {
   REACT_APP_FIREBASE_API_KEY: apiKey,
-  REACT_APP_FIREBASE_DB_URL: databaseURL
+  REACT_APP_FIREBASE_DB_URL: databaseURL,
+  REACT_APP_FIREBASE_AUTH_DOMAIN: authDomain,
+  REACT_APP_FIREBASE_PROJECT_ID: projectId
 } = process.env
 
 export const initFirebase = () => {
   firebase.initializeApp({
     apiKey,
-    databaseURL
+    databaseURL,
+    projectId,
+    authDomain
   })
 }
 

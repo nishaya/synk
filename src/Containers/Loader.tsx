@@ -1,13 +1,12 @@
 import * as React from 'react'
-import { RouteComponentProps, withRouter } from 'react-router'
-import { session } from 'Utils/fixtures'
-
 import { connect } from 'react-redux'
+import { RouteComponentProps, withRouter } from 'react-router'
 import { Dispatch } from 'redux'
 import { Action } from 'redux'
 import { initSession } from 'Redux/Session'
 import { RootState } from 'Redux/store'
 import { Session } from 'types'
+import { session } from 'Utils/fixtures'
 
 interface Params {
   sessionId?: string
@@ -42,7 +41,7 @@ class LoaderComponent extends React.Component<
     console.log('history', history)
   }
   render() {
-    return <div>loader</div>
+    return <div>loading...</div>
   }
 }
 const LoaderWithRouter = withRouter(LoaderComponent)
