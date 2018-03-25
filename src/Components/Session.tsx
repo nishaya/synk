@@ -15,6 +15,9 @@ import styled from 'styled-components'
 import { Block, Session } from 'types'
 import { BEAT_LENGTH } from 'Utils/time'
 
+import * as firebase from 'firebase'
+require('firebase/firestore')
+
 const blockPlayer = new Player()
 
 interface Props {
@@ -53,12 +56,24 @@ class SessionComponent extends React.Component<
   }
 
   componentDidMount() {
-    const { match, session, history } = this.props
+    const { match, session, history, actions } = this.props
     if (match.params && match.params.sessionId) {
       const { sessionId } = match.params
       if (session.id !== sessionId) {
         console.log('not loaded')
         history.push(`/loader/${sessionId}`)
+      } else {
+        const doc = firebase.firestore().doc(`/sessions/${sessionId}`)
+        doc.onSnapshot((changed: firebase.firestore.DocumentSnapshot) => {
+          const data = changed.data() as Session
+          console.log(
+            'onSnapshot',
+            data.blocks[0].patterns[0].notes.length,
+            changed,
+            changed.data()
+          )
+          actions.updateSession(data)
+        })
       }
     } else {
       console.log('no sessionId')

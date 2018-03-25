@@ -2,11 +2,11 @@ import SessionComponent from 'Components/Session'
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
 import { Action } from 'redux'
-import { addNote, changeTrackLevel } from 'Redux/Session'
+import { addNote, changeTrackLevel, initSession } from 'Redux/Session'
 import { RootState } from 'Redux/store'
 import { initSynth } from 'Redux/Synth'
 import { setBlockCursor, setCurrentTrack } from 'Redux/UI'
-import { Note, SynthPlayHandler } from 'types'
+import { Note, Session, SynthPlayHandler } from 'types'
 
 export interface PatternActions {
   addNote: (blockId: string, patternId: string, note: Note) => void
@@ -25,6 +25,7 @@ export interface TrackActions {
 }
 
 export interface SessionActions {
+  updateSession: (session: Session) => void
   pattern: PatternActions
   block: BlockActions
   track: TrackActions
@@ -39,6 +40,9 @@ const mapStateToProps = (state: RootState) => ({
 
 const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
   actions: {
+    updateSession: (session: Session) => {
+      dispatch(initSession({ session }))
+    },
     block: {
       setBlockCursor: (cursor: number) => {
         dispatch(setBlockCursor({ cursor }))

@@ -95,6 +95,7 @@ export const sessionReducers = (
   }
   if (isType(action, initSession)) {
     const { session } = action.payload
+    // return { ...state, session: JSON.parse(JSON.stringify(session)) }
     return { ...state, session }
   }
   return state
