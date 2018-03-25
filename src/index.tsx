@@ -1,6 +1,7 @@
 import App from 'App'
 import SplashComponent from 'Components/Splash'
 import AuthContainer from 'Containers/Auth'
+import Loader from 'Containers/Loader'
 import 'index.css'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import * as React from 'react'
@@ -20,6 +21,7 @@ ReactDOM.render(
         <BrowserRouter>
           <div>
             <Route path="/session" component={App} />
+            <Route path="/loader" component={Loader} />
             <Route component={SplashComponent} />
           </div>
         </BrowserRouter>
