@@ -54,6 +54,9 @@ class LoaderComponent extends React.Component<
         console.log('loaded', snapshot.data())
         // TODO: check loaded data
         const loadedSession = snapshot.data() as Session
+        doc.onSnapshot((changed: firebase.firestore.DocumentSnapshot) => {
+          console.log('onSnapshot', changed, changed.data())
+        })
         actions.initSession(loadedSession)
         history.push(`/session/${sessionId}`)
       })
