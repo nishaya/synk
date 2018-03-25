@@ -1,3 +1,4 @@
+import * as firebase from 'firebase'
 import * as React from 'react'
 import { connect } from 'react-redux'
 import { RouteComponentProps, withRouter } from 'react-router'
@@ -7,6 +8,7 @@ import { initSession } from 'Redux/Session'
 import { RootState } from 'Redux/store'
 import { Session } from 'types'
 import { session } from 'Utils/fixtures'
+require('firebase/firestore')
 
 interface Params {
   sessionId?: string
@@ -32,11 +34,30 @@ class LoaderComponent extends React.Component<
     if (!sessionId || sessionId == 'new') {
       console.log('create new')
       const newSession = session
-      actions.initSession(newSession)
-      history.push(`/session/${sessionId}`)
+      const db = firebase.firestore()
+      db
+        .collection('sessions')
+        .add(newSession)
+        .then((docRef: firebase.firestore.DocumentReference) => {
+          console.log('firestore added', docRef)
+          newSession.id = docRef.id
+          actions.initSession(newSession)
+          history.push(`/session/${docRef.id}`)
+        })
+        .catch((error: firebase.firestore.FirestoreError) => {
+          console.log('firestore error', error)
+        })
     } else {
+      const db = firebase.firestore()
+      const doc = db.doc(`/sessions/${sessionId}`)
+      doc.get().then((snapshot: firebase.firestore.DocumentSnapshot) => {
+        console.log('loaded', snapshot.data())
+        // TODO: check loaded data
+        const loadedSession = snapshot.data() as Session
+        actions.initSession(loadedSession)
+        history.push(`/session/${sessionId}`)
+      })
       console.log('load session')
-      history.push(`/session/${sessionId}`)
     }
     console.log('history', history)
   }
