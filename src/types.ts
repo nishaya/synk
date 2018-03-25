@@ -1,5 +1,6 @@
 export interface Session {
   id: string
+  created?: Date
   tracks: Track[]
   blocks: Block[]
   arrangement: Arrangement

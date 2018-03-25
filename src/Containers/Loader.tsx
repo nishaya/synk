@@ -37,7 +37,10 @@ class LoaderComponent extends React.Component<
       const db = firebase.firestore()
       db
         .collection('sessions')
-        .add(newSession)
+        .add({
+          ...newSession,
+          created: firebase.firestore.FieldValue.serverTimestamp()
+        })
         .then((docRef: firebase.firestore.DocumentReference) => {
           console.log('firestore added', docRef)
           newSession.id = docRef.id
