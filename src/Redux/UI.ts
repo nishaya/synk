@@ -19,6 +19,10 @@ export const setBlockCursor = actionCreator<{
   cursor: number
 }>('UI_SET_BLOCK_CURSOR')
 
+export const setCurrentBlockIndex = actionCreator<{
+  currentBlockIndex: number
+}>('UI_SET_CURRENT_BLOCK_INDEX')
+
 // reducer
 export interface PatternUIState {
   quantize: number
@@ -26,6 +30,7 @@ export interface PatternUIState {
 }
 
 export interface BlockUIState {
+  currentBlockIndex: number
   cursor: number
 }
 export interface TrackUIState {
@@ -54,6 +59,7 @@ const defaultTrackColors = [
 
 const initialState: UIState = {
   block: {
+    currentBlockIndex: 0,
     cursor: 0
   },
   pattern: { quantize: 120, duration: 120 },

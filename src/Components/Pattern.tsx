@@ -251,9 +251,9 @@ class PatternComponent extends React.Component<Props, State> {
       block,
       settings: { track: { currentTrack: patternIndex } }
     } = nextProps
-    console.log(block)
     const nextPattern = block.patterns[patternIndex]
     console.log('pattern updated', nextPattern, this.getPattern())
+    console.log(block.patterns[0].notes.length)
   }
 
   render() {
