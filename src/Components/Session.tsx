@@ -84,8 +84,7 @@ class SessionComponent extends React.Component<
   }
 
   playBlockPlayer() {
-    const { session, settings } = this.props
-    const currentBlock = session.blocks[settings.block.currentBlockIndex]
+    const currentBlock = this.getCurrentBlock()
     if (currentBlock) {
       const { actions, synth } = this.props
       blockPlayer.endPosition = currentBlock.bars * BEAT_LENGTH * 4
@@ -106,8 +105,22 @@ class SessionComponent extends React.Component<
     }
   }
 
+  getCurrentBlock(props: Props = this.props): Block {
+    const { session, settings } = props
+    return session.blocks[settings.block.currentBlockIndex]
+  }
+
   componentWillReceiveProps(nextProps: Props) {
     console.log('Session updated', this.props, nextProps)
+    const currentBlock = this.getCurrentBlock()
+    const nextBlock = this.getCurrentBlock(nextProps)
+    if (currentBlock !== nextBlock) {
+      console.log('block updated')
+      if (blockPlayer.playing) {
+        blockPlayer.block = nextBlock
+        blockPlayer.endPosition = nextBlock.bars * BEAT_LENGTH * 4
+      }
+    }
   }
 
   render() {
