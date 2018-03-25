@@ -246,16 +246,6 @@ class PatternComponent extends React.Component<Props, State> {
     return { avg, maxNote, minNote }
   }
 
-  componentWillReceiveProps(nextProps: Props) {
-    const {
-      block,
-      settings: { track: { currentTrack: patternIndex } }
-    } = nextProps
-    const nextPattern = block.patterns[patternIndex]
-    console.log('pattern updated', nextPattern, this.getPattern())
-    console.log(block.patterns[0].notes.length)
-  }
-
   render() {
     const pattern = this.getPattern()
     if (!pattern) return null

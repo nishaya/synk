@@ -39,9 +39,7 @@ const EditArea = styled.div`
   display: flex;
 `
 
-interface State {
-  currentBlock: Block | undefined
-}
+interface State {}
 
 interface RouteParams {
   sessionId?: string
@@ -51,10 +49,6 @@ class SessionComponent extends React.Component<
   Props & RouteComponentProps<RouteParams>,
   State
 > {
-  state: State = {
-    currentBlock: undefined
-  }
-
   componentDidMount() {
     const { match, session, history, actions } = this.props
     if (match.params && match.params.sessionId) {
@@ -90,7 +84,8 @@ class SessionComponent extends React.Component<
   }
 
   playBlockPlayer() {
-    const { currentBlock } = this.state
+    const { session, settings } = this.props
+    const currentBlock = session.blocks[settings.block.currentBlockIndex]
     if (currentBlock) {
       const { actions, synth } = this.props
       blockPlayer.endPosition = currentBlock.bars * BEAT_LENGTH * 4
@@ -159,19 +154,6 @@ class SessionComponent extends React.Component<
                           this.blockChanged(block)
                         }
                         actions.block.setCurrentBlockIndex(blockIndex)
-
-                        /*
-                        const block = session.blocks.find(
-                          (b: Block) => b.id === v
-                        )
-                        if (block) {
-                          this.blockChanged(block)
-                        }
-                        this.setState({
-                          currentBlock: block
-                        })
-                        console.log('select edit', v)
-                        */
                       }}
                     />
                   </div>
