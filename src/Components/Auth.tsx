@@ -1,30 +1,25 @@
 import { AuthActions } from 'Containers/Auth'
 import * as React from 'react'
+import { SessionState } from 'Redux/Session'
 import { anonAuth } from 'Utils/firebase'
 
 interface Props {
   actions: AuthActions
-}
-interface State {
-  user: firebase.User | null
+  session: SessionState
 }
 
-class AuthComponent extends React.Component<Props, State> {
-  state: State = {
-    user: null
-  }
+class AuthComponent extends React.Component<Props> {
   componentDidMount() {
     const { actions: { setUserId } } = this.props
     anonAuth((user: firebase.User) => {
       console.log('AuthComponent', user)
-      this.setState({ user })
       setUserId(user.uid)
     })
   }
   render() {
     const { children } = this.props
-    const { user } = this.state
-    if (user && children) {
+    const { session: { userId } } = this.props
+    if (userId && children) {
       return children
     }
     return null

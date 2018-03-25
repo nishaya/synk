@@ -9,7 +9,9 @@ export interface AuthActions {
   setUserId: (userId: string) => void
 }
 
-const mapStateToProps = (state: RootState) => ({})
+const mapStateToProps = (state: RootState) => ({
+  session: state.Session
+})
 
 const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
   actions: {
