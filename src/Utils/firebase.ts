@@ -29,3 +29,33 @@ export const anonAuth = (onAuth: (user: firebase.User) => void): void => {
       console.log('anonAuth error', error)
     })
 }
+
+export const getDbRef = (path: string): firebase.database.Reference => {
+  return firebase.database().ref(path)
+}
+
+export const watchDb = (
+  path: string,
+  onData: (snapshot: firebase.database.DataSnapshot) => void
+): firebase.database.Reference => {
+  const ref = getDbRef(path)
+  ref.on('value', (snapshot: firebase.database.DataSnapshot) => {
+    console.log('db updated', snapshot)
+  })
+  return ref
+}
+
+export const writeDb = (
+  path: string,
+  data: any,
+  onData?: (snapshot: firebase.database.DataSnapshot) => void
+): firebase.database.Reference => {
+  const ref = getDbRef(path)
+  ref.set(data, (res: any) => {
+    console.log('writeDb completed')
+  })
+  if (onData) {
+    return watchDb(path, onData)
+  }
+  return ref
+}
