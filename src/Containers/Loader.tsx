@@ -50,20 +50,30 @@ class LoaderComponent extends React.Component<
     } else {
       const db = firebase.firestore()
       const doc = db.doc(`/sessions/${sessionId}`)
-      doc.get().then((snapshot: firebase.firestore.DocumentSnapshot) => {
-        console.log('loaded', snapshot.data())
-        // TODO: check loaded data
-        const loadedSession = snapshot.data() as Session
-        loadedSession.id = snapshot.id
-        doc.onSnapshot((changed: firebase.firestore.DocumentSnapshot) => {
-          console.log('onSnapshot', changed, changed.data())
+      doc
+        .get()
+        .then((snapshot: firebase.firestore.DocumentSnapshot) => {
+          // TODO: check loaded data
+          if (snapshot.exists) {
+            const data = snapshot.data()
+            console.log('loaded', data)
+            const loadedSession = data as Session
+            loadedSession.id = snapshot.id
+            doc.onSnapshot((changed: firebase.firestore.DocumentSnapshot) => {
+              console.log('onSnapshot', changed, changed.data())
+            })
+            actions.initSession(loadedSession)
+            history.push(`/session/${sessionId}`)
+          } else {
+            console.log('not found', snapshot)
+            history.push('/404')
+          }
         })
-        actions.initSession(loadedSession)
-        history.push(`/session/${sessionId}`)
-      })
+        .catch((e: any) => {
+          console.log('load error', e)
+        })
       console.log('load session')
     }
-    console.log('history', history)
   }
   render() {
     return <div>loading...</div>

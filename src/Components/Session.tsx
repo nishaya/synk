@@ -54,7 +54,6 @@ class SessionComponent extends React.Component<
 
   componentDidMount() {
     const { match, session, history } = this.props
-    console.log('params', match)
     if (match.params && match.params.sessionId) {
       const { sessionId } = match.params
       if (session.id !== sessionId) {
