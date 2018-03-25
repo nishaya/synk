@@ -3,6 +3,9 @@ import { Block, Note, Pattern, Session } from 'types'
 import { isType } from 'typescript-fsa'
 import { session } from 'Utils/fixtures'
 
+import * as firebase from 'firebase'
+require('firebase/firestore')
+
 import actionCreatorFactory from 'typescript-fsa'
 
 // action
@@ -35,16 +38,28 @@ export interface SessionState {
 
 const initialState: SessionState = { session, userId: null }
 
+interface FoundPattern {
+  pattern: Pattern
+  blockIndex: number
+  patternIndex: number
+}
+
 const findPattern = (
   session: Session,
   blockId: string,
   patternId: string
-): Pattern | undefined => {
-  const block = session.blocks.find((b: Block) => b.id === blockId)
-  if (!block) {
-    return undefined
-  }
-  return block.patterns.find((p: Pattern) => p.id === patternId)
+): FoundPattern | undefined => {
+  let found: FoundPattern | undefined = undefined
+  session.blocks.forEach((b: Block, bIndex: number) => {
+    if (b.id === blockId) {
+      b.patterns.forEach((p: Pattern, pIndex: number) => {
+        if (p.id === patternId) {
+          found = { pattern: p, blockIndex: bIndex, patternIndex: pIndex }
+        }
+      })
+    }
+  })
+  return found
 }
 
 export const sessionReducers = (
@@ -54,10 +69,14 @@ export const sessionReducers = (
   if (isType(action, addNote)) {
     const { blockId, patternId, note } = action.payload
     console.log('Action - addNote', action.payload, note)
-    const pattern = findPattern(state.session, blockId, patternId)
-    if (pattern) {
+    const found = findPattern(state.session, blockId, patternId)
+    if (found) {
+      const { pattern } = found
       console.log('pattern', pattern)
       pattern.notes.push(note)
+
+      const doc = firebase.firestore().doc(`/sessions/${state.session.id}`)
+      doc.set(state.session)
     }
     return state
   }
