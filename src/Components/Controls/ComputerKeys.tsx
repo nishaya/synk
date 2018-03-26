@@ -18,7 +18,7 @@ class ComputerKeysComponent extends React.Component<Props> {
     this.keyDownHandler = this.handleKeyDown.bind(this)
     this.keyUpHandler = this.handleKeyUp.bind(this)
     document.addEventListener('keydown', this.keyDownHandler)
-    document.addEventListener('keydown', this.keyUpHandler)
+    document.addEventListener('keyup', this.keyUpHandler)
   }
 
   componentWillUnmount() {
