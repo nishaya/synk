@@ -39,29 +39,6 @@ export const sessionReducers = (
   state: SessionState = initialState,
   action: Action
 ): SessionState => {
-  /*
-  if (isType(action, addNote)) {
-    const { blockId, patternId, note } = action.payload
-    console.log('Action - addNote', action.payload, note)
-    const newSession = state.session
-    // const newSession = JSON.parse(JSON.stringify(state.session))
-    const found = findPattern(newSession, blockId, patternId)
-    if (found) {
-      const { pattern } = found
-      console.log('pattern', pattern)
-      pattern.notes.push(note)
-
-      console.log('state session', state.session)
-
-      const doc = firebase.firestore().doc(`/sessions/${newSession.id}`)
-      doc.set(newSession).then((v: any) => {
-        console.log('set', v)
-      })
-    }
-    // return { ...state, session: newSession }
-    return { ...state }
-  }
-  */
   if (isType(action, changeTrackLevel)) {
     const { trackIndex, level } = action.payload
     console.log('Action - changeTrackLevel', action.payload)
@@ -77,8 +54,7 @@ export const sessionReducers = (
   }
   if (isType(action, initSession)) {
     const { session } = action.payload
-    console.log('initSession', session)
-    // return { ...state, session: JSON.parse(JSON.stringify(session)) }
+    // console.log('initSession', session)
     return { ...state, session }
   }
   return state

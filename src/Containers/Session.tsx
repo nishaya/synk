@@ -49,19 +49,14 @@ const mapStateToProps = (state: RootState) => ({
     addNote: (blockId: string, patternId: string, note: Note) => {
       console.log('Mutation - addNote', blockId, patternId, note)
       const newSession = state.Session.session
-      // const newSession = JSON.parse(JSON.stringify(state.session))
       const found = findPattern(newSession, blockId, patternId)
       if (found) {
         const { pattern } = found
         pattern.notes.push(note)
 
         const doc = firebase.firestore().doc(`/sessions/${newSession.id}`)
-        doc.set(newSession).then((v: any) => {
-          console.log('set', v)
-        })
+        doc.set(newSession)
       }
-      // return { ...state, session: newSession }
-      // return { ...state }
     }
   }
 })
