@@ -1,10 +1,7 @@
 import { Action } from 'redux'
-import { Block, Note, Pattern, Session } from 'types'
+import { Note, Session } from 'types'
 import { isType } from 'typescript-fsa'
 import { session as dummySession } from 'Utils/fixtures'
-
-import * as firebase from 'firebase'
-require('firebase/firestore')
 
 import actionCreatorFactory from 'typescript-fsa'
 
@@ -38,34 +35,11 @@ export interface SessionState {
 
 const initialState: SessionState = { session: dummySession, userId: null }
 
-interface FoundPattern {
-  pattern: Pattern
-  blockIndex: number
-  patternIndex: number
-}
-
-const findPattern = (
-  session: Session,
-  blockId: string,
-  patternId: string
-): FoundPattern | undefined => {
-  let found: FoundPattern | undefined = undefined
-  session.blocks.forEach((b: Block, bIndex: number) => {
-    if (b.id === blockId) {
-      b.patterns.forEach((p: Pattern, pIndex: number) => {
-        if (p.id === patternId) {
-          found = { pattern: p, blockIndex: bIndex, patternIndex: pIndex }
-        }
-      })
-    }
-  })
-  return found
-}
-
 export const sessionReducers = (
   state: SessionState = initialState,
   action: Action
 ): SessionState => {
+  /*
   if (isType(action, addNote)) {
     const { blockId, patternId, note } = action.payload
     console.log('Action - addNote', action.payload, note)
@@ -87,6 +61,7 @@ export const sessionReducers = (
     // return { ...state, session: newSession }
     return { ...state }
   }
+  */
   if (isType(action, changeTrackLevel)) {
     const { trackIndex, level } = action.payload
     console.log('Action - changeTrackLevel', action.payload)

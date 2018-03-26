@@ -7,6 +7,10 @@ import { RootState } from 'Redux/store'
 import { initSynth } from 'Redux/Synth'
 import { setBlockCursor, setCurrentBlockIndex, setCurrentTrack } from 'Redux/UI'
 import { Note, Session, SynthPlayHandler } from 'types'
+import { findPattern } from 'Utils/session'
+
+import * as firebase from 'firebase'
+require('firebase/firestore')
 
 export interface PatternActions {
   addNote: (blockId: string, patternId: string, note: Note) => void
@@ -43,7 +47,21 @@ const mapStateToProps = (state: RootState) => ({
   synth: state.Synth,
   mutations: {
     addNote: (blockId: string, patternId: string, note: Note) => {
-      console.log('addNote', note)
+      console.log('Mutation - addNote', blockId, patternId, note)
+      const newSession = state.Session.session
+      // const newSession = JSON.parse(JSON.stringify(state.session))
+      const found = findPattern(newSession, blockId, patternId)
+      if (found) {
+        const { pattern } = found
+        pattern.notes.push(note)
+
+        const doc = firebase.firestore().doc(`/sessions/${newSession.id}`)
+        doc.set(newSession).then((v: any) => {
+          console.log('set', v)
+        })
+      }
+      // return { ...state, session: newSession }
+      // return { ...state }
     }
   }
 })
