@@ -8,6 +8,7 @@ import { keyDown, keyUp } from 'Redux/UI'
 interface Props {
   keyDown: (key: string) => void
   keyUp: (key: string) => void
+  keyPressed: (key: string) => boolean
 }
 
 class ComputerKeysComponent extends React.Component<Props> {
@@ -38,10 +39,17 @@ class ComputerKeysComponent extends React.Component<Props> {
 
   render() {
     return null
+    // const { keyPressed } = this.props
+    // return <div>{keyPressed('a') ? 'A' : '-'}</div>
   }
 }
 
-const mapStateToProps = (state: RootState) => ({})
+const mapStateToProps = (state: RootState) => ({
+  keyPressed: (key: string): boolean => {
+    const { keys } = state.UI
+    return keys.get(key) ? true : false
+  }
+})
 
 const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
   keyDown: (key: string) => {
