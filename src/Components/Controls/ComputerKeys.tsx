@@ -25,6 +25,10 @@ class ComputerKeysComponent extends React.Component<Props> {
     document.removeEventListener('keydown', this.keyDownHandler)
     document.removeEventListener('keyup', this.keyUpHandler)
   }
+
+  render() {
+    return null
+  }
 }
 
 export default ComputerKeysComponent
