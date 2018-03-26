@@ -1,4 +1,4 @@
-import ComputerKeysComponent from 'Components/Controls/ComputerKeys'
+import ComputerKeysComponent from 'Containers/ComputerKeys'
 import SessionContainer from 'Containers/Session'
 import * as React from 'react'
 import './App.css'

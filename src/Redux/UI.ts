@@ -23,6 +23,14 @@ export const setCurrentBlockIndex = actionCreator<{
   currentBlockIndex: number
 }>('UI_SET_CURRENT_BLOCK_INDEX')
 
+export const keyDown = actionCreator<{
+  key: string
+}>('UI_KEY_DOWN')
+
+export const keyUp = actionCreator<{
+  key: string
+}>('UI_KEY_UP')
+
 // reducer
 export interface PatternUIState {
   quantize: number
@@ -47,6 +55,7 @@ export interface UIState {
   readonly block: BlockUIState
   readonly track: TrackUIState
   readonly arrangement: ArrangementState
+  readonly keys: Map<string, boolean>
 }
 
 const defaultTrackColors = [
@@ -69,7 +78,8 @@ const initialState: UIState = {
   },
   arrangement: {
     cursor: 0
-  }
+  },
+  keys: new Map()
 }
 
 export const uiReducers = (
@@ -93,6 +103,16 @@ export const uiReducers = (
   if (isType(action, setCurrentBlockIndex)) {
     const { currentBlockIndex } = action.payload
     return { ...merge(state, { block: { currentBlockIndex } }) }
+  }
+  if (isType(action, keyDown)) {
+    const { key } = action.payload
+    state.keys.set(key, true)
+    return { ...merge(state, { keys: new Map(state.keys.entries()) }) }
+  }
+  if (isType(action, keyUp)) {
+    const { key } = action.payload
+    state.keys.set(key, false)
+    return { ...merge(state, { keys: new Map(state.keys.entries()) }) }
   }
   return state
 }
