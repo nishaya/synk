@@ -69,7 +69,8 @@ export const sessionReducers = (
   if (isType(action, addNote)) {
     const { blockId, patternId, note } = action.payload
     console.log('Action - addNote', action.payload, note)
-    const newSession = JSON.parse(JSON.stringify(state.session))
+    const newSession = state.session
+    // const newSession = JSON.parse(JSON.stringify(state.session))
     const found = findPattern(newSession, blockId, patternId)
     if (found) {
       const { pattern } = found
@@ -83,7 +84,8 @@ export const sessionReducers = (
         console.log('set', v)
       })
     }
-    return { ...state, session: newSession }
+    // return { ...state, session: newSession }
+    return { ...state }
   }
   if (isType(action, changeTrackLevel)) {
     const { trackIndex, level } = action.payload
@@ -101,8 +103,8 @@ export const sessionReducers = (
   if (isType(action, initSession)) {
     const { session } = action.payload
     console.log('initSession', session)
-    return { ...state, session: JSON.parse(JSON.stringify(session)) }
-    // return { ...state, session }
+    // return { ...state, session: JSON.parse(JSON.stringify(session)) }
+    return { ...state, session }
   }
   return state
 }

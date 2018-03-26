@@ -1,5 +1,5 @@
 import { NoteInfo } from 'Components/Edit/NoteInfo'
-import { SessionActions } from 'Containers/Session'
+import { Mutations, SessionActions } from 'Containers/Session'
 import * as React from 'react'
 import { SynthState } from 'Redux/Synth'
 import { UIState } from 'Redux/UI'
@@ -10,6 +10,7 @@ interface Props {
   actions: SessionActions
   settings: UIState
   synth: SynthState
+  mutations: Mutations
 }
 
 interface State {
@@ -198,7 +199,8 @@ class PatternComponent extends React.Component<Props, State> {
   handleMouseup(e: MouseEvent) {
     const {
       block: { id: blockId },
-      actions: { pattern: { addNote } }
+      //      actions: { pattern: { addNote } }
+      mutations: { addNote }
     } = this.props
     const pattern = this.getPattern()
     if (pattern) {

@@ -4,7 +4,7 @@ import EditTools from 'Components/Controls/EditTools'
 import Transport from 'Components/Controls/Transport'
 import BlockSelect from 'Components/Session/BlockSelect'
 import TrackListComponent from 'Components/TrackList'
-import { SessionActions } from 'Containers/Session'
+import { Mutations, SessionActions } from 'Containers/Session'
 import { Card, CardActions, CardHeader, CardText } from 'material-ui/Card'
 import Player, { PlayerUpdateInfo } from 'Player'
 import * as React from 'react'
@@ -25,6 +25,7 @@ interface Props {
   actions: SessionActions
   settings: UIState
   synth: SynthState
+  mutations: Mutations
 }
 
 const Tools = styled.div`
@@ -124,7 +125,7 @@ class SessionComponent extends React.Component<
   }
 
   render() {
-    const { session, actions, settings, synth } = this.props
+    const { session, actions, settings, synth, mutations } = this.props
     const currentBlock = session.blocks[settings.block.currentBlockIndex]
     return (
       <div style={{ padding: '4px' }}>
@@ -183,6 +184,7 @@ class SessionComponent extends React.Component<
                 <div style={{ flex: 1 }}>
                   {currentBlock ? (
                     <BlockEditComponent
+                      mutations={mutations}
                       actions={actions}
                       block={currentBlock}
                       settings={settings}

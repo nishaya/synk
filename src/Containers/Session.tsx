@@ -33,10 +33,19 @@ export interface SessionActions {
   synth: SynthActions
 }
 
+export interface Mutations {
+  addNote: (blockId: string, patternId: string, note: Note) => void
+}
+
 const mapStateToProps = (state: RootState) => ({
   session: state.Session.session,
   settings: state.UI,
-  synth: state.Synth
+  synth: state.Synth,
+  mutations: {
+    addNote: (blockId: string, patternId: string, note: Note) => {
+      console.log('addNote', note)
+    }
+  }
 })
 
 const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
