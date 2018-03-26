@@ -22,7 +22,7 @@ interface State {
 }
 
 const avgNotes = (notes: Note[]): number => {
-  if (notes.length === 0) return 0
+  if (notes.length === 0) return 64
   return ~~(
     notes.reduce<number>((sum: number, note: Note) => {
       return sum + note.note
@@ -197,11 +197,7 @@ class PatternComponent extends React.Component<Props, State> {
   }
 
   handleMouseup(e: MouseEvent) {
-    const {
-      block: { id: blockId },
-      //      actions: { pattern: { addNote } }
-      mutations: { addNote }
-    } = this.props
+    const { block: { id: blockId }, mutations: { addNote } } = this.props
     const pattern = this.getPattern()
     if (pattern) {
       const { editNote } = this.state

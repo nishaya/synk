@@ -151,7 +151,7 @@ class SessionComponent extends React.Component<
                   />
                 </div>
                 <div>
-                  <EditTools />
+                  <EditTools mutations={mutations} settings={settings} />
                 </div>
               </Tools>
             </CardActions>
