@@ -14,7 +14,7 @@ interface Props {
 
 const resolutions = [120, 240, 480, 960, 1920]
 
-export default ({ mutations, settings }: Props) => (
+export default ({ mutations, settings, actions }: Props) => (
   <div>
     {settings.keys.get('Meta') ? (
       <RaisedButton icon={<Icons.ActionDelete />} label="Remove" />
@@ -22,13 +22,19 @@ export default ({ mutations, settings }: Props) => (
       <RaisedButton icon={<Icons.ContentCreate />} label="Edit" />
     )}
     <RaisedButton icon={<Icons.ActionReorder />} label="Quantize" />
-    <DropDownMenu value={settings.pattern.quantize}>
+    <DropDownMenu
+      onChange={(_: any, i: number, v: number) => actions.setQuantize(v)}
+      value={settings.pattern.quantize}
+    >
       {resolutions.map((r: number) => (
         <MenuItem value={r} primaryText={`${r}`} />
       ))}
     </DropDownMenu>
     <RaisedButton icon={<Icons.AvLibraryMusic />} label="Duration" />
-    <DropDownMenu value={settings.pattern.duration}>
+    <DropDownMenu
+      onChange={(_: any, i: number, v: number) => actions.setNoteDuration(v)}
+      value={settings.pattern.duration}
+    >
       {resolutions.map((r: number) => (
         <MenuItem value={r} primaryText={`${r}`} />
       ))}
