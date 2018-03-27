@@ -12,6 +12,11 @@ interface Props {
   actions: TrackActions
 }
 
+const sliderStyle = {
+  marginTop: 8,
+  marginBottom: 8
+}
+
 const TrackDetail = ({ track, settings, actions }: Props) => {
   const color = settings.track.trackColors[track.index] || '#fff'
   const currentTrack = settings.track.currentTrack
@@ -34,6 +39,7 @@ const TrackDetail = ({ track, settings, actions }: Props) => {
         {current ? (
           <div style={{ padding: 8 }}>
             <Slider
+              sliderStyle={sliderStyle}
               value={track.level}
               min={0}
               max={127}
