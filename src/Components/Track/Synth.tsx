@@ -47,7 +47,6 @@ class SynthComponent extends React.Component<Props> {
   }
 
   componentWillReceiveProps(nextProps: Props) {
-    console.log('synth update', this.props.track, nextProps.track)
     const { track: { preset: nextPreset, level: nextLevel } } = nextProps
     this.synth.changeLevel(nextLevel)
     this.synth.changePreset(nextPreset)

@@ -46,7 +46,7 @@ export default ({ mutations, settings, actions }: Props) => {
         value={quantize}
       >
         {resolutions.map((r: number) => (
-          <MenuItem value={r} primaryText={dur2note(r)} />
+          <MenuItem key={`r_${r}`} value={r} primaryText={dur2note(r)} />
         ))}
       </IconMenu>
       <IconMenu
@@ -55,7 +55,7 @@ export default ({ mutations, settings, actions }: Props) => {
         value={duration}
       >
         {resolutions.map((r: number) => (
-          <MenuItem value={r} primaryText={dur2note(r)} />
+          <MenuItem key={`r_${r}`} value={r} primaryText={dur2note(r)} />
         ))}
       </IconMenu>
       <RaisedButton
