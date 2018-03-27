@@ -1,5 +1,6 @@
 import App from 'App'
 import NotFoundComponent from 'Components/NotFound'
+import SplashComponent from 'Components/Splash'
 import AuthContainer from 'Containers/Auth'
 import Loader from 'Containers/Loader'
 import 'index.css'
@@ -20,6 +21,7 @@ ReactDOM.render(
       <AuthContainer>
         <BrowserRouter>
           <Switch>
+            <Route path="/" component={SplashComponent} />
             <Route path="/session/:sessionId?" component={App} />
             <Route path="/loader/:sessionId" component={Loader} />
             <Route component={NotFoundComponent} />
