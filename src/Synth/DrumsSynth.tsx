@@ -24,6 +24,7 @@ class DrumsSynth implements Synthesizer {
   ctx: AudioContext
   noise: AudioBuffer
   gain: GainNode
+  level: number = 100
 
   constructor(preset: SynthOptions) {
     this.ctx = getAudioCtx()
@@ -34,6 +35,12 @@ class DrumsSynth implements Synthesizer {
 
   changePreset(preset: DrumsSynthPreset) {
     this.preset = preset
+  }
+
+  changeLevel(level: number) {
+    this.level = level
+    const volume = level / 127 * 0.8
+    this.gain.gain.setValueAtTime(volume, this.ctx.currentTime)
   }
 
   play(info: SynthPlayInfo): SynthStopHandler {

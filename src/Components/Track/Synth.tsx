@@ -30,11 +30,12 @@ class SynthComponent extends React.Component<Props> {
   synth: Synthesizer
   componentDidMount() {
     const {
-      track: { index: trackIndex, preset },
+      track: { index: trackIndex, preset, level },
       actions: { initSynth }
     } = this.props
     const synth = synthFactory(preset)
     if (synth) {
+      synth.changeLevel(level)
       this.synth = synth
       const handler: SynthPlayHandler = (
         info: SynthPlayInfo
