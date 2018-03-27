@@ -17,6 +17,9 @@ import { findPattern } from 'Utils/session'
 
 import * as firebase from 'firebase'
 require('firebase/firestore')
+import { initFirebase } from 'Utils/firebase'
+
+initFirebase()
 
 export interface PatternActions {
   setQuantize: (quantize: number) => void
@@ -51,11 +54,31 @@ export interface Mutations {
   changeTrackLevel: (trackIndex: number, level: number) => void
 }
 
+let pendingUpdate: Session | null = null
+let lastCommit = Date.now()
+
 const mapStateToProps = (state: RootState) => ({
   session: state.Session.session,
   settings: state.UI,
   synth: state.Synth,
   mutations: {
+    changeTrackLevel: (trackIndex: number, level: number) => {
+      console.log('changeTrackLevel', trackIndex, level)
+      const newSession = state.Session.session
+      if (newSession.tracks[trackIndex]) {
+        newSession.tracks[trackIndex].level = level
+      }
+      pendingUpdate = newSession
+      setTimeout(() => {
+        const now = Date.now()
+        if (now - lastCommit > 1000 && pendingUpdate) {
+          const doc = firebase.firestore().doc(`/sessions/${newSession.id}`)
+          doc.set(pendingUpdate)
+          lastCommit = Date.now()
+          pendingUpdate = null
+        }
+      }, 1000)
+    },
     changeBlockLength: (num: number) => {
       const { UI: { block: { currentBlockIndex } } } = state
       console.log('changeBlockLength', num)
@@ -70,15 +93,6 @@ const mapStateToProps = (state: RootState) => ({
         const doc = firebase.firestore().doc(`/sessions/${newSession.id}`)
         doc.set(newSession)
       }
-    },
-    changeTrackLevel: (trackIndex: number, level: number) => {
-      console.log('changeTrackLevel', trackIndex, level)
-      const newSession = state.Session.session
-      if (newSession.tracks[trackIndex]) {
-        newSession.tracks[trackIndex].level = level
-      }
-      const doc = firebase.firestore().doc(`/sessions/${newSession.id}`)
-      doc.set(newSession)
     },
     addNote: (blockId: string, patternId: string, note: Note) => {
       console.log('Mutation - addNote', blockId, patternId, note)

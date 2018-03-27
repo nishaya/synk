@@ -7,13 +7,19 @@ const {
   REACT_APP_FIREBASE_PROJECT_ID: projectId
 } = process.env
 
+let init = false
+
 export const initFirebase = () => {
+  if (init) {
+    return
+  }
   firebase.initializeApp({
     apiKey,
     databaseURL,
     projectId,
     authDomain
   })
+  init = true
 }
 
 export const anonAuth = (onAuth: (user: firebase.User) => void): void => {
