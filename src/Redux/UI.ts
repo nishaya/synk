@@ -19,6 +19,10 @@ export const setBlockCursor = actionCreator<{
   cursor: number
 }>('UI_SET_BLOCK_CURSOR')
 
+export const setNoteDuration = actionCreator<{
+  duration: number
+}>('UI_SET_NOTE_DURATION')
+
 export const setCurrentBlockIndex = actionCreator<{
   currentBlockIndex: number
 }>('UI_SET_CURRENT_BLOCK_INDEX')
@@ -90,6 +94,11 @@ export const uiReducers = (
     const { quantize } = action.payload
     console.log('Action - setQuantize', action.payload)
     return { ...merge(state, { pattern: { quantize } }) }
+  }
+  if (isType(action, setNoteDuration)) {
+    const { duration } = action.payload
+    console.log('Action - setNoteDuration', action.payload)
+    return { ...merge(state, { pattern: { duration } }) }
   }
   if (isType(action, setCurrentTrack)) {
     const { trackIndex: currentTrack } = action.payload
