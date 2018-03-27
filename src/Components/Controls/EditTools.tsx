@@ -15,18 +15,22 @@ interface Props {
 
 const resolutions = [60, 120, 240, 480, 960, 1920]
 
+const dur2note = (dur: number): string => {
+  return `1/${1920 / dur}`
+}
+
 export default ({ mutations, settings, actions }: Props) => {
   const { pattern: { quantize, duration } } = settings
   const bQuantize = (
     <RaisedButton
       icon={<Icons.ActionReorder />}
-      label={`Quantize: ${quantize}`}
+      label={`Quantize: ${dur2note(quantize)}`}
     />
   )
   const bDuration = (
     <RaisedButton
       icon={<Icons.AvLibraryMusic />}
-      label={`Duration ${duration}`}
+      label={`Duration ${dur2note(duration)}`}
     />
   )
   return (
@@ -42,7 +46,7 @@ export default ({ mutations, settings, actions }: Props) => {
         value={quantize}
       >
         {resolutions.map((r: number) => (
-          <MenuItem value={r} primaryText={`${r}`} />
+          <MenuItem value={r} primaryText={dur2note(r)} />
         ))}
       </IconMenu>
       <IconMenu
@@ -51,7 +55,7 @@ export default ({ mutations, settings, actions }: Props) => {
         value={duration}
       >
         {resolutions.map((r: number) => (
-          <MenuItem value={r} primaryText={`${r}`} />
+          <MenuItem value={r} primaryText={dur2note(r)} />
         ))}
       </IconMenu>
       <RaisedButton
