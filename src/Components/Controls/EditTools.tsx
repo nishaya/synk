@@ -12,7 +12,7 @@ interface Props {
   actions: PatternActions
 }
 
-const resolutions = [120, 240, 480, 960, 1920]
+const resolutions = [60, 120, 240, 480, 960, 1920]
 
 export default ({ mutations, settings, actions }: Props) => (
   <div>
