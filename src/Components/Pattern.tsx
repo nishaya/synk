@@ -300,102 +300,114 @@ class PatternComponent extends React.Component<Props, State> {
             height: `${stageHeight}px`
           }}
         >
-          <svg
-            style={{
-              height: svgHeight,
-              backgroundColor: '#ddd'
-            }}
-            ref={(svg: SVGSVGElement) => (this.svgElement = svg)}
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox={`0 0 ${beatWidth * 4 * bars} ${svgHeight}`}
-            preserveAspectRatio="xMidYMid meet"
-          >
-            <defs>
-              <pattern
-                id="Grid"
-                x="0"
-                y="0"
-                width={barWidth}
-                height={noteHeight}
-                patternUnits="userSpaceOnUse"
-              >
-                <rect
+          <div style={{ display: 'flex' }}>
+            <svg
+              style={{
+                height: svgHeight,
+                backgroundColor: '#ddd'
+              }}
+              ref={(svg: SVGSVGElement) => (this.svgElement = svg)}
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox={`0 0 ${beatWidth * 4 * bars} ${svgHeight}`}
+              preserveAspectRatio="xMidYMid meet"
+            >
+              <defs>
+                <pattern
+                  id="Grid"
                   x="0"
                   y="0"
                   width={barWidth}
                   height={noteHeight}
-                  fill={gridBgColor}
-                />
-                <line stroke="#aaa" x1="0" y1="0" x2={barWidth} y2="0" />
-                <line
-                  stroke="#aaa"
-                  strokeWidth="3"
-                  x1="0"
-                  y1="0"
-                  x2="0"
-                  y2={noteHeight}
-                />
-                <line
-                  stroke="#bbb"
-                  strokeDasharray="5 3"
-                  x1={beatWidth * 1}
-                  y1="0"
-                  x2={beatWidth * 1}
-                  y2={noteHeight}
-                />
-                <line
-                  stroke="#bbb"
-                  strokeDasharray="5 3"
-                  x1={beatWidth * 2}
-                  y1="0"
-                  x2={beatWidth * 2}
-                  y2={noteHeight}
-                />
-                <line
-                  stroke="#bbb"
-                  strokeDasharray="5 3"
-                  x1={beatWidth * 3}
-                  y1="0"
-                  x2={beatWidth * 3}
-                  y2={noteHeight}
-                />
-              </pattern>
-            </defs>
-            <rect
-              fill="url(#Grid)"
-              x="0"
-              y="0"
-              width={beatWidth * 4 * bars}
-              height={svgHeight}
-              style={{ pointerEvents: 'none' }}
-            />
-            {pattern.notes.map((note: Note, index: number) => {
-              if (note.note < minNote || maxNote < note.note) {
-                return null
-              }
-              return (
-                <rect
-                  key={`note_${index}`}
-                  rx={noteRound}
-                  ry={noteRound}
-                  x={note.position * durationWidth}
-                  y={(maxNote - note.note) * noteHeight}
-                  width={durationWidth * note.duration - noteOffset}
-                  height={noteHeight}
-                  style={noteStyle}
-                />
-              )
-            })}
-            <line
-              stroke="#ff0"
-              x1={cursorX}
-              y1="0"
-              x2={cursorX}
-              y2={svgHeight}
-              style={{ pointerEvents: 'none', mixBlendMode: 'difference' }}
-            />
-            {editingNote}
-          </svg>
+                  patternUnits="userSpaceOnUse"
+                >
+                  <rect
+                    x="0"
+                    y="0"
+                    width={barWidth}
+                    height={noteHeight}
+                    fill={gridBgColor}
+                  />
+                  <line stroke="#aaa" x1="0" y1="0" x2={barWidth} y2="0" />
+                  <line
+                    stroke="#aaa"
+                    strokeWidth="3"
+                    x1="0"
+                    y1="0"
+                    x2="0"
+                    y2={noteHeight}
+                  />
+                  <line
+                    stroke="#bbb"
+                    strokeDasharray="5 3"
+                    x1={beatWidth * 1}
+                    y1="0"
+                    x2={beatWidth * 1}
+                    y2={noteHeight}
+                  />
+                  <line
+                    stroke="#bbb"
+                    strokeDasharray="5 3"
+                    x1={beatWidth * 2}
+                    y1="0"
+                    x2={beatWidth * 2}
+                    y2={noteHeight}
+                  />
+                  <line
+                    stroke="#bbb"
+                    strokeDasharray="5 3"
+                    x1={beatWidth * 3}
+                    y1="0"
+                    x2={beatWidth * 3}
+                    y2={noteHeight}
+                  />
+                </pattern>
+              </defs>
+              <rect
+                fill="url(#Grid)"
+                x="0"
+                y="0"
+                width={beatWidth * 4 * bars}
+                height={svgHeight}
+                style={{ pointerEvents: 'none' }}
+              />
+              {pattern.notes.map((note: Note, index: number) => {
+                if (note.note < minNote || maxNote < note.note) {
+                  return null
+                }
+                return (
+                  <rect
+                    key={`note_${index}`}
+                    rx={noteRound}
+                    ry={noteRound}
+                    x={note.position * durationWidth}
+                    y={(maxNote - note.note) * noteHeight}
+                    width={durationWidth * note.duration - noteOffset}
+                    height={noteHeight}
+                    style={noteStyle}
+                  />
+                )
+              })}
+              <line
+                stroke="#ff0"
+                x1={cursorX}
+                y1="0"
+                x2={cursorX}
+                y2={svgHeight}
+                style={{ pointerEvents: 'none', mixBlendMode: 'difference' }}
+              />
+              {editingNote}
+            </svg>
+            <div
+              style={{
+                minHeight: '100%',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center'
+              }}
+            >
+              +1
+            </div>
+          </div>
         </div>
       </div>
     )
