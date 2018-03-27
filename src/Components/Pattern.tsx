@@ -115,7 +115,10 @@ class PatternComponent extends React.Component<Props, State> {
     }
 
     if (this.deleteMode()) {
-      console.log('delete note', editNote)
+      console.log('remove note', editNote)
+      const { block: { id: blockId }, mutations: { removeNote } } = this.props
+      const pattern = this.getPattern()
+      if (pattern) removeNote(blockId, pattern.id, editNote)
       return
     }
 
