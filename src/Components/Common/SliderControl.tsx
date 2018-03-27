@@ -37,7 +37,9 @@ const SliderControl = ({ min, max, value, label, onChange }: Props) => (
         value={value}
         min={min}
         max={max}
+        step={1}
         onChange={(_: any, v: number) => {
+          console.log('onChange', v)
           onChange(v)
         }}
       />

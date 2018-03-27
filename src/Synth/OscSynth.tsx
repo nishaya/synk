@@ -33,6 +33,7 @@ class OscSynth implements Synthesizer {
   constructor(preset: SynthOptions) {
     this.ctx = getAudioCtx()
     this.gain = this.ctx.createGain()
+    this.gain.connect(this.ctx.destination)
     this.changePreset({ ...defaultPreset, ...preset })
   }
 
@@ -41,6 +42,7 @@ class OscSynth implements Synthesizer {
   }
 
   changeLevel(level: number) {
+    console.log('changeLevel', this.level, level)
     this.level = level
     const volume = level / 127 * 0.8
     this.gain.gain.setValueAtTime(volume, this.ctx.currentTime)
@@ -64,7 +66,7 @@ class OscSynth implements Synthesizer {
     gain.gain.linearRampToValueAtTime(volume, attack)
     gain.gain.linearRampToValueAtTime(sustain, decay)
 
-    gain.connect(this.ctx.destination)
+    gain.connect(this.gain)
     osc.connect(gain)
 
     osc.addEventListener('ended', () => {
