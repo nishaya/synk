@@ -25,9 +25,13 @@ class DrumsSynth implements Synthesizer {
   noise: AudioBuffer
 
   constructor(preset: SynthOptions) {
-    this.preset = { ...defaultPreset, ...preset }
     this.ctx = getAudioCtx()
     this.noise = generateWhiteNoise(this.ctx)
+    this.changePreset({ ...defaultPreset, ...preset })
+  }
+
+  changePreset(preset: DrumsSynthPreset) {
+    this.preset = preset
   }
 
   play(info: SynthPlayInfo): SynthStopHandler {

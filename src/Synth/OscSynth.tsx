@@ -1,4 +1,9 @@
-import { OscSynthPreset, SynthPlayInfo, SynthStopHandler } from 'types'
+import {
+  OscSynthPreset,
+  SynthPlayInfo,
+  SynthPreset,
+  SynthStopHandler
+} from 'types'
 import { note2freq } from 'Utils/music'
 import { getAudioCtx } from './audio'
 
@@ -13,14 +18,19 @@ const defaultPreset: OscSynthPreset = {
 
 export interface Synthesizer {
   play(info: SynthPlayInfo): SynthStopHandler
+  changePreset(preset: SynthPreset): void
 }
 
 class OscSynth implements Synthesizer {
   preset: OscSynthPreset
   ctx: AudioContext
   constructor(preset: SynthOptions) {
-    this.preset = { ...defaultPreset, ...preset }
     this.ctx = getAudioCtx()
+    this.changePreset({ ...defaultPreset, ...preset })
+  }
+
+  changePreset(preset: OscSynthPreset) {
+    this.preset = preset
   }
 
   play(info: SynthPlayInfo): SynthStopHandler {
