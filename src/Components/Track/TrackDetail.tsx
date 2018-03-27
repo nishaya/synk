@@ -1,6 +1,6 @@
 import * as Color from 'color'
 import SliderControl from 'Components/Common/SliderControl'
-import { TrackActions } from 'Containers/Session'
+import { Mutations, TrackActions } from 'Containers/Session'
 import Paper from 'material-ui/Paper'
 // import Slider from 'material-ui/Slider'
 import * as React from 'react'
@@ -11,9 +11,10 @@ interface Props {
   track: Track
   settings: UIState
   actions: TrackActions
+  mutations: Mutations
 }
 
-const TrackDetail = ({ track, settings, actions }: Props) => {
+const TrackDetail = ({ track, settings, actions, mutations }: Props) => {
   const color = settings.track.trackColors[track.index] || '#fff'
   const currentTrack = settings.track.currentTrack
   const current = track.index === currentTrack
@@ -40,7 +41,7 @@ const TrackDetail = ({ track, settings, actions }: Props) => {
               min={0}
               max={127}
               onChange={(v: number) => {
-                actions.changeTrackLevel(track.index, v)
+                mutations.changeTrackLevel(track.index, v)
               }}
             />
           </div>

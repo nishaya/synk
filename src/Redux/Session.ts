@@ -14,11 +14,6 @@ export const addNote = actionCreator<{
   note: Note
 }>('SESSION_ADD_NOTE')
 
-export const changeTrackLevel = actionCreator<{
-  trackIndex: number
-  level: number
-}>('SESSION_CHANGE_TRACK_LEVEL')
-
 export const setUserId = actionCreator<{
   userId: string
 }>('SESSION_SET_USER_ID')
@@ -39,15 +34,6 @@ export const sessionReducers = (
   state: SessionState = initialState,
   action: Action
 ): SessionState => {
-  if (isType(action, changeTrackLevel)) {
-    const { trackIndex, level } = action.payload
-    console.log('Action - changeTrackLevel', action.payload)
-    const track = state.session.tracks[trackIndex]
-    if (track) {
-      track.level = level
-    }
-    return state
-  }
   if (isType(action, setUserId)) {
     const { userId } = action.payload
     return { ...state, userId }

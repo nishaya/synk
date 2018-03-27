@@ -1,6 +1,6 @@
 import SynthComponent from 'Components/Track/Synth'
 import TrackDetail from 'Components/Track/TrackDetail'
-import { SynthActions, TrackActions } from 'Containers/Session'
+import { Mutations, SynthActions, TrackActions } from 'Containers/Session'
 import * as React from 'react'
 import { UIState } from 'Redux/UI'
 import { Track } from 'types'
@@ -10,6 +10,7 @@ interface Props {
   settings: UIState
   actions: TrackActions
   synthActions: SynthActions
+  mutations: Mutations
   onTrackChange: (index: number) => void
 }
 
@@ -20,6 +21,7 @@ class TrackListComponent extends React.Component<Props> {
       onTrackChange,
       settings,
       actions,
+      mutations,
       synthActions
     } = this.props
     return (
@@ -30,6 +32,7 @@ class TrackListComponent extends React.Component<Props> {
               <TrackDetail
                 actions={actions}
                 track={track}
+                mutations={mutations}
                 settings={settings}
               />
               <SynthComponent track={track} actions={synthActions} />

@@ -2,7 +2,7 @@ import SessionComponent from 'Components/Session'
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
 import { Action } from 'redux'
-import { changeTrackLevel, initSession } from 'Redux/Session'
+import { initSession } from 'Redux/Session'
 import { RootState } from 'Redux/store'
 import { initSynth } from 'Redux/Synth'
 import {
@@ -33,7 +33,6 @@ export interface BlockActions {
 }
 export interface TrackActions {
   setCurrentTrack: (trackIndex: number) => void
-  changeTrackLevel: (trackIndex: number, level: number) => void
 }
 
 export interface SessionActions {
@@ -49,6 +48,7 @@ export interface Mutations {
   removeNote: (blockId: string, patternId: string, note: Note) => void
   clearPattern: (blockIndex: number, patternIndex: number) => void
   changeBlockLength: (num: number) => void
+  changeTrackLevel: (trackIndex: number, level: number) => void
 }
 
 const mapStateToProps = (state: RootState) => ({
@@ -70,6 +70,15 @@ const mapStateToProps = (state: RootState) => ({
         const doc = firebase.firestore().doc(`/sessions/${newSession.id}`)
         doc.set(newSession)
       }
+    },
+    changeTrackLevel: (trackIndex: number, level: number) => {
+      console.log('changeTrackLevel', trackIndex, level)
+      const newSession = state.Session.session
+      if (newSession.tracks[trackIndex]) {
+        newSession.tracks[trackIndex].level = level
+      }
+      const doc = firebase.firestore().doc(`/sessions/${newSession.id}`)
+      doc.set(newSession)
     },
     addNote: (blockId: string, patternId: string, note: Note) => {
       console.log('Mutation - addNote', blockId, patternId, note)
@@ -137,9 +146,6 @@ const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
     track: {
       setCurrentTrack: (trackIndex: number) => {
         dispatch(setCurrentTrack({ trackIndex }))
-      },
-      changeTrackLevel: (trackIndex: number, level: number) => {
-        dispatch(changeTrackLevel({ trackIndex, level }))
       }
     },
     pattern: {

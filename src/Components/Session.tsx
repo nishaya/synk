@@ -178,6 +178,7 @@ class SessionComponent extends React.Component<
                   <TrackListComponent
                     tracks={session.tracks}
                     settings={settings}
+                    mutations={mutations}
                     actions={actions.track}
                     synthActions={actions.synth}
                     onTrackChange={(index: number) =>
