@@ -19,7 +19,7 @@ export default ({ block, actions, settings, synth, mutations }: Props) => {
     <div style={{ padding: '4px' }}>
       <Card>
         <CardText>
-          <div style={{ height: '400px' }}>
+          <div style={{ height: '600px' }}>
             <PatternComponent
               mutations={mutations}
               settings={settings}

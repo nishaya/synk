@@ -112,7 +112,6 @@ class SessionComponent extends React.Component<
   }
 
   componentWillReceiveProps(nextProps: Props) {
-    console.log('Session updated', this.props, nextProps)
     const currentBlock = this.getCurrentBlock()
     const nextBlock = this.getCurrentBlock(nextProps)
     if (currentBlock !== nextBlock) {
