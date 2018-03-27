@@ -22,7 +22,7 @@ const MainLogo = styled.div`
 
 const TagLine = styled.div`
   color: #c06c84;
-  font-size: 23px;
+  font-size: 22px;
   letter-spacing: 0.1em;
   font-family: 'Montserrat', sans-serif;
   font-weight: 600;
@@ -31,6 +31,6 @@ const TagLine = styled.div`
 export default () => (
   <div style={{ textAlign: 'center' }}>
     <MainLogo>SYNK</MainLogo>
-    <TagLine>Online Collaborative Sequencer</TagLine>
+    <TagLine>Online Collaborative Sequencer&nbsp;&nbsp;</TagLine>
   </div>
 )
