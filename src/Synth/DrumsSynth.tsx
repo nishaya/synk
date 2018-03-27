@@ -23,10 +23,12 @@ class DrumsSynth implements Synthesizer {
   preset: DrumsSynthPreset
   ctx: AudioContext
   noise: AudioBuffer
+  gain: GainNode
 
   constructor(preset: SynthOptions) {
     this.ctx = getAudioCtx()
     this.noise = generateWhiteNoise(this.ctx)
+    this.gain = this.ctx.createGain()
     this.changePreset({ ...defaultPreset, ...preset })
   }
 

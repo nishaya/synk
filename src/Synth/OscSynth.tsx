@@ -17,6 +17,8 @@ const defaultPreset: OscSynthPreset = {
 }
 
 export interface Synthesizer {
+  ctx: AudioContext
+  gain: GainNode
   play(info: SynthPlayInfo): SynthStopHandler
   changePreset(preset: SynthPreset): void
 }
@@ -24,8 +26,10 @@ export interface Synthesizer {
 class OscSynth implements Synthesizer {
   preset: OscSynthPreset
   ctx: AudioContext
+  gain: GainNode
   constructor(preset: SynthOptions) {
     this.ctx = getAudioCtx()
+    this.gain = this.ctx.createGain()
     this.changePreset({ ...defaultPreset, ...preset })
   }
 
