@@ -87,6 +87,11 @@ class PatternComponent extends React.Component<Props, State> {
     )
   }
 
+  deleteMode(): boolean {
+    const { settings } = this.props
+    return settings.keys.get('Meta') ? true : false
+  }
+
   mouse2svgPoint(e: MouseEvent): SVGPoint {
     const pt = this.svgElement.createSVGPoint()
     pt.x = e.clientX
@@ -109,8 +114,12 @@ class PatternComponent extends React.Component<Props, State> {
       duration: this.getDuration()
     }
 
-    const stopHandler = this.triggerSynthPlay(editNote)
+    if (this.deleteMode()) {
+      console.log('delete note', editNote)
+      return
+    }
 
+    const stopHandler = this.triggerSynthPlay(editNote)
     this.setState({ editNote, stopHandler })
   }
 
