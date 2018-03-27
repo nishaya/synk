@@ -54,6 +54,14 @@ const mapStateToProps = (state: RootState) => ({
       const found = findPattern(newSession, blockId, patternId)
       if (found) {
         const { pattern } = found
+        if (
+          pattern.notes.find(
+            (n: Note) => n.note === note.note && n.position === note.position
+          )
+        ) {
+          console.log('same note')
+          return
+        }
         pattern.notes.push(note)
 
         const doc = firebase.firestore().doc(`/sessions/${newSession.id}`)
