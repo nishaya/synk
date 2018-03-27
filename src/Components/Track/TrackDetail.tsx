@@ -26,7 +26,11 @@ const TrackDetail = ({ track, settings, actions }: Props) => {
   return (
     <div style={{ padding: 4 }}>
       <Paper zDepth={current ? 2 : 1}>
-        <div style={{ background, padding: 8 }}>track #{track.index}</div>
+        <div style={{ background, padding: 8 }}>
+          <span style={{ fontWeight: 400, color: '#fff', fontSize: 16 }}>
+            #{track.index}
+          </span>
+        </div>
         {current ? (
           <div style={{ padding: 8 }}>
             <Slider
