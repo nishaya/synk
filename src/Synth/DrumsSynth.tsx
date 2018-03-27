@@ -30,6 +30,7 @@ class DrumsSynth implements Synthesizer {
     this.ctx = getAudioCtx()
     this.noise = generateWhiteNoise(this.ctx)
     this.gain = this.ctx.createGain()
+    this.gain.connect(this.ctx.destination)
     this.changePreset({ ...defaultPreset, ...preset })
   }
 
@@ -81,7 +82,7 @@ class DrumsSynth implements Synthesizer {
     gain.gain.setValueAtTime(volume * sustain, start + duration)
     gain.gain.exponentialRampToValueAtTime(0.01, start + duration + release)
     source.connect(gain)
-    gain.connect(this.ctx.destination)
+    gain.connect(this.gain)
     source.start(start)
     source.stop(start + duration + release)
   }
@@ -110,7 +111,7 @@ class DrumsSynth implements Synthesizer {
 
     gain.gain.linearRampToValueAtTime(0, sustain)
 
-    gain.connect(this.ctx.destination)
+    gain.connect(this.gain)
     osc.connect(gain)
 
     osc.addEventListener('ended', () => {
