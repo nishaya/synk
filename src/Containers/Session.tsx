@@ -2,10 +2,16 @@ import SessionComponent from 'Components/Session'
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
 import { Action } from 'redux'
-import { addNote, changeTrackLevel, initSession } from 'Redux/Session'
+import { changeTrackLevel, initSession } from 'Redux/Session'
 import { RootState } from 'Redux/store'
 import { initSynth } from 'Redux/Synth'
-import { setBlockCursor, setCurrentBlockIndex, setCurrentTrack } from 'Redux/UI'
+import {
+  setBlockCursor,
+  setCurrentBlockIndex,
+  setCurrentTrack,
+  setNoteDuration,
+  setQuantize
+} from 'Redux/UI'
 import { Note, Session, SynthPlayHandler } from 'types'
 import { findPattern } from 'Utils/session'
 
@@ -13,7 +19,8 @@ import * as firebase from 'firebase'
 require('firebase/firestore')
 
 export interface PatternActions {
-  addNote: (blockId: string, patternId: string, note: Note) => void
+  setQuantize: (quantize: number) => void
+  setNoteDuration: (duration: number) => void
 }
 
 export interface SynthActions {
@@ -120,8 +127,11 @@ const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
       }
     },
     pattern: {
-      addNote: (blockId: string, patternId: string, note: Note) => {
-        dispatch(addNote({ blockId, patternId, note }))
+      setQuantize: (quantize: number) => {
+        dispatch(setQuantize({ quantize }))
+      },
+      setNoteDuration: (duration: number) => {
+        dispatch(setNoteDuration({ duration }))
       }
     },
     synth: {
