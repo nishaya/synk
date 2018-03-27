@@ -1,7 +1,8 @@
 import * as Color from 'color'
+import SliderControl from 'Components/Common/SliderControl'
 import { TrackActions } from 'Containers/Session'
 import Paper from 'material-ui/Paper'
-import Slider from 'material-ui/Slider'
+// import Slider from 'material-ui/Slider'
 import * as React from 'react'
 import { UIState } from 'Redux/UI'
 import { Track } from 'types'
@@ -10,11 +11,6 @@ interface Props {
   track: Track
   settings: UIState
   actions: TrackActions
-}
-
-const sliderStyle = {
-  marginTop: 8,
-  marginBottom: 8
 }
 
 const TrackDetail = ({ track, settings, actions }: Props) => {
@@ -38,12 +34,12 @@ const TrackDetail = ({ track, settings, actions }: Props) => {
         </div>
         {current ? (
           <div style={{ padding: 8 }}>
-            <Slider
-              sliderStyle={sliderStyle}
+            <SliderControl
+              label="level"
               value={track.level}
               min={0}
               max={127}
-              onChange={(_: any, v: number) => {
+              onChange={(v: number) => {
                 actions.changeTrackLevel(track.index, v)
               }}
             />
