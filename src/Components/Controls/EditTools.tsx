@@ -11,7 +11,11 @@ interface Props {
 
 export default ({ mutations, settings }: Props) => (
   <div>
-    <RaisedButton icon={<Icons.ContentCreate />} label="Edit" />
+    {settings.keys.get('Meta') ? (
+      <RaisedButton icon={<Icons.ActionDelete />} label="Remove" />
+    ) : (
+      <RaisedButton icon={<Icons.ContentCreate />} label="Edit" />
+    )}
     <RaisedButton icon={<Icons.ActionReorder />} label="Quantize" />
     <RaisedButton icon={<Icons.AvLibraryMusic />} label="Resolution" />
     <RaisedButton
