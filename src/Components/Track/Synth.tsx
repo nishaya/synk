@@ -39,7 +39,6 @@ class SynthComponent extends React.Component<Props> {
       const handler: SynthPlayHandler = (
         info: SynthPlayInfo
       ): SynthStopHandler => {
-        console.log('play synth', info)
         return this.synth.play(info)
       }
       initSynth(trackIndex, handler)
