@@ -1,5 +1,7 @@
 import { NoteInfo } from 'Components/Edit/NoteInfo'
 import { Mutations, SessionActions } from 'Containers/Session'
+import IconButton from 'material-ui/IconButton'
+import * as Icons from 'material-ui/svg-icons'
 import * as React from 'react'
 import { SynthState } from 'Redux/Synth'
 import { UIState } from 'Redux/UI'
@@ -405,7 +407,21 @@ class PatternComponent extends React.Component<Props, State> {
                 alignItems: 'center'
               }}
             >
-              +1
+              <div>
+                <div>
+                  <IconButton tooltip="Add a bar" tooltipPosition="top-center">
+                    <Icons.ImageExposurePlus1 />
+                  </IconButton>
+                </div>
+                <div>
+                  <IconButton
+                    tooltip="Remove a bar"
+                    tooltipPosition="top-center"
+                  >
+                    <Icons.ImageExposureNeg1 />
+                  </IconButton>
+                </div>
+              </div>
             </div>
           </div>
         </div>
