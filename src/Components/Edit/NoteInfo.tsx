@@ -8,11 +8,12 @@ interface Props {
   previewNote?: Note | null
 }
 
-const previewStyle = {
+const previewStyle: React.CSSProperties = {
   fontSize: 'middle',
   color: '#355c7d',
   letterSpacing: '0.1em',
-  fontFamily: "'Roboto Mono', monospace"
+  fontFamily: "'Roboto Mono', monospace",
+  fontWeight: 700
 }
 
 export const NoteInfo = ({ editNote, previewNote }: Props) => {
