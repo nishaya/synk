@@ -277,6 +277,7 @@ class PatternComponent extends React.Component<Props, State> {
     const barWidth = beatWidth * 4
     const cursorX = settings.block.cursor / 480 * beatWidth
     const svgHeight = displayNotes * noteHeight
+    const svgWidth = barWidth * bars
     if (editNote) {
       console.log('editing', editNote)
       noteStyle.pointerEvents = 'none'
@@ -310,11 +311,12 @@ class PatternComponent extends React.Component<Props, State> {
             <svg
               style={{
                 height: svgHeight,
+                width: svgWidth,
                 backgroundColor: '#ddd'
               }}
               ref={(svg: SVGSVGElement) => (this.svgElement = svg)}
               xmlns="http://www.w3.org/2000/svg"
-              viewBox={`0 0 ${beatWidth * 4 * bars} ${svgHeight}`}
+              viewBox={`0 0 ${svgWidth} ${svgHeight}`}
               preserveAspectRatio="xMidYMid meet"
             >
               <defs>
