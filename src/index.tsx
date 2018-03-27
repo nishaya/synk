@@ -21,10 +21,10 @@ ReactDOM.render(
       <AuthContainer>
         <BrowserRouter>
           <Switch>
-            <Route path="/" component={SplashComponent} />
             <Route path="/session/:sessionId?" component={App} />
             <Route path="/loader/:sessionId" component={Loader} />
-            <Route component={NotFoundComponent} />
+            <Route path="/404" component={NotFoundComponent} />
+            <Route component={SplashComponent} />
           </Switch>
         </BrowserRouter>
       </AuthContainer>

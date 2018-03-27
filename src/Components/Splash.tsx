@@ -2,6 +2,7 @@ import Logo from 'Components/Common/Logo'
 // import RaisedButton from 'material-ui/RaisedButton'
 import FlatButton from 'material-ui/FlatButton'
 import * as React from 'react'
+import { RouteComponentProps, withRouter } from 'react-router'
 import styled from 'styled-components'
 
 // const Button = RaisedButton
@@ -22,7 +23,7 @@ const Splash = styled.div`
   }
 `
 
-const SplashComponent = () => (
+const SplashComponent = ({ history }: RouteComponentProps<any>) => (
   <Splash>
     <div className="head">
       <Logo />
@@ -31,9 +32,10 @@ const SplashComponent = () => (
       <FlatButton
         backgroundColor="rgba(255, 255, 255, 0.1)"
         label="Create New"
+        onClick={() => history.push('/loader/new')}
       />
     </div>
   </Splash>
 )
 
-export default SplashComponent
+export default withRouter(SplashComponent)
