@@ -1,3 +1,4 @@
+import Logo from 'Components/Common/Logo'
 import * as React from 'react'
 import styled from 'styled-components'
 
@@ -16,7 +17,9 @@ const Splash = styled.div`
 
 const SplashComponent = () => (
   <Splash>
-    <div className="head">splash</div>
+    <div className="head">
+      <Logo />
+    </div>
   </Splash>
 )
 
