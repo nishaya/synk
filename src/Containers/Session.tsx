@@ -48,6 +48,7 @@ export interface Mutations {
   addNote: (blockId: string, patternId: string, note: Note) => void
   removeNote: (blockId: string, patternId: string, note: Note) => void
   clearPattern: (blockIndex: number, patternIndex: number) => void
+  changeBlockLength: (num: number) => void
 }
 
 const mapStateToProps = (state: RootState) => ({
@@ -55,6 +56,21 @@ const mapStateToProps = (state: RootState) => ({
   settings: state.UI,
   synth: state.Synth,
   mutations: {
+    changeBlockLength: (num: number) => {
+      const { UI: { block: { currentBlockIndex } } } = state
+      console.log('changeBlockLength', num)
+      const newSession = state.Session.session
+      let bars = 0
+      if (newSession.blocks[currentBlockIndex]) {
+        bars = newSession.blocks[currentBlockIndex].bars
+        bars += num
+      }
+      if (bars <= 4 && bars >= 1) {
+        newSession.blocks[currentBlockIndex].bars = bars
+        const doc = firebase.firestore().doc(`/sessions/${newSession.id}`)
+        doc.set(newSession)
+      }
+    },
     addNote: (blockId: string, patternId: string, note: Note) => {
       console.log('Mutation - addNote', blockId, patternId, note)
       const newSession = state.Session.session

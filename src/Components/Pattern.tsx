@@ -261,7 +261,11 @@ class PatternComponent extends React.Component<Props, State> {
   render() {
     const pattern = this.getPattern()
     if (!pattern) return null
-    const { block: { bars }, settings } = this.props
+    const {
+      block: { bars },
+      settings,
+      mutations: { changeBlockLength }
+    } = this.props
     const { stageHeight, stageWidth, editNote, previewNote } = this.state
     const { maxNote, minNote } = this.noteRange(pattern)
     const trackColor = this.getTrackColor()
@@ -409,12 +413,17 @@ class PatternComponent extends React.Component<Props, State> {
             >
               <div>
                 <div>
-                  <IconButton tooltip="Add a bar" tooltipPosition="top-center">
+                  <IconButton
+                    onClick={() => changeBlockLength(1)}
+                    tooltip="Add a bar"
+                    tooltipPosition="top-center"
+                  >
                     <Icons.ImageExposurePlus1 />
                   </IconButton>
                 </div>
                 <div>
                   <IconButton
+                    onClick={() => changeBlockLength(-1)}
                     tooltip="Remove a bar"
                     tooltipPosition="top-center"
                   >
