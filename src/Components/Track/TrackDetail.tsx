@@ -34,7 +34,7 @@ const TrackDetail = ({ track, settings, actions, mutations }: Props) => {
           </span>
         </div>
         {current ? (
-          <div style={{ padding: 8 }}>
+          <div style={{ padding: 8, paddingRight: 16 }}>
             <SliderControl
               label="level"
               value={track.level}

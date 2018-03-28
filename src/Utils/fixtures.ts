@@ -1,13 +1,13 @@
 import { Note, Session } from 'types'
 import { BEAT_LENGTH } from 'Utils/time'
 
-const genNotes = (bars: number = 4): Note[] => {
+const genNotes = (bars: number = 4, octave = 0): Note[] => {
   const notes: Note[] = []
   // TODO: use scale
 
   for (let i = 0; i < 16 * bars; i++) {
     notes.push({
-      note: ~~(Math.random() * 4) * 3 + 30,
+      note: ~~(Math.random() * 4) * 3 + 30 + 12 * octave,
       position: i * 120,
       duration: 60,
       velocity: 100
@@ -65,7 +65,7 @@ export const session: Session = {
       index: 1,
       preset: {
         type: 'osc',
-        oscillator: 'triangle'
+        oscillator: 'square'
       },
       level: 100,
       pan: 0,
@@ -97,11 +97,11 @@ export const session: Session = {
       patterns: [
         {
           id: 'dummy1-1',
-          notes: genNotes(1)
+          notes: genNotes(1, 2)
         },
         {
           id: 'dummy1-2',
-          notes: genNotes(1)
+          notes: genNotes(1, -1)
         },
         {
           id: 'dummy1-3',

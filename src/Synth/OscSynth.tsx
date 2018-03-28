@@ -38,11 +38,16 @@ class OscSynth implements Synthesizer {
   }
 
   changePreset(preset: OscSynthPreset) {
+    if (this.preset === preset) {
+      return
+    }
     this.preset = preset
   }
 
   changeLevel(level: number) {
-    console.log('changeLevel', this.level, level)
+    if (this.level === level) {
+      return
+    }
     this.level = level
     const volume = level / 127 * 0.8
     this.gain.gain.setValueAtTime(volume, this.ctx.currentTime)
@@ -77,7 +82,7 @@ class OscSynth implements Synthesizer {
     osc.start(info.time || this.ctx.currentTime)
 
     const stop = (time: number = this.ctx.currentTime) => {
-      const release = time + 0.1
+      const release = time + 0.05
       if (gain) gain.gain.linearRampToValueAtTime(0, release)
       if (osc) osc.stop(release)
     }
