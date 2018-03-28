@@ -73,8 +73,8 @@ const mapStateToProps = (state: RootState) => ({
         const now = Date.now()
         if (now - lastCommit > 1000 && pendingUpdate) {
           const doc = firebase.firestore().doc(`/sessions/${newSession.id}`)
-          doc.set(pendingUpdate)
-          lastCommit = Date.now()
+          doc.set({ tracks: pendingUpdate.tracks }, { merge: true })
+          lastCommit = now
           pendingUpdate = null
         }
       }, 1000)
