@@ -1,11 +1,12 @@
 import * as Color from 'color'
 import SliderControl from 'Components/Common/SliderControl'
+import OscPreset from 'Components/Track/Preset/Osc'
 import { Mutations, TrackActions } from 'Containers/Session'
 import Paper from 'material-ui/Paper'
 // import Slider from 'material-ui/Slider'
 import * as React from 'react'
 import { UIState } from 'Redux/UI'
-import { Track } from 'types'
+import { isOscSynthPreset, OscSynthPreset, Track } from 'types'
 
 interface Props {
   track: Track
@@ -18,6 +19,7 @@ const TrackDetail = ({ track, settings, actions, mutations }: Props) => {
   const color = settings.track.trackColors[track.index] || '#fff'
   const currentTrack = settings.track.currentTrack
   const current = track.index === currentTrack
+  const { preset } = track
 
   const transparent = Color(color)
     .fade(0.2)
@@ -44,6 +46,14 @@ const TrackDetail = ({ track, settings, actions, mutations }: Props) => {
                 mutations.changeTrackLevel(track.index, v)
               }}
             />
+            {isOscSynthPreset(preset) ? (
+              <OscPreset
+                preset={preset}
+                onChange={(newPreset: OscSynthPreset) => {
+                  console.log('preset changed', newPreset)
+                }}
+              />
+            ) : null}
           </div>
         ) : null}
       </Paper>

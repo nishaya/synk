@@ -14,11 +14,12 @@ const OscPreset = ({ preset, onChange }: Props) => {
   return (
     <div>
       <DropDownMenu
+        value={preset.oscillator}
         onChange={(e: any, i: number, v: string) => {
           onChange(merge({ oscillator: v }, preset))
         }}
       >
-        <MenuItem value="sawtooth" primaryText="SAW" />
+        <MenuItem value="sawtooth" primaryText="SAWTOOTH" />
         <MenuItem value="square" primaryText="SQUARE" />
         <MenuItem value="sine" primaryText="SINE" />
         <MenuItem value="triangle" primaryText="TRIANGLE" />
@@ -36,7 +37,7 @@ const OscPreset = ({ preset, onChange }: Props) => {
         min={0}
         max={127}
         value={preset.aeg.decay}
-        label="attack"
+        label="decay"
         onChange={(v: number) => {
           onChange(merge({ aeg: { decay: v } }, preset))
         }}
@@ -45,7 +46,7 @@ const OscPreset = ({ preset, onChange }: Props) => {
         min={0}
         max={127}
         value={preset.aeg.sustain}
-        label="attack"
+        label="sustain"
         onChange={(v: number) => {
           onChange(merge({ aeg: { sustain: v } }, preset))
         }}
@@ -54,7 +55,7 @@ const OscPreset = ({ preset, onChange }: Props) => {
         min={0}
         max={127}
         value={preset.aeg.release}
-        label="attack"
+        label="release"
         onChange={(v: number) => {
           onChange(merge({ aeg: { release: v } }, preset))
         }}
