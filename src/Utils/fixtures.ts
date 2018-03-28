@@ -54,7 +54,13 @@ export const session: Session = {
       index: 0,
       preset: {
         type: 'osc',
-        oscillator: 'sawtooth'
+        oscillator: 'sawtooth',
+        aeg: {
+          attack: 0,
+          decay: 64,
+          sustain: 127,
+          release: 0
+        }
       },
       level: 100,
       pan: 0,
@@ -65,7 +71,13 @@ export const session: Session = {
       index: 1,
       preset: {
         type: 'osc',
-        oscillator: 'square'
+        oscillator: 'square',
+        aeg: {
+          attack: 0,
+          decay: 64,
+          sustain: 127,
+          release: 0
+        }
       },
       level: 100,
       pan: 0,

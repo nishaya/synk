@@ -15,6 +15,13 @@ export interface Track {
   solo: boolean
 }
 
+export interface ADSR {
+  attack: number
+  decay: number
+  sustain: number
+  release: number
+}
+
 type SynthPresetType = 'osc' | 'drums' | 'fm'
 
 export type SynthPreset = OscSynthPreset | FmSynthPreset | DrumsSynthPreset
@@ -38,6 +45,7 @@ export function isDrumsSynthPreset(v: any): v is DrumsSynthPreset {
 export interface OscSynthPreset extends BaseSynthPreset {
   type: 'osc'
   oscillator: OscillatorType
+  aeg: ADSR
 }
 
 export interface FmSynthPreset extends BaseSynthPreset {
