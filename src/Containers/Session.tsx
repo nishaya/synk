@@ -12,7 +12,7 @@ import {
   setNoteDuration,
   setQuantize
 } from 'Redux/UI'
-import { Note, Session, SynthPlayHandler } from 'types'
+import { Note, Session, SynthPlayHandler, SynthPreset } from 'types'
 import { findPattern } from 'Utils/session'
 
 import * as firebase from 'firebase'
@@ -52,6 +52,7 @@ export interface Mutations {
   clearPattern: (blockIndex: number, patternIndex: number) => void
   changeBlockLength: (num: number) => void
   changeTrackLevel: (trackIndex: number, level: number) => void
+  changePreset: (trackIndex: number, preset: SynthPreset) => void
 }
 
 let pendingUpdate: Session | null = null
@@ -67,6 +68,23 @@ const mapStateToProps = (state: RootState) => ({
       const newSession = state.Session.session
       if (newSession.tracks[trackIndex]) {
         newSession.tracks[trackIndex].level = level
+      }
+      pendingUpdate = newSession
+      setTimeout(() => {
+        const now = Date.now()
+        if (now - lastCommit > 1000 && pendingUpdate) {
+          const doc = firebase.firestore().doc(`/sessions/${newSession.id}`)
+          doc.set({ tracks: pendingUpdate.tracks }, { merge: true })
+          lastCommit = now
+          pendingUpdate = null
+        }
+      }, 1000)
+    },
+    changePreset: (trackIndex: number, preset: SynthPreset) => {
+      console.log('changePreset', trackIndex, preset)
+      const newSession = state.Session.session
+      if (newSession.tracks[trackIndex]) {
+        newSession.tracks[trackIndex].preset = preset
       }
       pendingUpdate = newSession
       setTimeout(() => {
