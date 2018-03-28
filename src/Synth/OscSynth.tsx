@@ -11,9 +11,9 @@ interface SynthOptions {
   oscillator?: OscillatorType
 }
 
-const MAX_ATTACK_TIME = 10
-const MAX_DECAY_TIME = 10
-const MAX_RELEASE_TIME = 10
+const MAX_ATTACK_TIME = 2
+const MAX_DECAY_TIME = 2
+const MAX_RELEASE_TIME = 2
 
 const defaultPreset: OscSynthPreset = {
   type: 'osc',

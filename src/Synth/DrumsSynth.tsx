@@ -77,7 +77,7 @@ class DrumsSynth implements Synthesizer {
 
     source.buffer = this.noise
     source.loop = true
-    const volume = velocity / 127 * 0.3
+    const volume = velocity / 127 * 0.5
     gain.gain.setValueAtTime(volume, start)
     gain.gain.setValueAtTime(volume * sustain, start + duration)
     gain.gain.exponentialRampToValueAtTime(0.01, start + duration + release)
@@ -98,7 +98,7 @@ class DrumsSynth implements Synthesizer {
     const decay = attack + 0.1
     const sustain = decay + 0.05
 
-    const volume = info.velocity / 127 * 0.5
+    const volume = info.velocity / 127 * 0.7
 
     osc.frequency.setValueAtTime(340, start)
     gain.gain.setValueAtTime(0, start)
