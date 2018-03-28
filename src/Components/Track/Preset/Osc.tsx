@@ -16,7 +16,7 @@ const OscPreset = ({ preset, onChange }: Props) => {
       <DropDownMenu
         value={preset.oscillator}
         onChange={(e: any, i: number, v: string) => {
-          onChange(merge({ oscillator: v }, preset))
+          onChange(merge(preset, { oscillator: v }))
         }}
       >
         <MenuItem value="sawtooth" primaryText="SAWTOOTH" />
@@ -30,7 +30,7 @@ const OscPreset = ({ preset, onChange }: Props) => {
         value={preset.aeg.attack}
         label="attack"
         onChange={(v: number) => {
-          onChange(merge({ aeg: { attack: v } }, preset))
+          onChange(merge(preset, { aeg: { attack: v } }))
         }}
       />
       <SliderControl
@@ -39,7 +39,7 @@ const OscPreset = ({ preset, onChange }: Props) => {
         value={preset.aeg.decay}
         label="decay"
         onChange={(v: number) => {
-          onChange(merge({ aeg: { decay: v } }, preset))
+          onChange(merge(preset, { aeg: { decay: v } }))
         }}
       />
       <SliderControl
@@ -48,7 +48,7 @@ const OscPreset = ({ preset, onChange }: Props) => {
         value={preset.aeg.sustain}
         label="sustain"
         onChange={(v: number) => {
-          onChange(merge({ aeg: { sustain: v } }, preset))
+          onChange(merge(preset, { aeg: { sustain: v } }))
         }}
       />
       <SliderControl
@@ -57,7 +57,7 @@ const OscPreset = ({ preset, onChange }: Props) => {
         value={preset.aeg.release}
         label="release"
         onChange={(v: number) => {
-          onChange(merge({ aeg: { release: v } }, preset))
+          onChange(merge(preset, { aeg: { release: v } }))
         }}
       />
     </div>

@@ -50,7 +50,7 @@ const TrackDetail = ({ track, settings, actions, mutations }: Props) => {
               <OscPreset
                 preset={preset}
                 onChange={(newPreset: OscSynthPreset) => {
-                  console.log('preset changed', newPreset)
+                  mutations.changePreset(track.index, newPreset)
                 }}
               />
             ) : null}
