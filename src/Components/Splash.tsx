@@ -10,7 +10,7 @@ const Splash = styled.div`
   height: 100%;
 
   .head {
-    height: 50%;
+    height: 70%;
     display: flex;
     justify-content: center;
     align-items: center;
