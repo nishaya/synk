@@ -11,9 +11,19 @@ interface SynthOptions {
   oscillator?: OscillatorType
 }
 
+const MAX_ATTACK_TIME = 10
+const MAX_DECAY_TIME = 10
+const MAX_RELEASE_TIME = 10
+
 const defaultPreset: OscSynthPreset = {
   type: 'osc',
-  oscillator: 'square'
+  oscillator: 'square',
+  aeg: {
+    attack: 0,
+    decay: 64,
+    sustain: 127,
+    release: 0
+  }
 }
 
 export interface Synthesizer {
@@ -63,9 +73,10 @@ class OscSynth implements Synthesizer {
 
     const volume = info.velocity / 127 * 0.5
     const start = info.time || this.ctx.currentTime
-    const attack = start + 0.005
-    const sustain = volume * 0.6
-    const decay = attack + 0.4
+    const attack =
+      start + 0.005 + this.preset.aeg.attack / 127 * MAX_ATTACK_TIME
+    const sustain = volume * this.preset.aeg.sustain / 127
+    const decay = attack + this.preset.aeg.decay / 127 * MAX_DECAY_TIME
 
     gain.gain.setValueAtTime(0, start)
     gain.gain.linearRampToValueAtTime(volume, attack)
@@ -82,8 +93,10 @@ class OscSynth implements Synthesizer {
     osc.start(info.time || this.ctx.currentTime)
 
     const stop = (time: number = this.ctx.currentTime) => {
-      const release = time + 0.05
-      if (gain) gain.gain.linearRampToValueAtTime(0, release)
+      const release = time + this.preset.aeg.release / 127 * MAX_RELEASE_TIME
+      if (gain) {
+        gain.gain.linearRampToValueAtTime(0, release)
+      }
       if (osc) osc.stop(release)
     }
 
