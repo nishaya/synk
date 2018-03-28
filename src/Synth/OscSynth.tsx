@@ -23,7 +23,9 @@ const defaultPreset: OscSynthPreset = {
     decay: 64,
     sustain: 127,
     release: 0
-  }
+  },
+  cutoff: 127,
+  resonance: 0
 }
 
 export interface Synthesizer {

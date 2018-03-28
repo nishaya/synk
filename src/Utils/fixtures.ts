@@ -60,7 +60,9 @@ export const session: Session = {
           decay: 64,
           sustain: 127,
           release: 0
-        }
+        },
+        cutoff: 127,
+        resonance: 0
       },
       level: 100,
       pan: 0,
@@ -77,7 +79,9 @@ export const session: Session = {
           decay: 64,
           sustain: 127,
           release: 0
-        }
+        },
+        cutoff: 127,
+        resonance: 0
       },
       level: 100,
       pan: 0,

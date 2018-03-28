@@ -46,6 +46,8 @@ export interface OscSynthPreset extends BaseSynthPreset {
   type: 'osc'
   oscillator: OscillatorType
   aeg: ADSR
+  cutoff: number
+  resonance: number
 }
 
 export interface FmSynthPreset extends BaseSynthPreset {
