@@ -19,6 +19,7 @@ const BlockSelect = ({
       i: number,
       v: number
     ) => onChange(i)}
+    style={{ width: 200 }}
   >
     {blocks.map((block: Block, i: number) => (
       <MenuItem key={block.id} value={i} primaryText={block.name} />
