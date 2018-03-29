@@ -60,6 +60,7 @@ export interface UIState {
   readonly track: TrackUIState
   readonly arrangement: ArrangementState
   readonly keys: Map<string, boolean>
+  readonly keyHistory: Array<string>
 }
 
 const defaultTrackColors = [
@@ -83,7 +84,8 @@ const initialState: UIState = {
   arrangement: {
     cursor: 0
   },
-  keys: new Map()
+  keys: new Map(),
+  keyHistory: []
 }
 
 export const uiReducers = (
@@ -120,8 +122,14 @@ export const uiReducers = (
   }
   if (isType(action, keyUp)) {
     const { key } = action.payload
+    const { keyHistory } = state
     state.keys.set(key, false)
-    return { ...merge(state, { keys: new Map(state.keys.entries()) }) }
+    return {
+      ...merge(state, {
+        keys: new Map(state.keys.entries()),
+        keyHistory: [key, ...keyHistory.slice(0, 15)]
+      })
+    }
   }
   return state
 }
