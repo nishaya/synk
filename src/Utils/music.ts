@@ -30,3 +30,22 @@ export const note2name = (note: number): string => {
 export const note2freq = (note: number): number => {
   return 440 * 2 ** ((note - 69) / 12)
 }
+
+const blackKeys = [
+  false,
+  true,
+  false,
+  true,
+  false,
+  false,
+  true,
+  false,
+  true,
+  false,
+  true,
+  false
+]
+
+export const isBlackKey = (note: number) => {
+  return blackKeys[note % 12]
+}

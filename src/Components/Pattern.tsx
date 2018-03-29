@@ -1,5 +1,6 @@
 import { NoteInfo } from 'Components/Edit/NoteInfo'
 import GridBg from 'Components/Pattern/GridBg'
+import KeysComponent from 'Components/Pattern/Keys'
 import { Mutations, SessionActions } from 'Containers/Session'
 import IconButton from 'material-ui/IconButton'
 import * as Icons from 'material-ui/svg-icons'
@@ -321,6 +322,14 @@ class PatternComponent extends React.Component<Props, State> {
                   startNote={maxNote}
                 />
               </defs>
+              <KeysComponent
+                max={maxNote}
+                min={minNote}
+                offsetX={0}
+                offsetY={gridYOffset}
+                width={gridXOffset}
+                noteHeight={noteHeight}
+              />
               <g>
                 <rect
                   fill="url(#Grid)"

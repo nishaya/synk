@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { isBlackKey } from 'Utils/music'
 
 interface Props {
   xOffset: number
@@ -11,25 +12,6 @@ interface Props {
 
 const gridBgColor = '#fff'
 const blackKeyColor = '#eee'
-
-const blackKeys = [
-  false,
-  true,
-  false,
-  true,
-  false,
-  false,
-  true,
-  false,
-  true,
-  false,
-  true,
-  false
-]
-
-const isBlackKey = (note: number) => {
-  return blackKeys[note % 12]
-}
 
 // objectBoundingBox, userSpaceOnUse
 const GridBg = ({

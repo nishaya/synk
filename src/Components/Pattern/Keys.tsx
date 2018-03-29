@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { isBlackKey } from 'Utils/music'
 
 interface Props {
   offsetX: number
@@ -26,10 +27,10 @@ const KeysComponent = ({
         <rect
           key={`k_${note}`}
           x={offsetX}
-          y={offsetY + noteHeight * 0}
+          y={offsetY + noteHeight * i}
           width={width}
           height={noteHeight}
-          fill={i % 2 === 0 ? '#00f' : '#f00'}
+          fill={isBlackKey(note) ? '#333' : '#fff'}
         />
       ))}
     </g>
