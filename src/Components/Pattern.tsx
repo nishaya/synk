@@ -52,6 +52,12 @@ const defaultNoteStyle = { fill: 'red', stroke: '#666', strokeWidth: 0 }
 const noteRound = 4
 const noteOffset = 1
 
+const noteDefaultProps = {
+  rx: noteRound,
+  ry: noteRound,
+  height: noteHeight
+}
+
 class PatternComponent extends React.Component<Props, State> {
   divElement: HTMLDivElement
   svgElement: SVGSVGElement
@@ -278,13 +284,11 @@ class PatternComponent extends React.Component<Props, State> {
       noteStyle.pointerEvents = 'none'
       editingNote = (
         <rect
+          {...defaultNoteStyle}
           key="note_editing"
-          rx={noteRound}
-          ry={noteRound}
           x={editNote.position * durationWidth}
           y={(maxNote - editNote.note) * noteHeight}
           width={durationWidth * editNote.duration - noteOffset}
-          height={noteHeight}
           style={noteStyle}
         />
       )
@@ -336,13 +340,11 @@ class PatternComponent extends React.Component<Props, State> {
                 }
                 return (
                   <rect
+                    {...noteDefaultProps}
                     key={`note_${index}`}
-                    rx={noteRound}
-                    ry={noteRound}
                     x={note.position * durationWidth}
                     y={(maxNote - note.note) * noteHeight}
                     width={durationWidth * note.duration - noteOffset}
-                    height={noteHeight}
                     style={noteStyle}
                   />
                 )
