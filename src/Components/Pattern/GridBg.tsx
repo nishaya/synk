@@ -1,6 +1,8 @@
 import * as React from 'react'
 
 interface Props {
+  xOffset: number
+  yOffset: number
   barWidth: number
   noteHeight: number
   beatWidth: number
@@ -29,13 +31,21 @@ const isBlackKey = (note: number) => {
   return blackKeys[note % 12]
 }
 
-const GridBg = ({ beatWidth, barWidth, noteHeight, startNote }: Props) => {
+// objectBoundingBox, userSpaceOnUse
+const GridBg = ({
+  xOffset = 0,
+  yOffset = 0,
+  beatWidth,
+  barWidth,
+  noteHeight,
+  startNote
+}: Props) => {
   const patternHeight = noteHeight * 12
   return (
     <pattern
       id="Grid"
-      x="0"
-      y="0"
+      x={xOffset}
+      y={yOffset}
       width={barWidth}
       height={patternHeight}
       patternUnits="userSpaceOnUse"

@@ -25,17 +25,6 @@ interface State {
   avgNote: number
 }
 
-/*
-const avgNotes = (notes: Note[]): number => {
-  if (notes.length === 0) return 64
-  return ~~(
-    notes.reduce<number>((sum: number, note: Note) => {
-      return sum + note.note
-    }, 0) / notes.length
-  )
-}
-*/
-
 const noteDefaults: Note = {
   note: 0,
   velocity: 100,
@@ -43,6 +32,8 @@ const noteDefaults: Note = {
   position: 0
 }
 
+const gridXOffset = 128
+const gridYOffset = 64
 const noteHeight = 10
 const displayNotes = 60
 const beatWidth = 64
@@ -277,8 +268,10 @@ class PatternComponent extends React.Component<Props, State> {
     let editingNote = null
     const barWidth = beatWidth * 4
     const cursorX = settings.block.cursor / 480 * beatWidth
-    const svgHeight = displayNotes * noteHeight
-    const svgWidth = barWidth * bars
+    const gridHeight = displayNotes * noteHeight
+    const svgHeight = gridHeight + gridYOffset
+    const gridWidth = barWidth * bars
+    const svgWidth = gridWidth + gridXOffset
     if (editNote) {
       console.log('editing', editNote)
       noteStyle.pointerEvents = 'none'
@@ -286,8 +279,8 @@ class PatternComponent extends React.Component<Props, State> {
         <rect
           {...defaultNoteStyle}
           key="note_editing"
-          x={editNote.position * durationWidth}
-          y={(maxNote - editNote.note) * noteHeight}
+          x={gridXOffset + editNote.position * durationWidth}
+          y={gridYOffset + (maxNote - editNote.note) * noteHeight}
           width={durationWidth * editNote.duration - noteOffset}
           style={noteStyle}
         />
@@ -320,44 +313,48 @@ class PatternComponent extends React.Component<Props, State> {
             >
               <defs>
                 <GridBg
+                  xOffset={gridXOffset}
+                  yOffset={gridYOffset}
                   barWidth={barWidth}
                   noteHeight={noteHeight}
                   beatWidth={beatWidth}
                   startNote={maxNote}
                 />
               </defs>
-              <rect
-                fill="url(#Grid)"
-                x="0"
-                y="0"
-                width={beatWidth * 4 * bars}
-                height={svgHeight}
-                style={{ pointerEvents: 'none' }}
-              />
-              {pattern.notes.map((note: Note, index: number) => {
-                if (note.note < minNote || maxNote < note.note) {
-                  return null
-                }
-                return (
-                  <rect
-                    {...noteDefaultProps}
-                    key={`note_${index}`}
-                    x={note.position * durationWidth}
-                    y={(maxNote - note.note) * noteHeight}
-                    width={durationWidth * note.duration - noteOffset}
-                    style={noteStyle}
-                  />
-                )
-              })}
-              <line
-                stroke="#ff0"
-                x1={cursorX}
-                y1="0"
-                x2={cursorX}
-                y2={svgHeight}
-                style={{ pointerEvents: 'none', mixBlendMode: 'difference' }}
-              />
-              {editingNote}
+              <g>
+                <rect
+                  fill="url(#Grid)"
+                  x={gridXOffset}
+                  y={gridYOffset}
+                  width={gridWidth}
+                  height={gridHeight}
+                  style={{ pointerEvents: 'none' }}
+                />
+                {pattern.notes.map((note: Note, index: number) => {
+                  if (note.note < minNote || maxNote < note.note) {
+                    return null
+                  }
+                  return (
+                    <rect
+                      {...noteDefaultProps}
+                      key={`note_${index}`}
+                      x={gridXOffset + note.position * durationWidth}
+                      y={gridYOffset + (maxNote - note.note) * noteHeight}
+                      width={durationWidth * note.duration - noteOffset}
+                      style={noteStyle}
+                    />
+                  )
+                })}
+                <line
+                  stroke="#ff0"
+                  x1={gridXOffset + cursorX}
+                  y1="0"
+                  x2={gridXOffset + cursorX}
+                  y2={gridYOffset + svgHeight}
+                  style={{ pointerEvents: 'none', mixBlendMode: 'difference' }}
+                />
+                {editingNote}
+              </g>
             </svg>
             <div
               style={{
