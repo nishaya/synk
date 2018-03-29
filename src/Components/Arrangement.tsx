@@ -60,7 +60,6 @@ export default ({
       <CardHeader title="Arrangement" />
       <CardActions>
         <Transport
-          bpm={session.bpm}
           cursor={settings.arrangement.cursor}
           onStop={() => {
             console.log('stop')

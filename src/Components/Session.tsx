@@ -1,5 +1,6 @@
 import ArrangementComponent from 'Components/Arrangement'
 import BlockEditComponent from 'Components/BlockEdit'
+import BpmComponent from 'Components/Controls/Bpm'
 import EditTools from 'Components/Controls/EditTools'
 import Transport from 'Components/Controls/Transport'
 import BlockSelect from 'Components/Session/BlockSelect'
@@ -32,6 +33,9 @@ const Tools = styled.div`
   display: flex;
 
   div:first-child {
+    xmargin-right: auto;
+  }
+  .eol {
     margin-right: auto;
   }
 `
@@ -136,7 +140,6 @@ class SessionComponent extends React.Component<
               <Tools>
                 <div>
                   <Transport
-                    bpm={session.bpm}
                     handleRec={() => console.log('rec button pushed')}
                     onStop={() => {
                       if (blockPlayer.playing) {
@@ -150,6 +153,9 @@ class SessionComponent extends React.Component<
                     }}
                     cursor={settings.block.cursor}
                   />
+                </div>
+                <div className="eol">
+                  <BpmComponent bpm={session.bpm} mutations={mutations} />
                 </div>
                 <div>
                   <EditTools
