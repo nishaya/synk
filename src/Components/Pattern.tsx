@@ -242,8 +242,15 @@ class PatternComponent extends React.Component<Props, State> {
     pattern: Pattern
   ): { avg: number; minNote: number; maxNote: number } {
     const avg = avgNotes(pattern.notes)
-    const maxNote = avg + displayNotes / 2
-    const minNote = maxNote - displayNotes
+    let maxNote = avg + displayNotes / 2
+    let minNote = maxNote - displayNotes
+    if (maxNote > 127) {
+      maxNote = 127
+      minNote = maxNote - displayNotes
+    } else if (minNote < 0) {
+      minNote = 0
+      maxNote = minNote + displayNotes
+    }
     return { avg, maxNote, minNote }
   }
 
@@ -257,6 +264,7 @@ class PatternComponent extends React.Component<Props, State> {
     } = this.props
     const { stageHeight, stageWidth, editNote, previewNote } = this.state
     const { maxNote, minNote } = this.noteRange(pattern)
+    console.log('min, max', minNote, maxNote)
     const trackColor = this.getTrackColor()
     const noteStyle: React.CSSProperties = {
       ...defaultNoteStyle,
