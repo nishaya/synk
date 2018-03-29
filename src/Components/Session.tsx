@@ -6,7 +6,7 @@ import Transport from 'Components/Controls/Transport'
 import BlockSelect from 'Components/Session/BlockSelect'
 import TrackListComponent from 'Components/TrackList'
 import { Mutations, SessionActions } from 'Containers/Session'
-import { Card, CardActions, CardHeader, CardText } from 'material-ui/Card'
+import { Card, CardActions, CardText } from 'material-ui/Card'
 import Player, { PlayerUpdateInfo } from 'Player'
 import * as React from 'react'
 import { RouteComponentProps, withRouter } from 'react-router'
@@ -141,7 +141,6 @@ class SessionComponent extends React.Component<
       <div style={{ padding: '4px' }}>
         <div style={{ padding: '4px' }}>
           <Card>
-            <CardHeader title="blocks" />
             <CardActions>
               <Tools>
                 <div>
