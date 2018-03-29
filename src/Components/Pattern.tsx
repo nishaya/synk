@@ -34,7 +34,7 @@ const noteDefaults: Note = {
 }
 
 const gridXOffset = 128
-const gridYOffset = 32
+const gridYOffset = 24
 const noteHeight = 12
 const displayNotes = 60
 const beatWidth = 64
@@ -363,6 +363,32 @@ class PatternComponent extends React.Component<Props, State> {
                   startNote={maxNote}
                 />
               </defs>
+              {Array(bars)
+                .fill(null)
+                .map((_: any, bar: number) => {
+                  const props = {
+                    fill: '#999',
+                    y: gridYOffset - 6,
+                    style: { pointerEvents: 'none' }
+                  }
+                  const xo = gridXOffset + bar * barWidth - 10
+                  return (
+                    <g key={`bi_${bar}`}>
+                      <text {...props} fill="#666" x={xo}>
+                        {sprintf('%d-%d', bar + 1, 1)}
+                      </text>
+                      <text {...props} x={xo + beatWidth}>
+                        {sprintf('%d-%d', bar + 1, 2)}
+                      </text>
+                      <text {...props} x={xo + beatWidth * 2}>
+                        {sprintf('%d-%d', bar + 1, 3)}
+                      </text>
+                      <text {...props} x={xo + beatWidth * 3}>
+                        {sprintf('%d-%d', bar + 1, 4)}
+                      </text>
+                    </g>
+                  )
+                })}
               <KeysComponent
                 max={maxNote}
                 min={minNote}
@@ -386,7 +412,7 @@ class PatternComponent extends React.Component<Props, State> {
                   x1={gridXOffset + cursorX}
                   y1="0"
                   x2={gridXOffset + cursorX}
-                  y2={gridYOffset + svgHeight}
+                  y2={svgHeight}
                   style={{ pointerEvents: 'none', mixBlendMode: 'difference' }}
                 />
               </g>
