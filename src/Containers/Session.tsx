@@ -82,6 +82,7 @@ const mapStateToProps = (state: RootState) => ({
   mutations: {
     changeBpm: (bpm: number) => {
       console.log('chanbeBpm', bpm)
+      state.Session.session.bpm = bpm
       scheduleUpdate({ bpm }, state.Session.session)
     },
     changeTrackLevel: (trackIndex: number, level: number) => {
