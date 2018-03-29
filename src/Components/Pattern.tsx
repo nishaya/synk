@@ -34,7 +34,7 @@ const noteDefaults: Note = {
 }
 
 const gridXOffset = 128
-const gridYOffset = 64
+const gridYOffset = 32
 const noteHeight = 12
 const displayNotes = 60
 const beatWidth = 64
