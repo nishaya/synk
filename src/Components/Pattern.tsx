@@ -173,18 +173,8 @@ class PatternComponent extends React.Component<Props, State> {
     const svgPoint = this.mouse2svgPoint(e)
     const { note, position } = this.svgPoint2NoteInfo(svgPoint)
     if (editNote) {
-      const quantize = this.getQuantize()
-      let { duration } = editNote
-      if (position < editNote.position) {
-        duration = quantize || 0
-      } else {
-        duration = quantize
-          ? ~~((position - editNote.position) / quantize + 1) * quantize
-          : position - editNote.position
-      }
-
-      if (editNote.note !== note || editNote.duration !== duration) {
-        const newNote = { ...editNote, note, duration }
+      if (editNote.note !== note || editNote.position !== position) {
+        const newNote = { ...editNote, note, position }
         if (editNote.note !== note) {
           this.triggerSynthStop()
           const stopHandler = this.triggerSynthPlay(newNote)
@@ -192,7 +182,6 @@ class PatternComponent extends React.Component<Props, State> {
             this.setState({ stopHandler })
           }
         }
-        console.log('state updated')
         this.setState({
           editNote: newNote
         })
