@@ -37,7 +37,7 @@ const gridXOffset = 128
 const gridYOffset = 24
 const noteHeight = 12
 const displayNotes = 60
-const beatWidth = 64
+const beatWidth = 48
 const durationWidth = beatWidth / 480
 
 const defaultNoteStyle = { fill: 'red', stroke: '#666', strokeWidth: 0 }
