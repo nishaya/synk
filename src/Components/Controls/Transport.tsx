@@ -9,6 +9,7 @@ interface Props {
   cursor: number
   onStop: () => void
   onPlay: () => void
+  bpm: number
 }
 
 const Time = styled.span`
@@ -21,7 +22,7 @@ const Time = styled.span`
   letter-spacing: 0.1em;
 `
 
-export default ({ handleRec, cursor, onStop, onPlay }: Props) => (
+export default ({ handleRec, cursor, onStop, onPlay, bpm }: Props) => (
   <div>
     {handleRec ? (
       <RaisedButton
@@ -41,5 +42,6 @@ export default ({ handleRec, cursor, onStop, onPlay }: Props) => (
       label="Play"
     />
     <Time>{position2time(cursor)}</Time>
+    bpm: {bpm}
   </div>
 )

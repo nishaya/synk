@@ -49,6 +49,7 @@ const genDrums = (bars: number = 4): Note[] => {
 
 export const session: Session = {
   id: 'dummy',
+  bpm: 130,
   tracks: [
     {
       index: 0,

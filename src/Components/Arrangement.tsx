@@ -4,11 +4,10 @@ import Paper from 'material-ui/Paper'
 import * as React from 'react'
 import { UIState } from 'Redux/UI'
 import styled from 'styled-components'
-import { Arrangement, Block, BlockInfo } from 'types'
+import { Block, BlockInfo, Session } from 'types'
 
 interface Props {
-  arrangement: Arrangement
-  blocks: Block[]
+  session: Session
   settings: UIState
 }
 
@@ -51,12 +50,17 @@ const Block = ({
   )
 }
 
-export default ({ arrangement, blocks, settings }: Props) => (
+export default ({
+  settings,
+  session,
+  session: { arrangement, blocks }
+}: Props) => (
   <div style={{ padding: '4px' }}>
     <Card>
       <CardHeader title="Arrangement" />
       <CardActions>
         <Transport
+          bpm={session.bpm}
           cursor={settings.arrangement.cursor}
           onStop={() => {
             console.log('stop')

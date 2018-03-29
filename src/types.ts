@@ -1,5 +1,6 @@
 export interface Session {
   id: string
+  bpm: number
   created?: Date
   tracks: Track[]
   blocks: Block[]

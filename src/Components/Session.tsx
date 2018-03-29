@@ -87,13 +87,14 @@ class SessionComponent extends React.Component<
   playBlockPlayer() {
     const currentBlock = this.getCurrentBlock()
     if (currentBlock) {
-      const { actions, synth } = this.props
+      const { actions, synth, session } = this.props
       blockPlayer.endPosition = currentBlock.bars * BEAT_LENGTH * 4
       blockPlayer.loop = true
       blockPlayer.synthPlayHandlers = synth.handlers
       blockPlayer.onUpdate = (info: PlayerUpdateInfo) => {
         actions.block.setBlockCursor(info.cursor)
       }
+      blockPlayer.bpm = session.bpm
       blockPlayer.playBlock(this.props.settings.block.cursor, currentBlock)
     }
   }
@@ -135,6 +136,7 @@ class SessionComponent extends React.Component<
               <Tools>
                 <div>
                   <Transport
+                    bpm={session.bpm}
                     handleRec={() => console.log('rec button pushed')}
                     onStop={() => {
                       if (blockPlayer.playing) {
@@ -203,11 +205,7 @@ class SessionComponent extends React.Component<
           </Card>
         </div>
 
-        <ArrangementComponent
-          arrangement={session.arrangement}
-          blocks={session.blocks}
-          settings={settings}
-        />
+        <ArrangementComponent session={session} settings={settings} />
       </div>
     )
   }
