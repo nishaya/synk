@@ -40,7 +40,7 @@ const noteDefaults: Note = {
   position: 0
 }
 
-const noteHeight = 8
+const noteHeight = 10
 const displayNotes = 72
 const beatWidth = 64
 const durationWidth = beatWidth / 480
