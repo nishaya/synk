@@ -1,4 +1,4 @@
-import ArrangementComponent from 'Components/Arrangement'
+// import ArrangementComponent from 'Components/Arrangement'
 import BlockEditComponent from 'Components/BlockEdit'
 import BpmComponent from 'Components/Controls/Bpm'
 import EditTools from 'Components/Controls/EditTools'
@@ -215,8 +215,9 @@ class SessionComponent extends React.Component<
             </CardText>
           </Card>
         </div>
-
-        <ArrangementComponent session={session} settings={settings} />
+        {/*
+          <ArrangementComponent session={session} settings={settings} /> 
+        */}
       </div>
     )
   }
