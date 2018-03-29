@@ -33,7 +33,7 @@ const noteDefaults: Note = {
   position: 0
 }
 
-const gridXOffset = 128
+const gridXOffset = 64
 const gridYOffset = 24
 const noteHeight = 12
 const displayNotes = 60
