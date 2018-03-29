@@ -22,8 +22,10 @@ interface State {
   editNote: Note | null
   previewNote: Note | null
   stopHandler: SynthStopHandler | null
+  avgNote: number
 }
 
+/*
 const avgNotes = (notes: Note[]): number => {
   if (notes.length === 0) return 64
   return ~~(
@@ -32,6 +34,7 @@ const avgNotes = (notes: Note[]): number => {
     }, 0) / notes.length
   )
 }
+*/
 
 const noteDefaults: Note = {
   note: 0,
@@ -58,7 +61,8 @@ class PatternComponent extends React.Component<Props, State> {
     stageHeight: 0,
     editNote: null,
     previewNote: null,
-    stopHandler: null
+    stopHandler: null,
+    avgNote: 64
   }
 
   componentDidMount() {
@@ -234,7 +238,8 @@ class PatternComponent extends React.Component<Props, State> {
   noteRange(
     pattern: Pattern
   ): { avg: number; minNote: number; maxNote: number } {
-    const avg = avgNotes(pattern.notes)
+    // const avg = avgNotes(pattern.notes)
+    const { avgNote: avg } = this.state
     let maxNote = avg + displayNotes / 2
     let minNote = maxNote - displayNotes
     if (maxNote >= 127) {
