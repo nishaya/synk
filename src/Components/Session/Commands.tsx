@@ -21,8 +21,8 @@ const konami = [
   'ArrowRight',
   'ArrowLeft',
   'ArrowDown',
-  'ArrowUp',
   'ArrowDown',
+  'ArrowUp',
   'ArrowUp'
 ]
 
