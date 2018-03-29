@@ -174,6 +174,11 @@ class SessionComponent extends React.Component<
                       value={settings.block.currentBlockIndex}
                       blocks={session.blocks}
                       onChange={(blockIndex: number) => {
+                        console.log(blockIndex)
+                        if (blockIndex === -1) {
+                          console.log('add new block')
+                          return
+                        }
                         const block = session.blocks[blockIndex]
                         if (block) {
                           this.blockChanged(block)

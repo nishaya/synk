@@ -18,12 +18,13 @@ const BlockSelect = ({
       e: React.SyntheticEvent<HTMLSelectElement>,
       i: number,
       v: number
-    ) => onChange(i)}
+    ) => onChange(v)}
     style={{ width: 200 }}
   >
     {blocks.map((block: Block, i: number) => (
       <MenuItem key={block.id} value={i} primaryText={block.name} />
     ))}
+    <MenuItem key="add_new_block" value={-1} primaryText="Add new block" />
   </SelectField>
 )
 
