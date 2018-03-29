@@ -20,6 +20,14 @@ const MainLogo = styled.div`
   line-height: 160px;
 `
 
+const MLC = styled.span`
+  color: #f67280;
+  font-size: 32px;
+  letter-spacing: 0.2em;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 100;
+`
+
 const TagLine = styled.div`
   color: #c06c84;
   font-size: 22px;
@@ -27,6 +35,12 @@ const TagLine = styled.div`
   font-family: 'Montserrat', sans-serif;
   font-weight: 600;
 `
+
+export const MiniLogo = () => (
+  <div>
+    <MLC>SYNK</MLC>
+  </div>
+)
 
 export default () => (
   <div style={{ textAlign: 'center' }}>
