@@ -41,7 +41,7 @@ const noteDefaults: Note = {
 }
 
 const noteHeight = 10
-const displayNotes = 72
+const displayNotes = 60
 const beatWidth = 64
 const durationWidth = beatWidth / 480
 
@@ -237,12 +237,12 @@ class PatternComponent extends React.Component<Props, State> {
     const avg = avgNotes(pattern.notes)
     let maxNote = avg + displayNotes / 2
     let minNote = maxNote - displayNotes
-    if (maxNote > 127) {
+    if (maxNote >= 127) {
       maxNote = 127
-      minNote = maxNote - displayNotes
-    } else if (minNote < 0) {
+      minNote = maxNote - displayNotes + 1
+    } else if (minNote <= 0) {
       minNote = 0
-      maxNote = minNote + displayNotes
+      maxNote = minNote + displayNotes - 1
     }
     return { avg, maxNote, minNote }
   }
