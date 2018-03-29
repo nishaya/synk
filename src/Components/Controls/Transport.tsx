@@ -11,10 +11,11 @@ interface Props {
   onPlay: () => void
 }
 
-const Time = styled.span`
+const Time = styled.div`
+  display: inline-block;
   margin-left: 16px;
   margin-right: 16px;
-  font-size: 32px;
+  font-size: 24px;
   color: #355c7d;
   font-weight: 700;
   font-family: 'Roboto Mono', monospace;
@@ -22,7 +23,7 @@ const Time = styled.span`
 `
 
 export default ({ handleRec, cursor, onStop, onPlay }: Props) => (
-  <div>
+  <div style={{ display: 'flex', alignItems: 'flex-end' }}>
     {handleRec ? (
       <RaisedButton
         icon={<Icons.ImageLens color="red" />}
