@@ -166,6 +166,10 @@ class PatternComponent extends React.Component<Props, State> {
     e.preventDefault() // prevent drag
     const { editNote } = this.state
     const svgPoint = this.mouse2svgPoint(e)
+    if (svgPoint.x < gridXOffset || svgPoint.y < gridYOffset) {
+      this.setState({ previewNote: null, editNote: null })
+      return
+    }
     const { note, position } = this.svgPoint2NoteInfo(svgPoint)
     if (editNote) {
       if (editNote.note !== note || editNote.position !== position) {
@@ -269,7 +273,7 @@ class PatternComponent extends React.Component<Props, State> {
       ...defaultNoteStyle,
       fill: trackColor
     }
-    let editingNote = null
+    // let editingNote = null
     const barWidth = beatWidth * 4
     const cursorX = settings.block.cursor / 480 * beatWidth
     const gridHeight = displayNotes * noteHeight
@@ -277,10 +281,26 @@ class PatternComponent extends React.Component<Props, State> {
     const gridWidth = barWidth * bars
     const svgWidth = gridWidth + gridXOffset
 
+    const notes = pattern.notes.map((note: Note, index: number) => {
+      if (note.note < minNote || maxNote < note.note) {
+        return null
+      }
+      return (
+        <rect
+          {...noteDefaultProps}
+          key={`note_${index}`}
+          x={gridXOffset + note.position * durationWidth}
+          y={gridYOffset + (maxNote - note.note) * noteHeight}
+          width={durationWidth * note.duration - noteOffset}
+          style={noteStyle}
+        />
+      )
+    })
+
     if (editNote) {
       console.log('editing', editNote)
       noteStyle.pointerEvents = 'none'
-      editingNote = (
+      notes.push(
         <rect
           {...defaultNoteStyle}
           key="note_editing"
@@ -291,6 +311,7 @@ class PatternComponent extends React.Component<Props, State> {
         />
       )
     }
+
     return (
       <div
         style={{ minHeight: '100%' }}
@@ -343,22 +364,7 @@ class PatternComponent extends React.Component<Props, State> {
                   height={gridHeight}
                   style={{ pointerEvents: 'none' }}
                 />
-                {pattern.notes.map((note: Note, index: number) => {
-                  if (note.note < minNote || maxNote < note.note) {
-                    return null
-                  }
-                  return (
-                    <rect
-                      {...noteDefaultProps}
-                      key={`note_${index}`}
-                      x={gridXOffset + note.position * durationWidth}
-                      y={gridYOffset + (maxNote - note.note) * noteHeight}
-                      width={durationWidth * note.duration - noteOffset}
-                      style={noteStyle}
-                    />
-                  )
-                })}
-                {editingNote}
+                {notes}
                 <line
                   stroke="#ff0"
                   x1={gridXOffset + cursorX}
