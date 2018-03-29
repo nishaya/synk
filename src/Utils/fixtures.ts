@@ -110,19 +110,19 @@ export const session: Session = {
     {
       id: 'b1',
       name: 'A',
-      bars: 1,
+      bars: 4,
       patterns: [
         {
           id: 'dummy1-1',
-          notes: genNotes(1, 2)
+          notes: genNotes(4, 2)
         },
         {
           id: 'dummy1-2',
-          notes: genNotes(1, -1)
+          notes: genNotes(4, -1)
         },
         {
           id: 'dummy1-3',
-          notes: genDrums(1)
+          notes: genDrums(4)
         }
       ]
     },
