@@ -75,15 +75,22 @@ class CommandsComponent extends React.Component<Props> {
         mutations.changePreset(0, newPreset)
       }
       mutations.addNewBlock(newBlock)
+      actions.block.setBlockCursor(0)
+      mutations.changeBpm(130)
       setTimeout(() => {
         actions.block.setCurrentBlockIndex(newIndex)
-        playBlock()
+        setTimeout(() => {
+          playBlock()
+        }, 500)
       }, 500)
     }
   }
   render() {
+    /*
     const { settings } = this.props
     return <div>commands{JSON.stringify(settings.keyHistory)}</div>
+    */
+    return null
   }
 }
 
