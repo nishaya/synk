@@ -12,7 +12,7 @@ interface Props {
   mutations: Mutations
 }
 
-const BpmComponent = ({ bpm }: Props) => {
+const BpmComponent = ({ bpm, mutations }: Props) => {
   return (
     <div style={{ width: 200 }}>
       <div>bpm: {bpm}</div>
@@ -24,6 +24,7 @@ const BpmComponent = ({ bpm }: Props) => {
         step={1}
         onChange={(e: any, v: number) => {
           console.log('bpm changed', v)
+          mutations.changeBpm(v)
         }}
       />
     </div>
