@@ -314,7 +314,7 @@ class PatternComponent extends React.Component<Props, State> {
                   barWidth={barWidth}
                   noteHeight={noteHeight}
                   beatWidth={beatWidth}
-                  startNote={minNote}
+                  startNote={maxNote}
                 />
               </defs>
               <rect

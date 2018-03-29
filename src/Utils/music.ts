@@ -1,15 +1,15 @@
 export const roots = [
   'C',
-  'Cb',
+  'C#',
   'D',
-  'Db',
+  'D#',
   'E',
   'F',
-  'Fb',
+  'F#',
   'G',
-  'Gb',
+  'G#',
   'A',
-  'Ab',
+  'A#',
   'B'
 ]
 

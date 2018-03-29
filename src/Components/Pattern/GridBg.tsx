@@ -8,8 +8,28 @@ interface Props {
 }
 
 const gridBgColor = '#fff'
+const blackKeyColor = '#eee'
 
-const GridBg = ({ beatWidth, barWidth, noteHeight }: Props) => {
+const blackKeys = [
+  false,
+  true,
+  false,
+  true,
+  false,
+  false,
+  true,
+  false,
+  true,
+  false,
+  true,
+  false
+]
+
+const isBlackKey = (note: number) => {
+  return blackKeys[note % 12]
+}
+
+const GridBg = ({ beatWidth, barWidth, noteHeight, startNote }: Props) => {
   const patternHeight = noteHeight * 12
   return (
     <pattern
@@ -20,14 +40,24 @@ const GridBg = ({ beatWidth, barWidth, noteHeight }: Props) => {
       height={patternHeight}
       patternUnits="userSpaceOnUse"
     >
-      <rect
-        x="0"
-        y="0"
-        width={barWidth}
-        height={noteHeight}
-        fill={gridBgColor}
-      />
-      <line stroke="#aaa" x1="0" y1="0" x2={barWidth} y2="0" />
+      {Array(12)
+        .fill(null)
+        .map((_: number, i: number) => {
+          const note = startNote - i
+          const y = noteHeight * i
+          return (
+            <g key={`k_${i}`}>
+              <rect
+                x="0"
+                y={y}
+                width={barWidth}
+                height={noteHeight}
+                fill={isBlackKey(note) ? blackKeyColor : gridBgColor}
+              />
+              <line stroke="#eee" x1="0" y1={y} x2={barWidth} y2={y} />
+            </g>
+          )
+        })}
       <line
         stroke="#aaa"
         strokeWidth="3"
