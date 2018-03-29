@@ -227,6 +227,7 @@ class SessionComponent extends React.Component<
           <ArrangementComponent session={session} settings={settings} /> 
         */}
         <CommandsComponent
+          session={session}
           settings={settings}
           mutations={mutations}
           actions={actions}

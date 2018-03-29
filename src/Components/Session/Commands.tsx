@@ -2,8 +2,11 @@ import { Mutations, SessionActions } from 'Containers/Session'
 import { isEqual } from 'lodash'
 import * as React from 'react'
 import { UIState } from 'Redux/UI'
+import { Session } from 'types'
+import { genBlock } from 'Utils/gen'
 
 interface Props {
+  session: Session
   settings: UIState
   actions: SessionActions
   mutations: Mutations
@@ -48,7 +51,14 @@ class CommandsComponent extends React.Component<Props> {
     if (
       isEqual(nextProps.settings.keyHistory.slice(0, konami.length), konami)
     ) {
+      const { session, mutations, actions } = nextProps
       console.log('detect konami', konamiPattern)
+      const newBlock = genBlock(session)
+      const newIndex = session.blocks.length
+      mutations.addNewBlock(newBlock)
+      setTimeout(() => {
+        actions.block.setCurrentBlockIndex(newIndex)
+      }, 500)
     }
   }
   render() {
