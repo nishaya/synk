@@ -4,6 +4,7 @@ import BpmComponent from 'Components/Controls/Bpm'
 import EditTools from 'Components/Controls/EditTools'
 import Transport from 'Components/Controls/Transport'
 import BlockSelect from 'Components/Session/BlockSelect'
+import CommandsComponent from 'Components/Session/Commands'
 import TrackListComponent from 'Components/TrackList'
 import { Mutations, SessionActions } from 'Containers/Session'
 import { Card, CardActions, CardText } from 'material-ui/Card'
@@ -67,7 +68,7 @@ class SessionComponent extends React.Component<
         const doc = firebase.firestore().doc(`/sessions/${sessionId}`)
         doc.onSnapshot((changed: firebase.firestore.DocumentSnapshot) => {
           const data = changed.data() as Session
-          actions.updateSession(data)
+          actions.updateSession(data) // Reduxのstoreを更新
         })
       }
     } else {
@@ -212,6 +213,7 @@ class SessionComponent extends React.Component<
         {/*
           <ArrangementComponent session={session} settings={settings} /> 
         */}
+        <CommandsComponent settings={settings} />
       </div>
     )
   }
