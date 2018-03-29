@@ -146,7 +146,6 @@ class SessionComponent extends React.Component<
               <Tools>
                 <div>
                   <Transport
-                    handleRec={() => console.log('rec button pushed')}
                     onStop={() => {
                       if (blockPlayer.playing) {
                         blockPlayer.stop()
