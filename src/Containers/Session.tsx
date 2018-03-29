@@ -13,6 +13,7 @@ import {
   setNoteDuration,
   setQuantize
 } from 'Redux/UI'
+import { clearKeyHistory } from 'Redux/UI'
 import { Block, Note, Session, SynthPlayHandler, SynthPreset } from 'types'
 import { findPattern } from 'Utils/session'
 
@@ -38,6 +39,9 @@ export interface BlockActions {
 export interface TrackActions {
   setCurrentTrack: (trackIndex: number) => void
 }
+export interface UIActions {
+  clearKeyHistory: () => void
+}
 
 export interface SessionActions {
   updateSession: (session: Session) => void
@@ -45,6 +49,7 @@ export interface SessionActions {
   block: BlockActions
   track: TrackActions
   synth: SynthActions
+  ui: UIActions
 }
 
 export interface Mutations {
@@ -203,6 +208,11 @@ const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
     synth: {
       initSynth: (trackIndex: number, handler: SynthPlayHandler) => {
         dispatch(initSynth({ trackIndex, handler }))
+      }
+    },
+    ui: {
+      clearKeyHistory: () => {
+        dispatch(clearKeyHistory())
       }
     }
   }

@@ -35,6 +35,8 @@ export const keyUp = actionCreator<{
   key: string
 }>('UI_KEY_UP')
 
+export const clearKeyHistory = actionCreator('UI_CLEAR_KEY_HISTORY')
+
 // reducer
 export interface PatternUIState {
   quantize: number
@@ -128,6 +130,13 @@ export const uiReducers = (
       ...merge(state, {
         keys: new Map(state.keys.entries()),
         keyHistory: [key, ...keyHistory.slice(0, 15)]
+      })
+    }
+  }
+  if (isType(action, clearKeyHistory)) {
+    return {
+      ...merge(state, {
+        keyHistory: []
       })
     }
   }
