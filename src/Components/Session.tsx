@@ -18,6 +18,7 @@ import { Block, Session } from 'types'
 import { BEAT_LENGTH } from 'Utils/time'
 
 import * as firebase from 'firebase'
+import { genBlock } from 'Utils/gen'
 require('firebase/firestore')
 
 const blockPlayer = new Player()
@@ -176,9 +177,16 @@ class SessionComponent extends React.Component<
                       onChange={(blockIndex: number) => {
                         console.log(blockIndex)
                         if (blockIndex === -1) {
-                          console.log('add new block')
+                          const newBlock = genBlock(session)
+                          const newIndex = session.blocks.length
+                          mutations.addNewBlock(newBlock)
+                          setTimeout(() => {
+                            this.blockChanged(newBlock)
+                            actions.block.setCurrentBlockIndex(newIndex)
+                          }, 500)
                           return
                         }
+
                         const block = session.blocks[blockIndex]
                         if (block) {
                           this.blockChanged(block)
@@ -218,7 +226,11 @@ class SessionComponent extends React.Component<
         {/*
           <ArrangementComponent session={session} settings={settings} /> 
         */}
-        <CommandsComponent settings={settings} />
+        <CommandsComponent
+          settings={settings}
+          mutations={mutations}
+          actions={actions}
+        />
       </div>
     )
   }

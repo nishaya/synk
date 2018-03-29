@@ -13,7 +13,7 @@ import {
   setNoteDuration,
   setQuantize
 } from 'Redux/UI'
-import { Note, Session, SynthPlayHandler, SynthPreset } from 'types'
+import { Block, Note, Session, SynthPlayHandler, SynthPreset } from 'types'
 import { findPattern } from 'Utils/session'
 
 import * as firebase from 'firebase'
@@ -55,6 +55,7 @@ export interface Mutations {
   changeTrackLevel: (trackIndex: number, level: number) => void
   changePreset: (trackIndex: number, preset: SynthPreset) => void
   changeBpm: (bpm: number) => void
+  addNewBlock: (block: Block) => void
 }
 
 let pendingUpdate: Session | null = null
@@ -85,6 +86,12 @@ const mapStateToProps = (state: RootState) => ({
       console.log('chanbeBpm', bpm)
       state.Session.session.bpm = bpm
       scheduleUpdate({ bpm }, state.Session.session)
+    },
+    addNewBlock: (block: Block) => {
+      const newSession = state.Session.session
+      newSession.blocks.push(block)
+      const doc = firebase.firestore().doc(`/sessions/${newSession.id}`)
+      doc.set({ blocks: newSession.blocks }, { merge: true })
     },
     changeTrackLevel: (trackIndex: number, level: number) => {
       console.log('changeTrackLevel', trackIndex, level)

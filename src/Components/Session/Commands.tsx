@@ -1,9 +1,12 @@
+import { Mutations, SessionActions } from 'Containers/Session'
 import { isEqual } from 'lodash'
 import * as React from 'react'
 import { UIState } from 'Redux/UI'
 
 interface Props {
   settings: UIState
+  actions: SessionActions
+  mutations: Mutations
 }
 
 const konami = [
