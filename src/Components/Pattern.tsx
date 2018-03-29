@@ -104,6 +104,13 @@ class PatternComponent extends React.Component<Props, State> {
 
     const svgPoint = this.mouse2svgPoint(e)
     const { note, position } = this.svgPoint2NoteInfo(svgPoint)
+    if (svgPoint.y <= gridYOffset) {
+      console.log('move position')
+      return
+    } else if (svgPoint.x <= gridXOffset) {
+      console.log('preview note', note)
+      return
+    }
     const editNote = {
       ...noteDefaults,
       note,
@@ -302,7 +309,7 @@ class PatternComponent extends React.Component<Props, State> {
       noteStyle.pointerEvents = 'none'
       notes.push(
         <rect
-          {...defaultNoteStyle}
+          {...noteDefaultProps}
           key="note_editing"
           x={gridXOffset + editNote.position * durationWidth}
           y={gridYOffset + (maxNote - editNote.note) * noteHeight}
@@ -310,6 +317,15 @@ class PatternComponent extends React.Component<Props, State> {
           style={noteStyle}
         />
       )
+      const preview = {
+        ...defaultNoteStyle,
+        key: 'note_editing',
+        x: gridXOffset + editNote.position * durationWidth,
+        y: gridYOffset + (maxNote - editNote.note) * noteHeight,
+        width: durationWidth * editNote.duration - noteOffset,
+        style: noteStyle
+      }
+      console.log(preview)
     }
 
     return (
