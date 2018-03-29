@@ -27,6 +27,7 @@ interface Props {
   settings: UIState
   synth: SynthState
   mutations: Mutations
+  bpm: number
 }
 
 const Tools = styled.div`
@@ -126,11 +127,11 @@ class SessionComponent extends React.Component<
         blockPlayer.endPosition = nextBlock.bars * BEAT_LENGTH * 4
       }
     }
-    const { bpm } = this.props.session
-    const { bpm: nextBpm } = nextProps.session
+    const bpm = this.props.bpm
+    const nextBpm = nextProps.bpm
     if (bpm !== nextBpm) {
-      console.log('bpm changed', bpm, nextBpm)
-      blockPlayer.bpm = bpm
+      console.log(`bpm changed ${bpm} -> ${nextBpm}`)
+      blockPlayer.bpm = nextBpm
     }
   }
 

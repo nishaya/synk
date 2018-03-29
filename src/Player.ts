@@ -75,7 +75,6 @@ class Player {
 
     if (this.cursor > this.endPosition) {
       if (this.loop) {
-        // TODO: schedule 0 to cursor
         this.cursor = this.cursor % this.endPosition
         this.scheduleNotes(now + this.pos2sec(restPos), 0, this.cursor)
       } else {

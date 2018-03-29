@@ -35,7 +35,6 @@ const BpmComponent = ({ bpm, mutations }: Props) => {
         step={1}
         style={{ width: 120 }}
         onChange={(e: any, v: number) => {
-          console.log('bpm changed', v)
           mutations.changeBpm(v)
         }}
       />

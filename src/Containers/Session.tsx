@@ -79,6 +79,7 @@ const mapStateToProps = (state: RootState) => ({
   session: state.Session.session,
   settings: state.UI,
   synth: state.Synth,
+  bpm: state.Session.session.bpm,
   mutations: {
     changeBpm: (bpm: number) => {
       console.log('chanbeBpm', bpm)
