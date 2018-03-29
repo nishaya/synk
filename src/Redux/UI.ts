@@ -134,6 +134,7 @@ export const uiReducers = (
     }
   }
   if (isType(action, clearKeyHistory)) {
+    console.log('clear key history')
     return {
       ...merge(state, {
         keyHistory: []

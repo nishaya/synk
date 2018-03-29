@@ -2,7 +2,7 @@ import { Mutations, SessionActions } from 'Containers/Session'
 import { isEqual } from 'lodash'
 import * as React from 'react'
 import { UIState } from 'Redux/UI'
-import { Session } from 'types'
+import { isOscSynthPreset, Session } from 'types'
 import { genBlock } from 'Utils/gen'
 
 interface Props {
@@ -10,6 +10,7 @@ interface Props {
   settings: UIState
   actions: SessionActions
   mutations: Mutations
+  playBlock: () => void
 }
 
 const konami = [
@@ -46,18 +47,36 @@ const konamiPattern = {
   ]
 }
 
+let executed = false
+
 class CommandsComponent extends React.Component<Props> {
   componentWillReceiveProps(nextProps: Props) {
     if (
+      !executed &&
       isEqual(nextProps.settings.keyHistory.slice(0, konami.length), konami)
     ) {
-      const { session, mutations, actions } = nextProps
+      executed = true
+      const { session, mutations, actions, playBlock } = nextProps
+      actions.ui.clearKeyHistory()
       console.log('detect konami', konamiPattern)
       const newBlock = genBlock(session)
+      newBlock.patterns[0] = konamiPattern
       const newIndex = session.blocks.length
+      const newPreset = session.tracks[0].preset
+      if (newPreset && isOscSynthPreset(newPreset)) {
+        newPreset.oscillator = 'square'
+        newPreset.aeg = {
+          attack: 0,
+          decay: 19,
+          release: 15,
+          sustain: 56
+        }
+        mutations.changePreset(0, newPreset)
+      }
       mutations.addNewBlock(newBlock)
       setTimeout(() => {
         actions.block.setCurrentBlockIndex(newIndex)
+        playBlock()
       }, 500)
     }
   }

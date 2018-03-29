@@ -448,7 +448,7 @@ class PatternComponent extends React.Component<Props, State> {
             </div>
           </div>
         </div>
-        {JSON.stringify(pattern)}
+        {/*JSON.stringify(pattern)*/}
       </div>
     )
   }

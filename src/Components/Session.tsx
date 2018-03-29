@@ -231,6 +231,7 @@ class SessionComponent extends React.Component<
           settings={settings}
           mutations={mutations}
           actions={actions}
+          playBlock={() => this.playBlockPlayer()}
         />
       </div>
     )
