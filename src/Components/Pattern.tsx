@@ -1,4 +1,5 @@
 import { NoteInfo } from 'Components/Edit/NoteInfo'
+import GridBg from 'Components/Pattern/GridBg'
 import { Mutations, SessionActions } from 'Containers/Session'
 import IconButton from 'material-ui/IconButton'
 import * as Icons from 'material-ui/svg-icons'
@@ -47,14 +48,6 @@ const durationWidth = beatWidth / 480
 const defaultNoteStyle = { fill: 'red', stroke: '#666', strokeWidth: 0 }
 const noteRound = 4
 const noteOffset = 1
-const gridBgColor = '#fff'
-
-/*
-const defaultNoteStyle = { fill: 'red', stroke: '#666', strokeWidth: 1 }
-const noteRound = 0
-const noteOffset = 0
-const gridBgColor = '#eee'
-*/
 
 class PatternComponent extends React.Component<Props, State> {
   divElement: HTMLDivElement
@@ -317,55 +310,12 @@ class PatternComponent extends React.Component<Props, State> {
               preserveAspectRatio="xMidYMid meet"
             >
               <defs>
-                <pattern
-                  id="Grid"
-                  x="0"
-                  y="0"
-                  width={barWidth}
-                  height={noteHeight}
-                  patternUnits="userSpaceOnUse"
-                >
-                  <rect
-                    x="0"
-                    y="0"
-                    width={barWidth}
-                    height={noteHeight}
-                    fill={gridBgColor}
-                  />
-                  <line stroke="#aaa" x1="0" y1="0" x2={barWidth} y2="0" />
-                  <line
-                    stroke="#aaa"
-                    strokeWidth="3"
-                    x1="0"
-                    y1="0"
-                    x2="0"
-                    y2={noteHeight}
-                  />
-                  <line
-                    stroke="#bbb"
-                    strokeDasharray="5 3"
-                    x1={beatWidth * 1}
-                    y1="0"
-                    x2={beatWidth * 1}
-                    y2={noteHeight}
-                  />
-                  <line
-                    stroke="#bbb"
-                    strokeDasharray="5 3"
-                    x1={beatWidth * 2}
-                    y1="0"
-                    x2={beatWidth * 2}
-                    y2={noteHeight}
-                  />
-                  <line
-                    stroke="#bbb"
-                    strokeDasharray="5 3"
-                    x1={beatWidth * 3}
-                    y1="0"
-                    x2={beatWidth * 3}
-                    y2={noteHeight}
-                  />
-                </pattern>
+                <GridBg
+                  barWidth={barWidth}
+                  noteHeight={noteHeight}
+                  beatWidth={beatWidth}
+                  startNote={minNote}
+                />
               </defs>
               <rect
                 fill="url(#Grid)"
