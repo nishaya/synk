@@ -126,6 +126,12 @@ class SessionComponent extends React.Component<
         blockPlayer.endPosition = nextBlock.bars * BEAT_LENGTH * 4
       }
     }
+    const { bpm } = this.props.session
+    const { bpm: nextBpm } = nextProps.session
+    if (bpm !== nextBpm) {
+      console.log('bpm changed', bpm, nextBpm)
+      blockPlayer.bpm = bpm
+    }
   }
 
   render() {
