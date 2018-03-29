@@ -1,5 +1,9 @@
+import { sample } from 'lodash'
 import { Note, Session } from 'types'
+import { majorScale } from 'Utils/music'
 import { BEAT_LENGTH } from 'Utils/time'
+
+const scale = majorScale.filter((n: number, i: number) => i % 2 == 0)
 
 const genNotes = (bars: number = 4, octave = 0): Note[] => {
   const notes: Note[] = []
@@ -7,7 +11,8 @@ const genNotes = (bars: number = 4, octave = 0): Note[] => {
 
   for (let i = 0; i < 16 * bars; i++) {
     notes.push({
-      note: ~~(Math.random() * 4) * 3 + 30 + 12 * octave,
+      //      note: ~~(Math.random() * 4) * 3 + 30 + 12 * octave,
+      note: 12 * (octave + 3) + (sample(scale) || 0),
       position: i * 120,
       duration: 60,
       velocity: 100
@@ -118,7 +123,7 @@ export const session: Session = {
         },
         {
           id: 'dummy1-2',
-          notes: genNotes(4, -1)
+          notes: genNotes(4)
         },
         {
           id: 'dummy1-3',
