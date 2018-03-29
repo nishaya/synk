@@ -35,7 +35,7 @@ const noteDefaults: Note = {
 
 const gridXOffset = 128
 const gridYOffset = 64
-const noteHeight = 10
+const noteHeight = 12
 const displayNotes = 60
 const beatWidth = 64
 const durationWidth = beatWidth / 480
@@ -222,14 +222,17 @@ class PatternComponent extends React.Component<Props, State> {
       return { note: 0, position: 0 }
     }
     const { maxNote } = this.noteRange(pattern)
-    let position = pt.x / durationWidth
+    let position = (pt.x - gridXOffset) / durationWidth
 
     // quantize
     if (typeof quantize === 'number') {
       position = ~~(position / quantize) * quantize
     }
 
-    const note = ~~(maxNote - (pt.y - noteHeight / 2) / noteHeight)
+    const note = ~~(
+      maxNote -
+      (pt.y - gridYOffset - noteHeight / 2) / noteHeight
+    )
     return { note, position }
   }
 
@@ -259,8 +262,8 @@ class PatternComponent extends React.Component<Props, State> {
       mutations: { changeBlockLength }
     } = this.props
     const { stageHeight, stageWidth, editNote, previewNote } = this.state
+
     const { maxNote, minNote } = this.noteRange(pattern)
-    console.log('min, max', minNote, maxNote)
     const trackColor = this.getTrackColor()
     const noteStyle: React.CSSProperties = {
       ...defaultNoteStyle,
@@ -273,6 +276,7 @@ class PatternComponent extends React.Component<Props, State> {
     const svgHeight = gridHeight + gridYOffset
     const gridWidth = barWidth * bars
     const svgWidth = gridWidth + gridXOffset
+
     if (editNote) {
       console.log('editing', editNote)
       noteStyle.pointerEvents = 'none'
@@ -354,6 +358,7 @@ class PatternComponent extends React.Component<Props, State> {
                     />
                   )
                 })}
+                {editingNote}
                 <line
                   stroke="#ff0"
                   x1={gridXOffset + cursorX}
@@ -362,7 +367,6 @@ class PatternComponent extends React.Component<Props, State> {
                   y2={gridYOffset + svgHeight}
                   style={{ pointerEvents: 'none', mixBlendMode: 'difference' }}
                 />
-                {editingNote}
               </g>
             </svg>
             <div

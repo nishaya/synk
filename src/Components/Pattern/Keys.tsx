@@ -21,6 +21,7 @@ const KeysComponent = ({
   const notes = Array(max - min)
     .fill(null)
     .map((_: any, i: number) => max - i)
+
   return (
     <g>
       {notes.map((note: number, i: number) => (
@@ -30,7 +31,7 @@ const KeysComponent = ({
           y={offsetY + noteHeight * i}
           width={width}
           height={noteHeight}
-          fill={isBlackKey(note) ? '#333' : '#fff'}
+          fill={isBlackKey(note) ? '#666' : '#fff'}
         />
       ))}
     </g>
