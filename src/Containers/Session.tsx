@@ -1,4 +1,5 @@
 import SessionComponent from 'Components/Session'
+import { merge } from 'lodash'
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
 import { Action } from 'redux'
@@ -53,32 +54,43 @@ export interface Mutations {
   changeBlockLength: (num: number) => void
   changeTrackLevel: (trackIndex: number, level: number) => void
   changePreset: (trackIndex: number, preset: SynthPreset) => void
+  changeBpm: (bpm: number) => void
 }
 
 let pendingUpdate: Session | null = null
 let lastCommit = Date.now()
+let changes = {}
+const scheduleUpdate = (change: any, session: Session) => {
+  pendingUpdate = session
+  changes = merge(changes, change)
+  setTimeout(() => {
+    const now = Date.now()
+    if (now - lastCommit > 1000 && pendingUpdate) {
+      console.log('scheduled update', changes)
+      const doc = firebase.firestore().doc(`/sessions/${session.id}`)
+      doc.set(changes, { merge: true })
+      lastCommit = now
+      pendingUpdate = null
+    }
+  }, 1000)
+}
 
 const mapStateToProps = (state: RootState) => ({
   session: state.Session.session,
   settings: state.UI,
   synth: state.Synth,
   mutations: {
+    changeBpm: (bpm: number) => {
+      console.log('chanbeBpm', bpm)
+      scheduleUpdate({ bpm }, state.Session.session)
+    },
     changeTrackLevel: (trackIndex: number, level: number) => {
       console.log('changeTrackLevel', trackIndex, level)
       const newSession = state.Session.session
       if (newSession.tracks[trackIndex]) {
         newSession.tracks[trackIndex].level = level
       }
-      pendingUpdate = newSession
-      setTimeout(() => {
-        const now = Date.now()
-        if (now - lastCommit > 1000 && pendingUpdate) {
-          const doc = firebase.firestore().doc(`/sessions/${newSession.id}`)
-          doc.set({ tracks: pendingUpdate.tracks }, { merge: true })
-          lastCommit = now
-          pendingUpdate = null
-        }
-      }, 1000)
+      scheduleUpdate({ tracks: newSession.tracks }, newSession)
     },
     changePreset: (trackIndex: number, preset: SynthPreset) => {
       console.log('changePreset', trackIndex, preset)
@@ -86,16 +98,7 @@ const mapStateToProps = (state: RootState) => ({
       if (newSession.tracks[trackIndex]) {
         newSession.tracks[trackIndex].preset = preset
       }
-      pendingUpdate = newSession
-      setTimeout(() => {
-        const now = Date.now()
-        if (now - lastCommit > 1000 && pendingUpdate) {
-          const doc = firebase.firestore().doc(`/sessions/${newSession.id}`)
-          doc.set({ tracks: pendingUpdate.tracks }, { merge: true })
-          lastCommit = now
-          pendingUpdate = null
-        }
-      }, 1000)
+      scheduleUpdate({ tracks: newSession.tracks }, newSession)
     },
     changeBlockLength: (num: number) => {
       const { UI: { block: { currentBlockIndex } } } = state
