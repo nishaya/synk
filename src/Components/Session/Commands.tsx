@@ -60,6 +60,7 @@ class CommandsComponent extends React.Component<Props> {
       actions.ui.clearKeyHistory()
       console.log('detect konami', konamiPattern)
       const newBlock = genBlock(session)
+      newBlock.name = 'Konami'
       newBlock.patterns[0] = konamiPattern
       const newIndex = session.blocks.length
       const newPreset = session.tracks[0].preset
