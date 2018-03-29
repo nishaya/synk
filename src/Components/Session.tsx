@@ -67,12 +67,6 @@ class SessionComponent extends React.Component<
         const doc = firebase.firestore().doc(`/sessions/${sessionId}`)
         doc.onSnapshot((changed: firebase.firestore.DocumentSnapshot) => {
           const data = changed.data() as Session
-          console.log(
-            'onSnapshot',
-            data.blocks[0].patterns[0].notes.length,
-            changed,
-            changed.data()
-          )
           actions.updateSession(data)
         })
       }
