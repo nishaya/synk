@@ -31,16 +31,8 @@ export default ({ handleRec, cursor, onStop, onPlay }: Props) => (
         onClick={() => handleRec()}
       />
     ) : null}
-    <RaisedButton
-      icon={<Icons.AvStop />}
-      onClick={() => onStop()}
-      label="Stop"
-    />
-    <RaisedButton
-      icon={<Icons.AvPlayArrow />}
-      onClick={() => onPlay()}
-      label="Play"
-    />
+    <RaisedButton icon={<Icons.AvStop />} onClick={() => onStop()} />
+    <RaisedButton icon={<Icons.AvPlayArrow />} onClick={() => onPlay()} />
     <Time>{position2time(cursor)}</Time>
   </div>
 )
