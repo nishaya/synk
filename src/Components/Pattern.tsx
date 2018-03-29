@@ -227,7 +227,7 @@ class PatternComponent extends React.Component<Props, State> {
       position = ~~(position / quantize) * quantize
     }
 
-    const note = ~~(maxNote - pt.y / noteHeight) + 1
+    const note = ~~(maxNote - (pt.y - noteHeight / 2) / noteHeight)
     return { note, position }
   }
 
