@@ -66,7 +66,7 @@ export default ({ mutations, settings, actions }: Props) => {
           )
         }
         icon={<Icons.ContentClear color="#f00" />}
-        label="Clear Pattern"
+        label="Clear"
       />
     </div>
   )

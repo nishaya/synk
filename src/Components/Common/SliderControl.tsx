@@ -25,13 +25,13 @@ const SliderControl = ({ min, max, value, label, onChange }: Props) => (
     <div
       style={{
         minHeight: '100%',
-        width: '20%',
+        width: '30%',
         paddingTop: 8
       }}
     >
       {label}
     </div>
-    <div style={{ width: '80%' }}>
+    <div style={{ width: '70%' }}>
       <Slider
         sliderStyle={sliderStyle}
         value={value}

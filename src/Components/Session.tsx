@@ -173,7 +173,7 @@ class SessionComponent extends React.Component<
             </CardActions>
             <CardText style={{ padding: 4 }}>
               <EditArea>
-                <div style={{ width: '300px' }}>
+                <div style={{ width: '220px' }}>
                   <div style={{ padding: 8 }}>
                     <BlockSelect
                       value={settings.block.currentBlockIndex}

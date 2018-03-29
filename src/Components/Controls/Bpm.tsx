@@ -14,8 +14,8 @@ interface Props {
 
 const BpmComponent = ({ bpm, mutations }: Props) => {
   return (
-    <div style={{ width: 200 }}>
-      <div>bpm: {bpm}</div>
+    <div style={{ width: 120 }}>
+      <div>BPM: {bpm}</div>
       <Slider
         sliderStyle={sliderStyle}
         value={bpm}
