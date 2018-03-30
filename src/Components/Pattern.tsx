@@ -15,6 +15,7 @@ interface Props {
   settings: UIState
   synth: SynthState
   mutations: Mutations
+  setBlockCursor: (pos: number) => void
 }
 
 interface State {
@@ -106,6 +107,8 @@ class PatternComponent extends React.Component<Props, State> {
     const { note, position } = this.svgPoint2NoteInfo(svgPoint)
     if (svgPoint.y <= gridYOffset) {
       console.log('move position')
+      const { setBlockCursor } = this.props
+      setBlockCursor(position)
       return
     } else if (svgPoint.x <= gridXOffset) {
       console.log('preview note', note)

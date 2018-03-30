@@ -12,9 +12,17 @@ interface Props {
   settings: UIState
   synth: SynthState
   mutations: Mutations
+  setBlockCursor: (pos: number) => void
 }
 
-export default ({ block, actions, settings, synth, mutations }: Props) => {
+export default ({
+  block,
+  actions,
+  settings,
+  synth,
+  mutations,
+  setBlockCursor
+}: Props) => {
   return (
     <div style={{ padding: '4px' }}>
       <Card>
@@ -26,6 +34,7 @@ export default ({ block, actions, settings, synth, mutations }: Props) => {
               block={block}
               actions={actions}
               synth={synth}
+              setBlockCursor={setBlockCursor}
             />
           </div>
         </CardText>

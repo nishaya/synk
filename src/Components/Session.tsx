@@ -214,6 +214,10 @@ class SessionComponent extends React.Component<
                       block={currentBlock}
                       settings={settings}
                       synth={synth}
+                      setBlockCursor={(pos: number) => {
+                        blockPlayer.cursor = pos
+                        actions.block.setBlockCursor(pos)
+                      }}
                     />
                   ) : (
                     'no current block'
