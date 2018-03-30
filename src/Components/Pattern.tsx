@@ -100,6 +100,36 @@ class PatternComponent extends React.Component<Props, State> {
     return svgPoint
   }
 
+  findNote(
+    noteNumber: number,
+    position: number
+  ): { note: Note | undefined; index: number; diff: number } {
+    console.log('findNote', noteNumber, position)
+    let foundNote: { note: Note | undefined; index: number; diff: number } = {
+      note: undefined,
+      index: -1,
+      diff: 0
+    }
+    const pattern = this.getPattern()
+    if (pattern) {
+      pattern.notes.forEach((n: Note, index: number) => {
+        console.log(n.position, n.position + n.duration, position)
+        if (
+          n.note === noteNumber &&
+          (n.position <= position && n.position + n.duration >= position)
+        ) {
+          foundNote = {
+            note: n,
+            index,
+            diff: n.position + n.duration - position
+          }
+        }
+      })
+    }
+
+    return foundNote
+  }
+
   handleMousedown(e: MouseEvent) {
     console.log('mousedown', e)
 
@@ -120,6 +150,9 @@ class PatternComponent extends React.Component<Props, State> {
       position,
       duration: this.getDuration()
     }
+
+    const found = this.findNote(note, rawPosition)
+    console.log('foundNote', found)
 
     if (this.deleteMode()) {
       const { block: { id: blockId }, mutations: { removeNote } } = this.props
