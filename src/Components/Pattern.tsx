@@ -18,9 +18,16 @@ interface Props {
   setBlockCursor: (pos: number) => void
 }
 
+enum ModificationType {
+  NONE,
+  MOVE,
+  STRETCH
+}
+
 interface State {
   stageWidth: number
   stageHeight: number
+  modification: ModificationType
   editNote: Note | null
   previewNote: Note | null
   stopHandler: SynthStopHandler | null
@@ -58,6 +65,7 @@ class PatternComponent extends React.Component<Props, State> {
   state: State = {
     stageWidth: 0,
     stageHeight: 0,
+    modification: ModificationType.NONE,
     editNote: null,
     previewNote: null,
     stopHandler: null,
@@ -173,6 +181,7 @@ class PatternComponent extends React.Component<Props, State> {
         if (pattern) removeNote(blockId, pattern.id, found.index)
         return
       }
+      console.log('found', found)
     }
 
     const stopHandler = this.triggerSynthPlay(editNote)
@@ -266,13 +275,21 @@ class PatternComponent extends React.Component<Props, State> {
     }
     this.triggerSynthStop()
 
-    this.setState({ editNote: null, previewNote: null })
+    this.setState({
+      editNote: null,
+      previewNote: null,
+      modification: ModificationType.NONE
+    })
   }
 
   handleMouseleave(e: MouseEvent) {
     console.log('handleMouseleave')
     this.triggerSynthStop()
-    this.setState({ editNote: null, previewNote: null })
+    this.setState({
+      editNote: null,
+      previewNote: null,
+      modification: ModificationType.NONE
+    })
   }
 
   svgPoint2NoteInfo(
