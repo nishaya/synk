@@ -189,7 +189,10 @@ class PatternComponent extends React.Component<Props, State> {
       editNote = { ...found.note }
       this.setState({
         //        modification: ModificationType.MOVE,
-        modification: ModificationType.STRETCH,
+        modification:
+          found.tailDiff < 90
+            ? ModificationType.STRETCH
+            : ModificationType.MOVE,
         modifyNoteIndex: found.index
       })
     }
