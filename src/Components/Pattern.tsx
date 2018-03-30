@@ -154,12 +154,13 @@ class PatternComponent extends React.Component<Props, State> {
     const found = this.findNote(note, rawPosition)
     console.log('foundNote', found)
 
-    if (this.deleteMode()) {
-      const { block: { id: blockId }, mutations: { removeNote } } = this.props
-      const pattern = this.getPattern()
-      if (pattern)
-        removeNote(blockId, pattern.id, { ...editNote, position: rawPosition })
-      return
+    if (found.note) {
+      if (this.deleteMode()) {
+        const { block: { id: blockId }, mutations: { removeNote } } = this.props
+        const pattern = this.getPattern()
+        if (pattern) removeNote(blockId, pattern.id, found.index)
+        return
+      }
     }
 
     const stopHandler = this.triggerSynthPlay(editNote)

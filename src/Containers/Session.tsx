@@ -54,7 +54,7 @@ export interface SessionActions {
 
 export interface Mutations {
   addNote: (blockId: string, patternId: string, note: Note) => void
-  removeNote: (blockId: string, patternId: string, note: Note) => void
+  removeNote: (blockId: string, patternId: string, index: number) => void
   clearPattern: (blockIndex: number, patternIndex: number) => void
   changeBlockLength: (num: number) => void
   changeTrackLevel: (trackIndex: number, level: number) => void
@@ -149,12 +149,16 @@ const mapStateToProps = (state: RootState) => ({
         doc.set(newSession)
       }
     },
-    removeNote: (blockId: string, patternId: string, note: Note) => {
-      console.log('Mutation - removeNote', blockId, patternId, note)
+    removeNote: (blockId: string, patternId: string, index: number) => {
+      console.log('Mutation - removeNote', blockId, patternId, index)
       const newSession = state.Session.session
       const found = findPattern(newSession, blockId, patternId)
       if (found) {
         const { pattern } = found
+        pattern.notes = pattern.notes.filter(
+          (n: Note, i: number) => i !== index
+        )
+        /*
         pattern.notes = pattern.notes.filter((n: Note) => {
           return !(
             n.note === note.note &&
@@ -162,6 +166,7 @@ const mapStateToProps = (state: RootState) => ({
               n.position + n.duration >= note.position)
           )
         })
+        */
 
         const doc = firebase.firestore().doc(`/sessions/${newSession.id}`)
         doc.set(newSession)
