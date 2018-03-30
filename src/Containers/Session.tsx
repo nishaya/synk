@@ -155,14 +155,13 @@ const mapStateToProps = (state: RootState) => ({
       const found = findPattern(newSession, blockId, patternId)
       if (found) {
         const { pattern } = found
-        pattern.notes = pattern.notes.filter(
-          (n: Note) =>
-            !(
-              n.note === note.note &&
-              (n.position >= note.position &&
-                n.position + n.duration <= note.position)
-            )
-        )
+        pattern.notes = pattern.notes.filter((n: Note) => {
+          return !(
+            n.note === note.note &&
+            (n.position <= note.position &&
+              n.position + n.duration >= note.position)
+          )
+        })
 
         const doc = firebase.firestore().doc(`/sessions/${newSession.id}`)
         doc.set(newSession)
