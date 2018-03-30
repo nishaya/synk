@@ -188,7 +188,8 @@ class PatternComponent extends React.Component<Props, State> {
       // start modification
       editNote = { ...found.note }
       this.setState({
-        modification: ModificationType.MOVE,
+        //        modification: ModificationType.MOVE,
+        modification: ModificationType.STRETCH,
         modifyNoteIndex: found.index
       })
     }
@@ -238,7 +239,7 @@ class PatternComponent extends React.Component<Props, State> {
 
   handleMousemove(e: MouseEvent) {
     e.preventDefault() // prevent drag
-    const { editNote } = this.state
+    const { editNote, modification } = this.state
     const svgPoint = this.mouse2svgPoint(e)
     if (svgPoint.x < gridXOffset || svgPoint.y < gridYOffset) {
       this.setState({ previewNote: null, editNote: null })
@@ -247,7 +248,13 @@ class PatternComponent extends React.Component<Props, State> {
     const { note, position } = this.svgPoint2NoteInfo(svgPoint)
     if (editNote) {
       if (editNote.note !== note || editNote.position !== position) {
-        const newNote = { ...editNote, note, position }
+        let newNote = { ...editNote, note, position }
+        if (modification === ModificationType.STRETCH) {
+          const quantize = this.getQuantize()
+          let duration = position - editNote.position
+          if (duration <= quantize) duration = quantize
+          newNote = { ...editNote, note, duration }
+        }
         if (editNote.note !== note) {
           this.triggerSynthStop()
           const stopHandler = this.triggerSynthPlay(newNote)
@@ -283,7 +290,10 @@ class PatternComponent extends React.Component<Props, State> {
       console.log('handleMouseup', e)
       if (editNote) {
         const { modification, modifyNoteIndex } = this.state
-        if (modification === ModificationType.MOVE) {
+        if (
+          modification === ModificationType.MOVE ||
+          modification === ModificationType.STRETCH
+        ) {
           swapNote(blockId, pattern.id, modifyNoteIndex, { ...editNote })
         } else {
           addNote(blockId, pattern.id, { ...editNote })
