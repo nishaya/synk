@@ -156,7 +156,12 @@ const mapStateToProps = (state: RootState) => ({
       if (found) {
         const { pattern } = found
         pattern.notes = pattern.notes.filter(
-          (n: Note) => !(n.note === note.note && n.position === note.position)
+          (n: Note) =>
+            !(
+              n.note === note.note &&
+              (n.position >= note.position &&
+                n.position + n.duration <= note.position)
+            )
         )
 
         const doc = firebase.firestore().doc(`/sessions/${newSession.id}`)

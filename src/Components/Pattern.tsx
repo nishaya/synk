@@ -104,7 +104,7 @@ class PatternComponent extends React.Component<Props, State> {
     console.log('mousedown', e)
 
     const svgPoint = this.mouse2svgPoint(e)
-    const { note, position } = this.svgPoint2NoteInfo(svgPoint)
+    const { note, position, rawPosition } = this.svgPoint2NoteInfo(svgPoint)
     if (svgPoint.y <= gridYOffset) {
       console.log('move position')
       const { setBlockCursor } = this.props
@@ -125,7 +125,8 @@ class PatternComponent extends React.Component<Props, State> {
       console.log('remove note', editNote)
       const { block: { id: blockId }, mutations: { removeNote } } = this.props
       const pattern = this.getPattern()
-      if (pattern) removeNote(blockId, pattern.id, editNote)
+      if (pattern)
+        removeNote(blockId, pattern.id, { ...editNote, position: rawPosition })
       return
     }
 
@@ -229,14 +230,17 @@ class PatternComponent extends React.Component<Props, State> {
     this.setState({ editNote: null, previewNote: null })
   }
 
-  svgPoint2NoteInfo(pt: SVGPoint): { note: number; position: number } {
+  svgPoint2NoteInfo(
+    pt: SVGPoint
+  ): { note: number; position: number; rawPosition: number } {
     const quantize = this.getQuantize()
     const pattern = this.getPattern()
     if (!pattern) {
-      return { note: 0, position: 0 }
+      return { note: 0, position: 0, rawPosition: 0 }
     }
     const { maxNote } = this.noteRange(pattern)
     let position = (pt.x - gridXOffset) / durationWidth
+    const rawPosition = position
 
     // quantize
     if (typeof quantize === 'number') {
@@ -247,7 +251,7 @@ class PatternComponent extends React.Component<Props, State> {
       maxNote -
       (pt.y - gridYOffset - noteHeight / 2) / noteHeight
     )
-    return { note, position }
+    return { note, position, rawPosition }
   }
 
   noteRange(
