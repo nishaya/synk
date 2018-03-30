@@ -28,6 +28,7 @@ interface State {
   stageWidth: number
   stageHeight: number
   modification: ModificationType
+  modifyNoteIndex: number
   editNote: Note | null
   previewNote: Note | null
   stopHandler: SynthStopHandler | null
@@ -66,6 +67,7 @@ class PatternComponent extends React.Component<Props, State> {
     stageWidth: 0,
     stageHeight: 0,
     modification: ModificationType.NONE,
+    modifyNoteIndex: -1,
     editNote: null,
     previewNote: null,
     stopHandler: null,
@@ -182,6 +184,12 @@ class PatternComponent extends React.Component<Props, State> {
         return
       }
       console.log('found', found)
+      // start modification
+      this.setState({
+        modification: ModificationType.MOVE,
+        modifyNoteIndex: found.index
+      })
+      return
     }
 
     const stopHandler = this.triggerSynthPlay(editNote)
@@ -341,13 +349,23 @@ class PatternComponent extends React.Component<Props, State> {
       settings,
       mutations: { changeBlockLength }
     } = this.props
-    const { stageHeight, stageWidth, editNote, previewNote } = this.state
+    const {
+      stageHeight,
+      stageWidth,
+      editNote,
+      previewNote,
+      modifyNoteIndex
+    } = this.state
 
     const { maxNote, minNote } = this.noteRange(pattern)
     const trackColor = this.getTrackColor()
     const noteStyle: React.CSSProperties = {
       ...defaultNoteStyle,
       fill: trackColor
+    }
+    const modifyingNoteStyle: React.CSSProperties = {
+      ...noteStyle,
+      fill: '#ccc'
     }
     // let editingNote = null
     const barWidth = beatWidth * 4
@@ -368,7 +386,7 @@ class PatternComponent extends React.Component<Props, State> {
           x={gridXOffset + note.position * durationWidth}
           y={gridYOffset + (maxNote - note.note) * noteHeight}
           width={durationWidth * note.duration - noteOffset}
-          style={noteStyle}
+          style={index === modifyNoteIndex ? modifyingNoteStyle : noteStyle}
         />
       )
     })
