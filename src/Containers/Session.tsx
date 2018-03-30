@@ -54,6 +54,12 @@ export interface SessionActions {
 
 export interface Mutations {
   addNote: (blockId: string, patternId: string, note: Note) => void
+  swapNote: (
+    blockId: string,
+    patternId: string,
+    index: number,
+    note: Note
+  ) => void
   removeNote: (blockId: string, patternId: string, index: number) => void
   clearPattern: (blockIndex: number, patternIndex: number) => void
   changeBlockLength: (num: number) => void
@@ -144,6 +150,23 @@ const mapStateToProps = (state: RootState) => ({
           return
         }
         pattern.notes.push(note)
+
+        const doc = firebase.firestore().doc(`/sessions/${newSession.id}`)
+        doc.set(newSession)
+      }
+    },
+    swapNote: (
+      blockId: string,
+      patternId: string,
+      index: number,
+      note: Note
+    ) => {
+      console.log('swapnote', blockId, patternId, index, note)
+      const newSession = state.Session.session
+      const found = findPattern(newSession, blockId, patternId)
+      if (found) {
+        const { pattern } = found
+        pattern.notes[index] = note
 
         const doc = firebase.firestore().doc(`/sessions/${newSession.id}`)
         doc.set(newSession)

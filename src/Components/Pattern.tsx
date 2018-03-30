@@ -273,13 +273,21 @@ class PatternComponent extends React.Component<Props, State> {
   }
 
   handleMouseup(e: MouseEvent) {
-    const { block: { id: blockId }, mutations: { addNote } } = this.props
+    const {
+      block: { id: blockId },
+      mutations: { addNote, swapNote }
+    } = this.props
     const pattern = this.getPattern()
     if (pattern) {
       const { editNote } = this.state
       console.log('handleMouseup', e)
       if (editNote) {
-        addNote(blockId, pattern.id, { ...editNote })
+        const { modification, modifyNoteIndex } = this.state
+        if (modification === ModificationType.MOVE) {
+          swapNote(blockId, pattern.id, modifyNoteIndex, { ...editNote })
+        } else {
+          addNote(blockId, pattern.id, { ...editNote })
+        }
       }
     }
     this.triggerSynthStop()
