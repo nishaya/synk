@@ -1,3 +1,4 @@
+import * as Color from 'color'
 import { NoteInfo } from 'Components/Edit/NoteInfo'
 import GridBg from 'Components/Pattern/GridBg'
 import KeysComponent from 'Components/Pattern/Keys'
@@ -166,7 +167,7 @@ class PatternComponent extends React.Component<Props, State> {
       console.log('preview note', note)
       return
     }
-    const editNote = {
+    let editNote = {
       ...noteDefaults,
       note,
       position,
@@ -185,11 +186,11 @@ class PatternComponent extends React.Component<Props, State> {
       }
       console.log('found', found)
       // start modification
+      editNote = { ...found.note }
       this.setState({
         modification: ModificationType.MOVE,
         modifyNoteIndex: found.index
       })
-      return
     }
 
     const stopHandler = this.triggerSynthPlay(editNote)
@@ -286,7 +287,8 @@ class PatternComponent extends React.Component<Props, State> {
     this.setState({
       editNote: null,
       previewNote: null,
-      modification: ModificationType.NONE
+      modification: ModificationType.NONE,
+      modifyNoteIndex: -1
     })
   }
 
@@ -296,7 +298,8 @@ class PatternComponent extends React.Component<Props, State> {
     this.setState({
       editNote: null,
       previewNote: null,
-      modification: ModificationType.NONE
+      modification: ModificationType.NONE,
+      modifyNoteIndex: -1
     })
   }
 
@@ -365,7 +368,9 @@ class PatternComponent extends React.Component<Props, State> {
     }
     const modifyingNoteStyle: React.CSSProperties = {
       ...noteStyle,
-      fill: '#ccc'
+      fill: Color(trackColor)
+        .fade(0.8)
+        .toString()
     }
     // let editingNote = null
     const barWidth = beatWidth * 4
