@@ -103,12 +103,23 @@ class PatternComponent extends React.Component<Props, State> {
   findNote(
     noteNumber: number,
     position: number
-  ): { note: Note | undefined; index: number; diff: number } {
+  ): {
+    note: Note | undefined
+    index: number
+    headDiff: number
+    tailDiff: number
+  } {
     console.log('findNote', noteNumber, position)
-    let foundNote: { note: Note | undefined; index: number; diff: number } = {
+    let foundNote: {
+      note: Note | undefined
+      index: number
+      headDiff: number
+      tailDiff: number
+    } = {
       note: undefined,
       index: -1,
-      diff: 0
+      headDiff: 0,
+      tailDiff: 0
     }
     const pattern = this.getPattern()
     if (pattern) {
@@ -121,7 +132,8 @@ class PatternComponent extends React.Component<Props, State> {
           foundNote = {
             note: n,
             index,
-            diff: n.position + n.duration - position
+            headDiff: position - n.position,
+            tailDiff: n.position + n.duration - position
           }
         }
       })
