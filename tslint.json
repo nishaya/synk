@@ -5,6 +5,6 @@
     "ordered-imports": true,
     "jsx-no-lambda": false,
     "jsx-no-multiline-js": false,
-    "prettier": [true, "configs"]
+    "prettier": true
   }
 }
