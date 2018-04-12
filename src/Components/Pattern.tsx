@@ -105,9 +105,13 @@ class PatternComponent extends React.Component<Props, State> {
     const pt = this.svgElement.createSVGPoint()
     pt.x = e.clientX
     pt.y = e.clientY
-    const svgPoint = pt.matrixTransform(
-      this.svgElement.getScreenCTM().inverse()
-    )
+    const matrix = this.svgElement.getScreenCTM()
+    if (!matrix) {
+      pt.x = 0
+      pt.y = 0
+      return pt
+    }
+    const svgPoint = pt.matrixTransform(matrix.inverse())
     return svgPoint
   }
 
@@ -479,7 +483,7 @@ class PatternComponent extends React.Component<Props, State> {
               {Array(bars)
                 .fill(null)
                 .map((_: any, bar: number) => {
-                  const props = {
+                  const props: React.SVGProps<any> = {
                     fill: '#999',
                     y: gridYOffset - 6,
                     style: { pointerEvents: 'none' }
