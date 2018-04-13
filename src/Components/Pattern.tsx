@@ -103,16 +103,15 @@ class PatternComponent extends React.Component<Props, State> {
 
   mouse2svgPoint(e: MouseEvent): SVGPoint {
     const pt = this.svgElement.createSVGPoint()
-    pt.x = e.clientX
-    pt.y = e.clientY
     const matrix = this.svgElement.getScreenCTM()
     if (!matrix) {
       pt.x = 0
       pt.y = 0
       return pt
     }
-    const svgPoint = pt.matrixTransform(matrix.inverse())
-    return svgPoint
+    pt.x = e.clientX
+    pt.y = e.clientY
+    return pt.matrixTransform(matrix.inverse())
   }
 
   findNote(
